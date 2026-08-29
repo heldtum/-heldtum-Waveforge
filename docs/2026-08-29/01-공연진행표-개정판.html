@@ -1,0 +1,955 @@
+<title>침묵의 증거 진행표</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F1F2EE; --panel:#FBFBF9; --panel2:#E9EBE5; --sunk:#E3E6DE;
+  --ink:#15181B; --ink2:#4C555C; --ink3:#7B858B;
+  --line:#D6DBD2; --line2:#BFC7B9;
+  --acc:#1F4E4A; --acc2:#2E7168; --accSoft:#E0EAE6;
+  --pro:#B0433C; --proSoft:#F6E6E4;
+  --def:#3A6EA8; --defSoft:#E3EBF4;
+  --warn:#A2681A; --warnSoft:#F7EEDD;
+  --ok:#3F7340; --okSoft:#E6EFE4;
+  --sans:"IBM Plex Sans KR",'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --serif:"Nanum Myeongjo",'Apple SD Gothic Neo',serif;
+  --r:4px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1112; --panel:#171B1D; --panel2:#1F2426; --sunk:#101415;
+  --ink:#E8EAE6; --ink2:#A6AFB2; --ink3:#7C868A;
+  --line:#282F31; --line2:#3A4346;
+  --acc:#67B0A3; --acc2:#84C6BA; --accSoft:#172A28;
+  --pro:#DE7A70; --proSoft:#2C1C1A;
+  --def:#6EA3DC; --defSoft:#161F2B;
+  --warn:#D3982F; --warnSoft:#2A2214;
+  --ok:#71B06F; --okSoft:#17251A;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1112; --panel:#171B1D; --panel2:#1F2426; --sunk:#101415;
+  --ink:#E8EAE6; --ink2:#A6AFB2; --ink3:#7C868A;
+  --line:#282F31; --line2:#3A4346;
+  --acc:#67B0A3; --acc2:#84C6BA; --accSoft:#172A28;
+  --pro:#DE7A70; --proSoft:#2C1C1A;
+  --def:#6EA3DC; --defSoft:#161F2B;
+  --warn:#D3982F; --warnSoft:#2A2214;
+  --ok:#71B06F; --okSoft:#17251A;
+}
+/* 무대 모드 — 암전 중 객석 광원을 최소화하는 부스등 팔레트. 테마보다 우선한다. */
+:root[data-stage="on"]{
+  --bg:#0A0505; --panel:#140A0A; --panel2:#1B0E0E; --sunk:#080404;
+  --ink:#F0C9C2; --ink2:#C08A82; --ink3:#8E625C;
+  --line:#2A1413; --line2:#42201E;
+  --acc:#E8837A; --acc2:#F4A79F; --accSoft:#22100F;
+  --pro:#F0928A; --proSoft:#25100F;
+  --def:#C98A84; --defSoft:#1E100F;
+  --warn:#E0A24A; --warnSoft:#241708;
+  --ok:#C7907F; --okSoft:#1F1210;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+
+/* header */
+header{position:sticky;top:0;z-index:40;background:var(--panel);border-bottom:1px solid var(--line)}
+.hbar{max-width:1240px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:9px;margin-right:auto;min-width:0}
+.brand b{font-family:var(--serif);font-weight:800;font-size:18px;letter-spacing:-.01em;white-space:nowrap}
+.brand span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
+.tabs{display:flex;gap:2px;background:var(--sunk);padding:3px;border-radius:var(--r);border:1px solid var(--line)}
+.tabs button{background:none;border:0;padding:6px 13px;border-radius:2px;font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--panel);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.tabs button:hover:not([aria-selected="true"]){color:var(--ink)}
+.hbtns{display:flex;gap:6px;align-items:center}
+
+/* generic controls */
+.btn{background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:6px 12px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--bg);font-weight:600}
+.btn.pri:hover{background:var(--acc2);border-color:var(--acc2);color:var(--bg)}
+.btn.sm{padding:3px 8px;font-size:12px}
+.btn.danger:hover{border-color:var(--pro);color:var(--pro)}
+.btn[aria-pressed="true"]{background:var(--accSoft);border-color:var(--acc);color:var(--acc)}
+input[type=text],input[type=number],select,textarea{background:var(--sunk);border:1px solid var(--line);border-radius:3px;padding:5px 8px;font-size:13px;width:100%}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+label.f{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+
+main{max-width:1240px;margin:0 auto;padding:20px 18px 100px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px}
+.panel>h2{margin:0 0 4px;font-size:15px;font-weight:600;letter-spacing:-.005em}
+.panel>h2+.sub{margin:0 0 16px;font-size:13px;color:var(--ink2);max-width:74ch}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+thead th{background:var(--panel2);font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+td.c,th.c{text-align:center}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--ink3)}
+.hint{font-size:12.5px;color:var(--ink3);margin:8px 0 0}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;padding:2px 7px;border-radius:2px;white-space:nowrap}
+.c-pro{color:var(--pro);background:var(--proSoft)}
+.c-def{color:var(--def);background:var(--defSoft)}
+.c-neu{color:var(--ink3);background:var(--sunk)}
+.c-ok{color:var(--ok);background:var(--okSoft)}
+.c-warn{color:var(--warn);background:var(--warnSoft)}
+.dot{width:8px;height:8px;border-radius:50%;flex:none;display:inline-block}
+
+/* team card */
+.tcard{border:1px solid var(--line);border-left:3px solid var(--tc,var(--acc));border-radius:var(--r);background:var(--panel);padding:12px 14px}
+.tcard h4{margin:0 0 2px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px}
+
+/* matrix */
+.mx{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+.mx table{min-width:auto}
+.mx th.st{writing-mode:vertical-rl;padding:9px 5px;font-size:10px;letter-spacing:.04em;text-transform:none;font-family:var(--sans);font-weight:500;white-space:nowrap;max-height:130px}
+.mx td.cell{text-align:center;padding:0;width:42px;height:36px;border-left:1px solid var(--line)}
+.mx td.cell i{display:block;width:100%;height:100%;line-height:36px;font-family:var(--mono);font-size:11px;font-style:normal;font-weight:600}
+.seen-p{background:var(--proSoft);color:var(--pro)}
+.seen-d{background:var(--defSoft);color:var(--def)}
+.seen-n{background:var(--panel2);color:var(--ink2)}
+.unseen{color:var(--ink3);opacity:.32}
+
+/* lean bar */
+.lean{height:22px;display:flex;border-radius:2px;overflow:hidden;background:var(--sunk);border:1px solid var(--line)}
+.lean i{display:block;height:100%}
+.lean .lp{background:var(--pro)}
+.lean .ld{background:var(--def)}
+.lean .ln{background:var(--line2)}
+
+/* alerts */
+.alert{display:flex;gap:11px;padding:11px 13px;border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:0 var(--r) var(--r) 0;background:var(--panel);margin-bottom:8px;font-size:13.5px;align-items:flex-start}
+.alert.crit{border-left-color:var(--pro)}
+.alert.good{border-left-color:var(--ok)}
+.alert b{display:block;font-size:13.5px;margin-bottom:2px}
+.alert p{margin:0;color:var(--ink2);font-size:12.5px;line-height:1.55}
+.alert .ic{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;padding:2px 6px;border-radius:2px;flex:none;margin-top:1px}
+
+/* run mode */
+.clock{font-family:var(--mono);font-size:clamp(44px,11vw,84px);font-weight:600;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.clock.over{color:var(--pro)}
+.stage-strip{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.stage-strip .sc{flex:none;min-width:132px;border:1px solid var(--line);border-left:3px solid var(--tc,var(--acc));border-radius:var(--r);padding:10px 12px;background:var(--panel)}
+.stage-strip .sc .tn{font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
+.stage-strip .sc .sn{font-size:15px;font-weight:600;margin-top:5px;line-height:1.3}
+.stage-strip .sc .ev{font-size:11.5px;color:var(--ink3);margin-top:3px}
+
+.phase{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.phase button{flex:1;min-width:104px;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:9px 8px;text-align:center;cursor:pointer}
+.phase button[aria-pressed="true"]{background:var(--accSoft);border-color:var(--acc)}
+.phase button b{display:block;font-size:13.5px;font-weight:600}
+.phase button small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-top:2px}
+
+.verdict{background:var(--sunk);border:1px solid var(--line2);border-radius:var(--r);padding:22px;text-align:center}
+.verdict .vl{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.verdict .vv{font-family:var(--serif);font-weight:800;font-size:clamp(32px,7vw,56px);line-height:1.1;margin:8px 0 4px}
+.verdict .vv.g{color:var(--pro)}
+.verdict .vv.ng{color:var(--def)}
+.verdict .vv.tie{color:var(--warn)}
+.verdict .vs{font-family:var(--mono);font-size:14px;color:var(--ink2)}
+
+.votebar{height:34px;display:flex;border-radius:2px;overflow:hidden;border:1px solid var(--line2);margin:12px 0 6px}
+.votebar i{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;min-width:0;overflow:hidden}
+.votebar .vg{background:var(--pro)}
+.votebar .vn{background:var(--def)}
+
+.trace{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.trace .tstep{display:flex;align-items:center;gap:8px}
+.trace .tbox{border:1px solid var(--line2);border-radius:var(--r);padding:7px 12px;text-align:center;min-width:92px}
+.trace .tbox small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.trace .tbox b{display:block;font-size:15px;font-weight:600;margin-top:2px}
+.trace .arw{color:var(--ink3);padding:0 9px;font-size:15px}
+
+dialog{border:1px solid var(--line2);border-radius:var(--r);background:var(--panel);color:var(--ink);max-width:560px;width:calc(100% - 32px);padding:0}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+.dlg-h{padding:14px 18px;border-bottom:1px solid var(--line);font-weight:600;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dlg-b{padding:18px}
+.dlg-f{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
+textarea.code{font-family:var(--mono);font-size:11px;height:160px;resize:vertical;line-height:1.45;word-break:break-all}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:500;z-index:99;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+:root[data-stage="on"] .toast{background:var(--panel2);color:var(--ink);border:1px solid var(--line2)}
+
+.hide{display:none!important}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(max-width:700px){
+  main{padding:14px 12px 90px}
+  .panel{padding:14px}
+  .hbar{padding:9px 12px;gap:9px}
+  .brand span{display:none}
+}
+</style><style>
+/* 개정판 추가 스타일 */
+.tlbar{display:flex;height:46px;border-radius:2px;overflow:hidden;border:1px solid var(--line2);margin:14px 0 8px}
+.tlbar i{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#FBFBF9;overflow:hidden;white-space:nowrap;font-style:normal}
+.sg-a{background:#5C6B72}.sg-b{background:#7E8A6A}.sg-c{background:var(--acc)}.sg-d{background:#8C4A44}.sg-e{background:#6B5B8A}
+:root[data-stage="on"] .tlbar i{color:#1A0B0B}
+.leg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--ink2)}
+.leg span{display:flex;align-items:center;gap:7px}.leg i{width:10px;height:10px;border-radius:2px;flex:none}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:14px 0}
+.kpi div{background:var(--panel);padding:13px 15px}
+.kpi dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px}
+.kpi dd{margin:0;font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi dd small{display:block;font-family:var(--sans);font-size:11.5px;font-weight:400;color:var(--ink3);margin-top:3px;letter-spacing:0}
+.ok{color:var(--ok)}.no{color:var(--pro)}
+.quote{background:var(--sunk);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 var(--r) var(--r) 0;padding:15px 17px;margin:14px 0;font-family:var(--serif);font-size:16px;line-height:1.65}
+.pickrow{display:grid;grid-template-columns:38px 1fr 92px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)}
+.pickrow:last-child{border-bottom:none}
+.pickrow .no2{font-family:var(--mono);font-size:13px;color:var(--ink3);text-align:center}
+.pbar{height:9px;background:var(--sunk);border-radius:2px;overflow:hidden;border:1px solid var(--line)}
+.pbar i{display:block;height:100%}
+.adopted{outline:2px solid var(--acc);outline-offset:2px;border-radius:2px}
+</style>
+
+<header>
+  <div class="hbar">
+    <div class="brand"><b>침묵의 증거</b><span>공연 진행표 · 개정판</span></div>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-view="plan" aria-selected="true">구성</button>
+      <button role="tab" data-view="money" aria-selected="false">경제성</button>
+      <button role="tab" data-view="run" aria-selected="false">운영</button>
+      <button role="tab" data-view="cue" aria-selected="false">인솔 큐</button>
+    </div>
+    <div class="hbtns">
+      <button class="btn sm" id="stageBtn" aria-pressed="false" title="암전 중 객석 광원을 줄이는 부스등 팔레트">무대 모드</button>
+      <button class="btn sm" id="shareBtn">공유·백업</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div id="v-plan"></div>
+  <div id="v-money" class="hide"></div>
+  <div id="v-run" class="hide"></div>
+  <div id="v-cue" class="hide"></div>
+</main>
+
+<dialog id="shareDlg">
+  <div class="dlg-h"><span>공유 · 백업</span><button class="btn sm" data-close>닫기</button></div>
+  <div class="dlg-b">
+    <p style="margin:0 0 12px;font-size:13px;color:var(--ink2)">배포 코드를 복사해 인솔자에게 보내면, 같은 링크를 열고 붙여넣어 동일한 구성을 받습니다. 서버가 없어 자동 동기화는 되지 않습니다.</p>
+    <label class="f">배포 코드</label>
+    <textarea class="code" id="codeOut" readonly></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="copyCode">코드 복사</button>
+      <button class="btn" id="dlJson">JSON 파일로 저장</button>
+    </div>
+    <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+    <label class="f">코드 불러오기</label>
+    <textarea class="code" id="codeIn" placeholder="배포 코드를 붙여넣으십시오"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn pri" id="loadCode">불러오기</button>
+      <button class="btn danger" id="resetAll">기본 구성으로 초기화</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ============================================================
+   침묵의 증거 — 공연 진행표 (1차 심사 반영 개정판)
+   쇼케이스 2팀 구조 복귀 · 조사관 카드 집계 · 손익분기 계산
+   상태는 이 기기의 localStorage에만 저장된다. 서버 없음.
+   ============================================================ */
+var LS = "sv.tribunal.v2";
+var SIDE_C = { pro:"#B0433C", def:"#3A6EA8" };
+
+function defaults(){
+  return {
+    cfg:{ enterMin:8, briefMin:3, investMin:7, trialMin:34, verdictMin:8, endingMin:15 },
+    biz:{ actors:6, actorDay:250000, staff:3, staffDay:200000, venueDay:800000,
+          consumDay:200000, price:35000, seats:50, shows:2 },
+    teams:[
+      {id:"pro", name:"검사 측 조사단", side:"pro", size:25, guide:"형사"},
+      {id:"def", name:"변호인 측 조사단", side:"def", size:25, guide:"윤수(참관인)"}
+    ],
+    ev:[
+      {id:"e1", no:"①", name:"인혜의 일기장 (마지막 장 찢김)", favors:"pro",
+       note:"복수 다짐과 의도적 접근. 찢긴 흔적을 발견하면 변호 쪽으로 뒤집힌다."},
+      {id:"e2", no:"②", name:"과거 정신과 진단서", favors:"pro",
+       note:"3년 전 처방. 음료에서 검출된 성분과 일치."},
+      {id:"e3", no:"③", name:"음료수 통 (지문·반쯤 빔)", favors:"neu",
+       note:"인혜 지문. 뚜껑 열린 채 반쯤 비어 있음 — 변호 측 반격 지점."},
+      {id:"e4", no:"④", name:"조각 망치 (장갑흔)", favors:"def",
+       note:"두부 가격 흉기. 지문 위에 장갑흔, 크기가 일반보다 큼. 거치대에 은닉."},
+      {id:"e5", no:"⑤", name:"창틀 발자국", favors:"def",
+       note:"제3자의 유일한 물리적 증거. 풀버전 스토리에는 있으나 쇼케이스에는 없었음 — 신규 추가."},
+      {id:"e6", no:"⑥", name:"민호의 휴대폰 (동반자살 문자)", favors:"pro",
+       note:"00:14 \"오빠가 죽으면 나도 죽을 거야\". 검찰 최강 증거."},
+      {id:"e7", no:"⑦", name:"깨진 조각상", favors:"neu", mac:true,
+       note:"맥거핀. 사건과 직접 연관 없음."}
+    ],
+    cast:[
+      {id:"c1", role:"인혜 (피고인)", invest:"—", trial:"피고인"},
+      {id:"c2", role:"세미 (검사)", invest:"검사팀 인솔·브리핑", trial:"검사"},
+      {id:"c3", role:"충하 (변호사)", invest:"변호팀 인솔·브리핑", trial:"변호인"},
+      {id:"c4", role:"판사", invest:"—", trial:"재판장"},
+      {id:"c5", role:"형사", invest:"검사팀 현장 통제·타이머", trial:"보안관 (겸역)"},
+      {id:"c6", role:"윤수 (주치의)", invest:"변호팀 현장 참관인", trial:"방청 → 제3자로 지목"}
+    ],
+    run:{ phase:"invest", elapsed:0, running:false, startedAt:null,
+          cards:{}, votes:{} }
+  };
+}
+
+var S = load() || defaults();
+var view = "plan", cueTeam = null;
+
+function load(){ try{ var r=localStorage.getItem(LS); if(!r) return null;
+  var o=JSON.parse(r); return (o&&o.ev&&o.teams)?fix(o):null; }catch(e){ return null; } }
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} }
+function fix(o){ var d=defaults();
+  o.cfg=Object.assign({},d.cfg,o.cfg||{}); o.biz=Object.assign({},d.biz,o.biz||{});
+  o.run=Object.assign({},d.run,o.run||{}); if(!o.cast) o.cast=d.cast;
+  if(!o.run.cards) o.run.cards={}; if(!o.run.votes) o.run.votes={}; return o; }
+
+/* ---------- helpers ---------- */
+function el(t,a,k){ var n=document.createElement(t);
+  if(a) for(var x in a){ if(x==="class")n.className=a[x];
+    else if(x==="html")n.innerHTML=a[x]; else if(x==="text")n.textContent=a[x];
+    else if(x.slice(0,2)==="on")n.addEventListener(x.slice(2),a[x]);
+    else if(a[x]!=null)n.setAttribute(x,a[x]); }
+  (k||[]).forEach(function(c){ if(c)n.appendChild(c); }); return n; }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function won(n){ return Number(n||0).toLocaleString("ko-KR"); }
+function clamp(v,a,b){ v=Number(v); if(isNaN(v))v=a; return Math.max(a,Math.min(b,v)); }
+function toast(m){ var t=el("div",{class:"toast",text:m}); document.body.appendChild(t);
+  setTimeout(function(){t.remove();},2200); }
+function favLabel(f){ return f==="pro"?"검찰 유리":f==="def"?"변호 유리":"중립"; }
+function favChip(f){ return '<span class="chip '+(f==="pro"?"c-pro":f==="def"?"c-def":"c-neu")+'">'+favLabel(f)+'</span>'; }
+function teamColor(t){ return SIDE_C[t.side]||"#7A62A8"; }
+function totalMin(){ var c=S.cfg;
+  return c.enterMin+c.briefMin+c.investMin+c.trialMin+c.verdictMin+c.endingMin; }
+
+/* ---------- 경제성 ---------- */
+function economics(o){
+  var b = Object.assign({}, S.biz, o||{});
+  var costDay = b.actors*b.actorDay + b.staff*b.staffDay + b.venueDay + b.consumDay;
+  var shows = Math.max(1, b.shows);
+  var costShow = costDay/shows;
+  var revShow = b.price*b.seats;
+  var bep = b.price>0 ? costShow/b.price : Infinity;
+  return { costDay:costDay, costShow:costShow, revShow:revShow,
+           profitShow:revShow-costShow, profitDay:(revShow-costShow)*shows,
+           bep:bep, feasible: bep<=b.seats, b:b };
+}
+
+/* ---------- 카드 집계 ---------- */
+function cardsOf(teamId){ return S.run.cards[teamId] || (S.run.cards[teamId]={}); }
+function adoptedOf(teamId){
+  var c = cardsOf(teamId);
+  var rows = S.ev.map(function(e){ return {e:e, n:Number(c[e.id])||0}; });
+  var total = rows.reduce(function(s,r){ return s+r.n; },0);
+  rows.sort(function(a,b){ return b.n-a.n; });
+  return { rows:rows, total:total, top: rows.filter(function(r){return r.n>0;}).slice(0,3) };
+}
+function tally(){
+  var g=0,ng=0;
+  S.teams.forEach(function(t){ var v=S.run.votes[t.id]||{};
+    g+=Number(v.g)||0; ng+=Number(v.ng)||0; });
+  var tot=g+ng;
+  return {g:g,ng:ng,tot:tot, verdict: tot===0?null:(g>ng?"g":ng>g?"ng":"tie")};
+}
+function vWord(v){ return v==="g"?"유죄":v==="ng"?"무죄":v==="tie"?"동수":"미집계"; }
+
+/* ================= 구성 ================= */
+function renderPlan(){
+  var root=document.getElementById("v-plan"); root.textContent="";
+  var c=S.cfg;
+
+  /* 러닝타임 */
+  var p1=el("div",{class:"panel"});
+  p1.appendChild(el("h2",{text:"러닝타임 배분"}));
+  p1.appendChild(el("p",{class:"sub",text:"심사평 \"재판 부분 때문에 뽑혔다\"를 시간으로 옮긴 것입니다. 재판이 전체의 40%를 넘는지 확인하십시오."}));
+  var bar=el("div",{class:"tlbar"});
+  var segs=[["sg-a",c.enterMin,"도입"],["sg-b",c.briefMin+c.investMin,"조사"],
+            ["sg-c",c.trialMin,"재판"],["sg-d",c.verdictMin,"평결"],["sg-e",c.endingMin,"엔딩"]];
+  var tot=totalMin();
+  segs.forEach(function(s){ bar.appendChild(el("i",{class:s[0],style:"flex:"+s[1],
+    text: s[1]/tot>0.09 ? s[2]+" "+s[1] : String(s[1])})); });
+  p1.appendChild(bar);
+  var lg=el("div",{class:"leg"});
+  [["sg-a","도입 · 팀 배분 · 조사관 위촉"],["sg-b","브리핑 + 현장 조사"],
+   ["sg-c","재판 (심문 · 반대심문 · 제3자 지목 · 최후변론)"],["sg-d","평결 거수 · 집계"],
+   ["sg-e","분기 엔딩 + 진실 공개"]].forEach(function(x){
+    lg.appendChild(el("span",{html:"<i class='"+x[0]+"'></i>"+x[1]})); });
+  p1.appendChild(lg);
+
+  var g=el("div",{class:"grid g3",style:"margin-top:16px"});
+  [["enterMin","도입"],["briefMin","브리핑"],["investMin","현장 조사"],
+   ["trialMin","재판"],["verdictMin","평결"],["endingMin","엔딩·진실"]].forEach(function(f){
+    var w=el("div"); w.appendChild(el("label",{class:"f",text:f[1]+" (분)"}));
+    w.appendChild(el("input",{type:"number",min:0,max:90,value:c[f[0]],
+      oninput:function(e){ c[f[0]]=clamp(e.target.value,0,90); save(); planTimeOut(); }}));
+    g.appendChild(w); });
+  p1.appendChild(g);
+  p1.appendChild(el("p",{class:"hint",id:"timeHint"}));
+  root.appendChild(p1);
+
+  /* 팀 */
+  var p2=el("div",{class:"panel"});
+  p2.appendChild(el("h2",{text:"2팀 구성"}));
+  p2.appendChild(el("p",{class:"sub",text:"쇼케이스 구조입니다 — 빨간 줄은 검사 측, 파란 줄은 변호인 측. 팀을 더 쪼개지 마십시오. 관객이 자기 역할을 잃습니다."}));
+  var tw=el("div",{class:"tw"}); var tb=el("table");
+  tb.appendChild(el("thead",{html:"<tr><th style='width:34px'></th><th>팀</th><th style='width:110px'>입장</th><th class='n' style='width:90px'>정원</th><th style='width:170px'>현장 인솔</th></tr>"}));
+  var tbd=el("tbody");
+  S.teams.forEach(function(t){
+    var tr=el("tr");
+    tr.appendChild(el("td",{html:"<span class='dot' style='background:"+teamColor(t)+"'></span>"}));
+    var c1=el("td"); c1.appendChild(el("input",{type:"text",value:t.name,oninput:function(e){t.name=e.target.value;save();}})); tr.appendChild(c1);
+    tr.appendChild(el("td",{html: t.side==="pro"?"<span class='chip c-pro'>검사 측</span>":"<span class='chip c-def'>변호인 측</span>"}));
+    var c3=el("td",{class:"n"}); c3.appendChild(el("input",{type:"number",min:1,max:100,value:t.size,style:"text-align:right",
+      oninput:function(e){ t.size=clamp(e.target.value,1,100); save(); planCapOut(); }})); tr.appendChild(c3);
+    var c4=el("td"); c4.appendChild(el("input",{type:"text",value:t.guide||"",oninput:function(e){t.guide=e.target.value;save();}})); tr.appendChild(c4);
+    tbd.appendChild(tr);
+  });
+  tb.appendChild(tbd); tw.appendChild(tb); p2.appendChild(tw);
+  p2.appendChild(el("p",{class:"hint",id:"capHint"}));
+  root.appendChild(p2);
+
+  /* 증거 */
+  var p3=el("div",{class:"panel"});
+  var h=el("div",{class:"row",style:"justify-content:space-between;margin-bottom:4px"});
+  h.appendChild(el("h2",{text:"증거 목록",style:"margin:0"}));
+  h.appendChild(el("button",{class:"btn sm",text:"+ 증거 추가",onclick:function(){
+    S.ev.push({id:"e"+Math.random().toString(36).slice(2,6),no:"("+(S.ev.length+1)+")",
+      name:"새 증거",favors:"neu",note:""}); save(); renderPlan(); }}));
+  p3.appendChild(h);
+  p3.appendChild(el("p",{class:"sub",text:"양 팀이 같은 현장을 봅니다. 증거를 숨기는 대신 목표를 다르게 주십시오 — 그게 훨씬 단순하고 잘 통합니다. 관객은 만지지 않고 관찰만 합니다."}));
+  var ew=el("div",{class:"tw"}); var et=el("table");
+  et.appendChild(el("thead",{html:"<tr><th class='c' style='width:44px'>번호</th><th style='width:30%'>증거</th><th style='width:120px'>유리한 쪽</th><th>설명 · 인솔자 메모</th><th style='width:46px'></th></tr>"}));
+  var eb=el("tbody");
+  S.ev.forEach(function(e,i){
+    var tr=el("tr");
+    var c0=el("td",{class:"c"}); c0.appendChild(el("input",{type:"text",value:e.no,style:"text-align:center",oninput:function(x){e.no=x.target.value;save();}})); tr.appendChild(c0);
+    var c1=el("td"); c1.appendChild(el("input",{type:"text",value:e.name,oninput:function(x){e.name=x.target.value;save();}})); tr.appendChild(c1);
+    var c2=el("td"); var sel=el("select",{onchange:function(x){e.favors=x.target.value;save();planEvOut();}});
+    [["pro","검찰 유리"],["def","변호 유리"],["neu","중립"]].forEach(function(o){
+      sel.appendChild(el("option",{value:o[0],selected:e.favors===o[0]?"selected":null,text:o[1]})); });
+    c2.appendChild(sel);
+    if(e.mac) c2.appendChild(el("div",{class:"chip c-warn",style:"margin-top:5px",text:"맥거핀"}));
+    tr.appendChild(c2);
+    var c3=el("td"); c3.appendChild(el("input",{type:"text",value:e.note||"",oninput:function(x){e.note=x.target.value;save();}})); tr.appendChild(c3);
+    var c4=el("td"); c4.appendChild(el("button",{class:"btn sm danger",text:"삭제",onclick:function(){
+      if(S.ev.length<=3){toast("증거는 최소 3개 필요합니다");return;}
+      S.ev.splice(i,1); save(); renderPlan(); }})); tr.appendChild(c4);
+    eb.appendChild(tr);
+  });
+  et.appendChild(eb); ew.appendChild(et); p3.appendChild(ew);
+  p3.appendChild(el("p",{class:"hint",id:"evHint"}));
+  root.appendChild(p3);
+
+  /* 배역 */
+  var p4=el("div",{class:"panel"});
+  p4.appendChild(el("h2",{text:"배역 · 겸역"}));
+  p4.appendChild(el("p",{class:"sub",text:"쇼케이스 8명을 6명으로 줄인 안입니다. 감식반의 브리핑은 변호사가 흡수하고, 현장 통제는 윤수가 참관인으로 맡습니다. 보안관은 형사가 법정에서 이어받습니다."}));
+  var cw=el("div",{class:"tw"}); var ct=el("table");
+  ct.appendChild(el("thead",{html:"<tr><th class='n' style='width:34px'>#</th><th style='width:26%'>배우</th><th style='width:34%'>조사 파트</th><th>법정 파트</th><th style='width:46px'></th></tr>"}));
+  var cb=el("tbody");
+  S.cast.forEach(function(a,i){
+    var tr=el("tr");
+    tr.appendChild(el("td",{class:"n muted mono",text:String(i+1)}));
+    ["role","invest","trial"].forEach(function(k){
+      var td=el("td"); td.appendChild(el("input",{type:"text",value:a[k]||"",oninput:function(x){a[k]=x.target.value;save();}})); tr.appendChild(td); });
+    var td4=el("td"); td4.appendChild(el("button",{class:"btn sm danger",text:"삭제",onclick:function(){
+      S.cast.splice(i,1); S.biz.actors=S.cast.length; save(); renderPlan(); }})); tr.appendChild(td4);
+    cb.appendChild(tr);
+  });
+  ct.appendChild(cb); cw.appendChild(ct); p4.appendChild(cw);
+  var rw=el("div",{class:"row",style:"margin-top:10px"});
+  rw.appendChild(el("button",{class:"btn sm",text:"+ 배역 추가",onclick:function(){
+    S.cast.push({id:"c"+Math.random().toString(36).slice(2,6),role:"새 배역",invest:"—",trial:"—"});
+    S.biz.actors=S.cast.length; save(); renderPlan(); }}));
+  rw.appendChild(el("span",{class:"hint",style:"margin:0",html:"배우 <b class='mono'>"+S.cast.length+"명</b> — 경제성 탭에 자동 반영됩니다"}));
+  p4.appendChild(rw);
+  root.appendChild(p4);
+  planTimeOut(); planCapOut(); planEvOut();
+}
+
+/* 입력 중 전체 재렌더를 피하기 위해 결과 문구만 갱신한다 */
+function planTimeOut(){
+  var h=document.getElementById("timeHint"); if(!h) return;
+  var tot=totalMin(), share=S.cfg.trialMin/tot*100;
+  h.innerHTML="총 <b class='mono'>"+tot+"분</b> · 재판 비중 <b class='mono "+(share>=40?"ok":"no")+"'>"+share.toFixed(0)+"%</b> "+
+    (share>=40?"— 강점에 시간을 쓰고 있습니다":"— 40% 미만입니다. 재판을 늘리십시오");
+  var bar=document.querySelector("#v-plan .tlbar");
+  if(bar){ var c=S.cfg;
+    var segs=[c.enterMin, c.briefMin+c.investMin, c.trialMin, c.verdictMin, c.endingMin];
+    var names=["도입","조사","재판","평결","엔딩"];
+    bar.querySelectorAll("i").forEach(function(n,i){
+      n.style.flex=segs[i];
+      n.textContent = segs[i]/tot>0.09 ? names[i]+" "+segs[i] : String(segs[i]); });
+  }
+}
+function planCapOut(){
+  var h=document.getElementById("capHint"); if(!h) return;
+  var cap=S.teams.reduce(function(s,t){ return s+t.size; },0);
+  h.innerHTML="총 수용 <b class='mono'>"+cap+"명</b> — 경제성 탭의 객석 수와 맞추십시오. "+
+    (cap<50?"<b class='no'>50명 미만이면 손익분기를 넘기 어렵습니다.</b>":"");
+}
+function planEvOut(){
+  var h=document.getElementById("evHint"); if(!h) return;
+  var np=S.ev.filter(function(e){return e.favors==="pro";}).length;
+  var nd=S.ev.filter(function(e){return e.favors==="def";}).length;
+  h.innerHTML="검찰 유리 <b class='mono'>"+np+"</b> · 변호 유리 <b class='mono'>"+nd+"</b> — "+
+    ((np>0&&nd>0)?"양 팀 모두 자기 편 증거가 있습니다.":"<b class='no'>한쪽에 증거가 없으면 그 팀은 싸울 이유가 없습니다.</b>");
+}
+
+/* ================= 경제성 ================= */
+function renderMoney(){
+  var root=document.getElementById("v-money"); root.textContent="";
+  var b=S.biz;
+
+  var p0=el("div",{class:"panel"});
+  p0.appendChild(el("h2",{text:"손익분기 계산"}));
+  p0.appendChild(el("p",{class:"sub",text:"심사평 \"인원에 맞는 판매모델을 찾아야 한다 · 계산 잘해야 한다\"에 대한 답입니다. 추정치를 실제 단가로 바꿔 넣으십시오."}));
+  var g=el("div",{class:"grid g3"});
+  [["actors","배우 수",1,30],["actorDay","배우 1일 단가",0,2000000],
+   ["staff","스태프 수",0,30],["staffDay","스태프 1일 단가",0,2000000],
+   ["venueDay","대관 1일",0,10000000],["consumDay","소모품·운영 1일",0,5000000],
+   ["price","티켓가",0,200000],["seats","회당 객석",1,500],["shows","1일 회차",1,6]].forEach(function(f){
+    var w=el("div"); w.appendChild(el("label",{class:"f",text:f[1]}));
+    /* 입력 중 재렌더는 입력칸을 DOM에서 떼어낸다 — 결과 영역만 갱신한다 */
+    w.appendChild(el("input",{type:"number",min:f[2],max:f[3],value:b[f[0]],
+      oninput:function(e){ b[f[0]]=clamp(e.target.value,f[2],f[3]); save(); moneyOut(); }}));
+    g.appendChild(w); });
+  p0.appendChild(g);
+  p0.appendChild(el("div",{id:"moneyKpi"}));
+  root.appendChild(p0);
+  root.appendChild(el("div",{id:"moneySens"}));
+  root.appendChild(el("div",{id:"moneyRef"}));
+  moneyOut();
+}
+
+function moneyOut(){
+  var b=S.biz, E=economics();
+  var host=document.getElementById("moneyKpi");
+  if(!host) return;
+  host.textContent="";
+  var k=el("dl",{class:"kpi"});
+  function kpi(t,v,sm,cls){ k.appendChild(el("div",null,[
+    el("dt",{text:t}), el("dd",{class:cls||"",html: v+(sm?"<small>"+sm+"</small>":"")}) ])); }
+  kpi("1일 원가", won(E.costDay)+"원", "회차 무관 고정");
+  kpi("회당 원가", won(Math.round(E.costShow))+"원", b.shows+"회로 분산");
+  kpi("회당 매출", won(E.revShow)+"원", b.seats+"석 매진 기준");
+  kpi("회당 손익", (E.profitShow>=0?"+":"")+won(Math.round(E.profitShow))+"원",
+      "1일 "+(E.profitDay>=0?"+":"")+won(Math.round(E.profitDay))+"원", E.profitShow>=0?"ok":"no");
+  kpi("손익분기 관객", Math.ceil(E.bep)+"명", "회당 · 객석 "+b.seats+"명", E.feasible?"ok":"no");
+  host.appendChild(k);
+  host.appendChild(el("div",{class:"alert "+(E.feasible?"good":"crit"),
+    html:(E.feasible?"<span class='ic c-ok'>가능</span>":"<span class='ic c-pro'>불가</span>")+
+    "<div><b>"+(E.feasible
+      ? "손익분기 "+Math.ceil(E.bep)+"명 — 객석 "+b.seats+"명 안에서 달성 가능합니다"
+      : "손익분기 "+Math.ceil(E.bep)+"명 — 객석 "+b.seats+"명을 초과합니다")+"</b><p>"+
+    (E.feasible
+      ? "객석의 "+Math.round(E.bep/b.seats*100)+"%만 채우면 원가를 회수합니다."
+      : "이 조건에서는 매진해도 적자입니다. 인원을 줄이거나, 회차를 늘리거나, 티켓가를 올려야 합니다.")+"</p></div>"}));
+
+  /* 민감도 */
+  var sens=document.getElementById("moneySens");
+  sens.textContent="";
+  var p1=el("div",{class:"panel"});
+  p1.appendChild(el("h2",{text:"조건별 손익분기"}));
+  p1.appendChild(el("p",{class:"sub",text:"티켓가와 1일 회차를 바꿨을 때 회당 몇 명이 필요한지. 초록은 현재 객석 안에서 달성 가능한 조합입니다."}));
+  var tw=el("div",{class:"tw"}), t=el("table");
+  var prices=[25000,30000,35000,40000,45000];
+  var hd="<tr><th>1일 회차</th>";
+  prices.forEach(function(pr){ hd+="<th class='n'>"+won(pr)+"원</th>"; });
+  t.appendChild(el("thead",{html:hd+"</tr>"}));
+  var tb=el("tbody");
+  [1,2,3].forEach(function(sh){
+    var tr=el("tr"); tr.appendChild(el("td",{html:"<b>"+sh+"회</b>"}));
+    prices.forEach(function(pr){
+      var e=economics({shows:sh,price:pr}), need=Math.ceil(e.bep), okk=need<=b.seats;
+      tr.appendChild(el("td",{class:"n",
+        style: okk?"background:var(--okSoft);color:var(--ok);font-weight:600":"color:var(--ink3)",
+        text: need+"명"}));
+    });
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); tw.appendChild(t); p1.appendChild(tw);
+  p1.appendChild(el("p",{class:"hint",html:"현재 객석 <b class='mono'>"+b.seats+"명</b> 기준."}));
+  sens.appendChild(p1);
+
+  /* 티켓가 근거 */
+  var ref=document.getElementById("moneyRef");
+  ref.textContent="";
+  var p2=el("div",{class:"panel"});
+  p2.appendChild(el("h2",{text:"티켓가 근거"}));
+  p2.appendChild(el("div",{class:"tw",html:"<table><thead><tr><th>비교 대상</th><th class='n'>1인 단가</th><th>우리와의 차이</th></tr></thead><tbody>"+
+    "<tr><td>방탈출 카페</td><td class='n'>2.5~3.5만</td><td>배우 없음 · 서사 없음 · 3~5인 한정</td></tr>"+
+    "<tr><td>머더미스터리 보드게임</td><td class='n'>1.5~3만</td><td>연기 · 무대 · 조명 없음</td></tr>"+
+    "<tr><td>일반 소극장 연극</td><td class='n'>2~4만</td><td>관객 참여 없음 · 결말 고정</td></tr>"+
+    "<tr class='hi'><td><b>침묵의 증거</b></td><td class='n'><b>"+won(b.price)+"</b></td><td>전문 배우 "+b.actors+"명 · "+totalMin()+"분 · 결말 분기</td></tr>"+
+    "</tbody></table>"}));
+  p2.appendChild(el("p",{class:"hint",text:"단체 판매 제안: 4인 배심원단 단체석. 그룹 단위로 팔면 객석이 빨리 차고, 함께 온 관객은 만족도가 높습니다."}));
+  ref.appendChild(p2);
+}
+
+/* ================= 운영 ================= */
+function fmt(s){ s=Math.max(0,Math.floor(s)); var m=Math.floor(s/60),x=s%60;
+  return (m<10?"0":"")+m+":"+(x<10?"0":"")+x; }
+function resetTimer(){ S.run.running=false; S.run.elapsed=0; S.run.startedAt=null; }
+function phaseTarget(){ var c=S.cfg,p=S.run.phase;
+  return p==="invest"?c.investMin : p==="cards"?3 : p==="trial"?c.trialMin : c.verdictMin; }
+
+function renderRun(){
+  var root=document.getElementById("v-run"); root.textContent="";
+  var run=S.run;
+
+  var p0=el("div",{class:"panel"});
+  var ph=el("div",{class:"phase"});
+  [["invest","현장 조사","STEP 1"],["cards","카드 집계","STEP 2"],
+   ["trial","재판","STEP 3"],["verdict","평결","STEP 4"]].forEach(function(x){
+    var b=el("button",{"aria-pressed": run.phase===x[0]?"true":"false",
+      onclick:function(){ run.phase=x[0]; resetTimer(); save(); renderRun(); }});
+    b.appendChild(el("b",{text:x[1]})); b.appendChild(el("small",{text:x[2]}));
+    ph.appendChild(b); });
+  p0.appendChild(ph);
+
+  var tgt=phaseTarget();
+  var w=el("div",{class:"row",style:"justify-content:space-between;align-items:flex-end;gap:16px"});
+  var L=el("div");
+  L.appendChild(el("div",{class:"mono",style:"font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)",
+    text:"목표 "+tgt+"분"}));
+  L.appendChild(el("div",{class:"clock"+(run.elapsed>tgt*60?" over":""),id:"clockEl",text:fmt(run.elapsed)}));
+  w.appendChild(L);
+  var ctl=el("div",{class:"row"});
+  ctl.appendChild(el("button",{class:"btn pri",id:"playBtn",text: run.running?"일시정지":"시작",
+    onclick:function(){ run.running=!run.running; if(run.running) run.startedAt=Date.now()-run.elapsed*1000; save(); renderRun(); }}));
+  ctl.appendChild(el("button",{class:"btn",text:"리셋",onclick:function(){ resetTimer(); save(); renderRun(); }}));
+  w.appendChild(ctl);
+  p0.appendChild(w);
+  root.appendChild(p0);
+
+  if(run.phase==="invest") runInvest(root);
+  else if(run.phase==="cards") runCards(root);
+  else if(run.phase==="trial") runTrial(root);
+  else runVerdict(root);
+}
+
+function runInvest(root){
+  var p=el("div",{class:"panel"});
+  p.appendChild(el("h2",{text:"현장 조사 진행"}));
+  p.appendChild(el("p",{class:"sub",text:"양 팀이 각자 공간에서 같은 현장을 봅니다. 인솔 배우가 타이머와 동선을 통제합니다."}));
+  var strip=el("div",{class:"stage-strip"});
+  S.teams.forEach(function(t){
+    var c=el("div",{class:"sc",style:"--tc:"+teamColor(t)});
+    c.appendChild(el("div",{class:"tn",html:"<span class='dot' style='background:"+teamColor(t)+"'></span>"+esc(t.name)}));
+    c.appendChild(el("div",{class:"sn",text:t.guide||"—"}));
+    c.appendChild(el("div",{class:"ev",text:"정원 "+t.size+"명"}));
+    strip.appendChild(c);
+  });
+  p.appendChild(strip);
+  p.appendChild(el("div",{class:"quote",html:"인솔자 대사 — <b>“지금부터 조사 시간 "+S.cfg.investMin+"분 드리겠습니다. 손대지 마시고 살펴보십시오. <u>카드에 증거 번호 하나만 동그라미</u> 쳐주시면 됩니다.”</b>"}));
+  p.appendChild(el("p",{class:"hint",text:"핵심 3개를 손으로 짚어 주십시오. 하나도 못 찾은 관객도 그 셋 중 하나를 고르면 되므로 낙오가 없습니다."}));
+  root.appendChild(p);
+}
+
+function runCards(root){
+  var p=el("div",{class:"panel"});
+  p.appendChild(el("h2",{text:"조사관 카드 집계"}));
+  p.appendChild(el("p",{class:"sub",text:"걷은 카드에서 증거 번호별 지목 수를 입력하십시오. 가장 많이 지목된 3개가 그 팀의 채택 증거가 되고, 그 순서대로 재판에서 제시됩니다."}));
+
+  S.teams.forEach(function(t){
+    var c=cardsOf(t.id), A=adoptedOf(t.id);
+    var box=el("div",{class:"tcard",id:"cardbox-"+t.id,style:"--tc:"+teamColor(t)+";margin-bottom:14px"});
+    box.appendChild(el("h4",{html:"<span class='dot' style='background:"+teamColor(t)+"'></span>"+esc(t.name)+
+      " <span class='muted' style='font-weight:400;font-size:12.5px'>· 총 "+A.total+"표 / 정원 "+t.size+"명</span>"}));
+    var maxN=Math.max(1, A.rows.reduce(function(m,r){ return Math.max(m,r.n); },0));
+    var adoptIds={}; A.top.forEach(function(r){ adoptIds[r.e.id]=1; });
+    S.ev.forEach(function(e){
+      var row=el("div",{class:"pickrow"+(adoptIds[e.id]?" adopted":"")});
+      row.appendChild(el("div",{class:"no2",text:e.no}));
+      var mid=el("div");
+      mid.appendChild(el("div",{style:"font-size:13px;line-height:1.4",html:esc(e.name)+" "+favChip(e.favors)}));
+      var pb=el("div",{class:"pbar",style:"margin-top:5px"});
+      var n=Number(c[e.id])||0;
+      pb.appendChild(el("i",{style:"width:"+(n/maxN*100)+"%;background:"+teamColor(t)}));
+      mid.appendChild(pb);
+      row.appendChild(mid);
+      var inp=el("input",{type:"number",min:0,max:200,value:n,style:"text-align:right",
+        oninput:function(x){ c[e.id]=clamp(x.target.value,0,200); save(); cardsOut(t.id); }});
+      row.appendChild(inp);
+      box.appendChild(row);
+    });
+    if(A.top.length){
+      box.appendChild(el("div",{class:"quote",style:"margin-top:12px",
+        html:"판사 낭독 — <b>“"+esc(t.name)+"이 채택한 증거, "+
+          A.top.map(function(r,i){ return "제"+(i+1)+"호 "+esc(r.e.name.split(" (")[0]); }).join(", ")+".”</b>"}));
+    } else {
+      box.appendChild(el("p",{class:"hint",text:"아직 입력된 표가 없습니다."}));
+    }
+    root.appendChild(box);
+  });
+
+  var note=el("div",{class:"panel"});
+  note.appendChild(el("div",{class:"alert",html:"<span class='ic c-warn'>주의</span><div><b>대사는 바뀌지 않습니다 — 순서만 바뀝니다</b><p>검사와 변호인은 어차피 모든 증거를 제시합니다. 관객이 1위로 뽑은 것부터 꺼내면 됩니다. 블록 단위로 순서만 조립하므로 배우 부담이 거의 없고, 관객에게는 “우리가 정한 순서대로 재판이 간다”로 보입니다.</p></div>"}));
+  root.appendChild(note);
+}
+
+function cardsOut(teamId){
+  var box=document.getElementById("cardbox-"+teamId); if(!box) return;
+  var t=null; S.teams.forEach(function(x){ if(x.id===teamId) t=x; });
+  if(!t) return;
+  var c=cardsOf(teamId), A=adoptedOf(teamId);
+  var maxN=Math.max(1, A.rows.reduce(function(m,r){ return Math.max(m,r.n); },0));
+  var adopt={}; A.top.forEach(function(r){ adopt[r.e.id]=1; });
+  var h=box.querySelector("h4");
+  if(h) h.innerHTML="<span class='dot' style='background:"+teamColor(t)+"'></span>"+esc(t.name)+
+    " <span class='muted' style='font-weight:400;font-size:12.5px'>· 총 "+A.total+"표 / 정원 "+t.size+"명</span>";
+  box.querySelectorAll(".pickrow").forEach(function(row,i){
+    var e=S.ev[i]; if(!e) return;
+    row.classList.toggle("adopted", !!adopt[e.id]);
+    var fill=row.querySelector(".pbar i");
+    if(fill) fill.style.width=((Number(c[e.id])||0)/maxN*100)+"%";
+  });
+  var q=box.querySelector(".quote"), hint=box.querySelector(".hint");
+  if(A.top.length){
+    var txt="판사 낭독 — <b>“"+esc(t.name)+"이 채택한 증거, "+
+      A.top.map(function(r,i){ return "제"+(i+1)+"호 "+esc(r.e.name.split(" (")[0]); }).join(", ")+".”</b>";
+    if(q) q.innerHTML=txt;
+    else { if(hint) hint.remove();
+      box.appendChild(el("div",{class:"quote",style:"margin-top:12px",html:txt})); }
+  } else if(q){ q.remove(); box.appendChild(el("p",{class:"hint",text:"아직 입력된 표가 없습니다."})); }
+}
+
+function runTrial(root){
+  var p=el("div",{class:"panel"});
+  p.appendChild(el("h2",{text:"재판 진행 — "+S.cfg.trialMin+"분"}));
+  p.appendChild(el("p",{class:"sub",text:"이 팀이 선정된 이유입니다. 시간을 지키고, 각 구간의 목적을 놓치지 마십시오."}));
+  var steps=[
+    ["증거 채택 · 개정",3,"판사가 양측 채택 증거를 호명. 관객이 자기 선택을 확인하는 순간"],
+    ["검사 직접심문",10,"일기장 → 처방서 → 상담 기록 → 문자. 계획 살인으로 몰아간다"],
+    ["변호인 반대심문",12,"장갑흔 → 음료 잔량 → 약물 전문성 → 작업실 위치. 반전의 엔진"],
+    ["제3자 지목",5,"고윤수 지목. 방청석의 윤수가 고개를 숙인다 — 조사 파트에서 관객이 본 얼굴"],
+    ["양측 최후변론",4,"평결 직전 마지막 설득"]
+  ];
+  var sum=steps.reduce(function(s,x){return s+x[1];},0);
+  var tw=el("div",{class:"tw"}); var t=el("table");
+  t.appendChild(el("thead",{html:"<tr><th class='n' style='width:44px'>#</th><th style='width:26%'>구간</th><th class='n' style='width:70px'>분</th><th>목적</th></tr>"}));
+  var tb=el("tbody");
+  steps.forEach(function(x,i){ tb.appendChild(el("tr",{html:
+    "<td class='n muted mono'>"+(i+1)+"</td><td><b>"+x[0]+"</b></td><td class='n mono'>"+x[1]+"</td><td class='muted' style='font-size:12.5px'>"+x[2]+"</td>"})); });
+  t.appendChild(tb); tw.appendChild(t); p.appendChild(tw);
+  p.appendChild(el("p",{class:"hint",html:"구간 합계 <b class='mono'>"+sum+"분</b> / 설정값 <b class='mono'>"+S.cfg.trialMin+"분</b>"+
+    (sum!==S.cfg.trialMin?" — <b class='no'>불일치. 구성 탭에서 재판 시간을 "+sum+"분으로 맞추십시오.</b>":"")}));
+  root.appendChild(p);
+}
+
+function runVerdict(root){
+  var p=el("div",{class:"panel"});
+  p.appendChild(el("h2",{text:"평결 집계"}));
+  p.appendChild(el("p",{class:"sub",text:"팀별 거수 인원을 입력하십시오. 쇼케이스 그대로 — 빨간색은 유죄, 파란색은 무죄."}));
+  var tw=el("div",{class:"tw"}); var t=el("table");
+  t.appendChild(el("thead",{html:"<tr><th>팀</th><th class='n' style='width:80px'>정원</th><th class='n' style='width:110px'>유죄</th><th class='n' style='width:110px'>무죄</th></tr>"}));
+  var tb=el("tbody");
+  S.teams.forEach(function(tm){
+    if(!S.run.votes[tm.id]) S.run.votes[tm.id]={g:0,ng:0};
+    var v=S.run.votes[tm.id];
+    var tr=el("tr");
+    tr.appendChild(el("td",{html:"<span class='dot' style='background:"+teamColor(tm)+"'></span> <b>"+esc(tm.name)+"</b>"}));
+    tr.appendChild(el("td",{class:"n muted mono",text:String(tm.size)}));
+    ["g","ng"].forEach(function(k){
+      var td=el("td",{class:"n"});
+      td.appendChild(el("input",{type:"number",min:0,max:200,value:v[k]||0,style:"text-align:right",
+        oninput:function(e){ v[k]=clamp(e.target.value,0,200); save(); updateVerdict(); }}));
+      tr.appendChild(td); });
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); tw.appendChild(t); p.appendChild(tw);
+  p.appendChild(el("div",{id:"vBox",style:"margin-top:16px"}));
+  root.appendChild(p);
+  updateVerdict();
+}
+
+function updateVerdict(){
+  var box=document.getElementById("vBox"); if(!box) return;
+  box.textContent="";
+  var q=tally();
+  if(q.tot===0){ box.appendChild(el("p",{class:"hint",text:"아직 집계된 표가 없습니다."})); return; }
+  var bar=el("div",{class:"votebar"});
+  var gp=q.g/q.tot*100, np=q.ng/q.tot*100;
+  bar.appendChild(el("i",{class:"vg",style:"width:"+gp+"%",text: gp>13?"유죄 "+q.g:""}));
+  bar.appendChild(el("i",{class:"vn",style:"width:"+np+"%",text: np>13?"무죄 "+q.ng:""}));
+  box.appendChild(bar);
+  box.appendChild(el("div",{class:"row",style:"justify-content:space-between;font-size:12px",html:
+    "<span class='mono' style='color:var(--pro)'>유죄 "+q.g+" ("+gp.toFixed(0)+"%)</span>"+
+    "<span class='mono muted'>총 "+q.tot+"표</span>"+
+    "<span class='mono' style='color:var(--def)'>무죄 "+q.ng+" ("+np.toFixed(0)+"%)</span>"}));
+  var v=el("div",{class:"verdict",style:"margin-top:14px"});
+  v.appendChild(el("div",{class:"vl",text:"평결"}));
+  v.appendChild(el("div",{class:"vv "+(q.verdict==="g"?"g":q.verdict==="ng"?"ng":"tie"),text:vWord(q.verdict)}));
+  v.appendChild(el("div",{class:"vs",text:q.g+" 대 "+q.ng}));
+  box.appendChild(v);
+  var ending = q.verdict==="g" ? "[인혜 유죄] — 1심 판결 유지. 인혜의 마지막 진술 → 퇴장 → 비명 → 암전"
+             : q.verdict==="ng" ? "[인혜 무죄] — 결심 연기·추가 증거 조사 명령. 인혜의 항의 → 퇴장 → 비명 → 암전"
+             : "동수 — 재판장 판단으로 넘어갑니다. 준비된 제3의 엔딩을 사용하십시오";
+  box.appendChild(el("div",{class:"alert"+(q.verdict==="tie"?" crit":""),style:"margin-top:14px",
+    html:"<span class='ic "+(q.verdict==="tie"?"c-pro":"c-ok")+"'>엔딩</span><div><b>"+esc(ending)+"</b></div>"}));
+}
+
+/* ================= 인솔 큐 ================= */
+function renderCue(){
+  var root=document.getElementById("v-cue"); root.textContent="";
+  var p=el("div",{class:"panel"});
+  p.appendChild(el("h2",{text:"인솔자 큐카드"}));
+  p.appendChild(el("p",{class:"sub",text:"인솔 배우가 자기 팀을 선택하면 그 팀의 대사와 순서만 표시됩니다."}));
+  var row=el("div",{class:"row"});
+  S.teams.forEach(function(t){
+    row.appendChild(el("button",{class:"btn","aria-pressed":cueTeam===t.id?"true":"false",
+      html:"<span class='dot' style='background:"+teamColor(t)+";margin-right:6px'></span>"+esc(t.name),
+      onclick:function(){ cueTeam=(cueTeam===t.id?null:t.id); renderCue(); }}));
+  });
+  p.appendChild(row);
+  root.appendChild(p);
+  if(!cueTeam) return;
+  var t=null; S.teams.forEach(function(x){ if(x.id===cueTeam) t=x; });
+  if(!t) { cueTeam=null; return; }
+
+  var p2=el("div",{class:"panel",style:"border-left:3px solid "+teamColor(t)});
+  p2.appendChild(el("h2",{html:esc(t.name)+" &nbsp;"+(t.side==="pro"?"<span class='chip c-pro'>검사 측</span>":"<span class='chip c-def'>변호인 측</span>")}));
+  p2.appendChild(el("p",{class:"sub",text:"인솔 "+(t.guide||"—")+" · 정원 "+t.size+"명"}));
+  var seq=[
+    ["1","팀 배분","“"+(t.side==="pro"?"빨간색":"파란색")+" 줄에 계신 분들은 저를 따라 "+t.name+"으로 조사를 진행하겠습니다.”"],
+    ["2","입장 · 카드 배부","조사관 카드와 명찰을 배부한다. “카드는 나가실 때 걷습니다.”"],
+    ["3","브리핑 "+S.cfg.briefMin+"분","사건 개요 — 피해자 노민호(33), 사인 급성약물중독, 두부 타격 흔적, 신고자는 용의자 주인혜."],
+    ["4","과제 지시","“카드에 <b>증거 번호 하나만</b> 동그라미 쳐 주십시오. 여러분이 고른 증거가 법정에서 채택됩니다.”"],
+    ["5","핵심 3개 짚기","못 찾은 관객이 없도록 손으로 직접 가리킨다"],
+    ["6","조사 "+S.cfg.investMin+"분","타이머 시작. 1분 남았을 때 소리내어 알린다. “손대지 마십시오.”"],
+    ["7","카드 회수 · 이동","“카드 내주시고 한 줄로 서서 이동하시겠습니다.”"]
+  ];
+  var tw=el("div",{class:"tw"}); var tb=el("table");
+  tb.appendChild(el("thead",{html:"<tr><th class='n' style='width:40px'>#</th><th style='width:24%'>단계</th><th>대사 · 행동</th></tr>"}));
+  var body=el("tbody");
+  seq.forEach(function(s){ body.appendChild(el("tr",{html:
+    "<td class='n mono'>"+s[0]+"</td><td><b>"+s[1]+"</b></td><td>"+s[2]+"</td>"})); });
+  tb.appendChild(body); tw.appendChild(tb); p2.appendChild(tw);
+  root.appendChild(p2);
+
+  var p3=el("div",{class:"panel"});
+  p3.appendChild(el("h2",{text:"현장 증거 — 인솔자용"}));
+  p3.appendChild(el("p",{class:"sub",text: t.side==="pro"
+    ? "검사 측 목표: 인혜의 유죄를 입증할 증거를 고르게 한다."
+    : "변호인 측 목표: 인혜의 무죄와 제3자 가능성을 뒷받침할 증거를 고르게 한다."}));
+  var ew=el("div",{class:"tw"}); var et=el("table");
+  et.appendChild(el("thead",{html:"<tr><th class='c' style='width:44px'>번호</th><th style='width:28%'>증거</th><th style='width:110px'>유리한 쪽</th><th>메모</th></tr>"}));
+  var eb=el("tbody");
+  S.ev.forEach(function(e){
+    var mine = e.favors===t.side;
+    eb.appendChild(el("tr",{class: mine?"hi":"", html:
+      "<td class='c mono'>"+esc(e.no)+"</td><td><b>"+esc(e.name)+"</b></td><td>"+favChip(e.favors)+
+      (mine?" <span class='chip c-ok'>우리 편</span>":"")+"</td><td class='muted' style='font-size:12.5px'>"+esc(e.note||"")+"</td>"}));
+  });
+  et.appendChild(eb); ew.appendChild(et); p3.appendChild(ew);
+  root.appendChild(p3);
+}
+
+/* ================= 공유 ================= */
+function encodeShow(){
+  var j=JSON.stringify({cfg:S.cfg,biz:S.biz,teams:S.teams,ev:S.ev,cast:S.cast});
+  var by=new TextEncoder().encode(j), bin="";
+  by.forEach(function(b){ bin+=String.fromCharCode(b); });
+  return btoa(bin);
+}
+function decodeShow(code){
+  var bin=atob(String(code).trim()), by=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) by[i]=bin.charCodeAt(i);
+  var o=JSON.parse(new TextDecoder().decode(by));
+  if(!o.ev||!o.teams) throw new Error("형식 오류");
+  return fix({cfg:o.cfg,biz:o.biz,teams:o.teams,ev:o.ev,cast:o.cast,run:null});
+}
+
+/* ================= 배선 ================= */
+function switchView(v){
+  view=v;
+  ["plan","money","run","cue"].forEach(function(k){
+    document.getElementById("v-"+k).classList.toggle("hide", k!==v); });
+  document.querySelectorAll(".tabs button").forEach(function(b){
+    b.setAttribute("aria-selected", b.dataset.view===v?"true":"false"); });
+  render();
+}
+function render(){
+  if(view==="plan") renderPlan();
+  else if(view==="money") renderMoney();
+  else if(view==="run") renderRun();
+  else renderCue();
+}
+document.querySelectorAll(".tabs button").forEach(function(b){
+  b.addEventListener("click",function(){ switchView(b.dataset.view); }); });
+
+var stageBtn=document.getElementById("stageBtn");
+try{ if(localStorage.getItem("sv.stage")==="1"){
+  document.documentElement.setAttribute("data-stage","on");
+  stageBtn.setAttribute("aria-pressed","true"); } }catch(e){}
+stageBtn.addEventListener("click",function(){
+  var on=document.documentElement.getAttribute("data-stage")==="on";
+  if(on){ document.documentElement.removeAttribute("data-stage"); stageBtn.setAttribute("aria-pressed","false"); }
+  else { document.documentElement.setAttribute("data-stage","on"); stageBtn.setAttribute("aria-pressed","true"); }
+  try{ localStorage.setItem("sv.stage", on?"0":"1"); }catch(e){}
+});
+
+var dlg=document.getElementById("shareDlg");
+document.getElementById("shareBtn").addEventListener("click",function(){
+  document.getElementById("codeOut").value=encodeShow();
+  if(typeof dlg.showModal==="function") dlg.showModal(); else dlg.setAttribute("open",""); });
+dlg.querySelectorAll("[data-close]").forEach(function(b){
+  b.addEventListener("click",function(){ dlg.close?dlg.close():dlg.removeAttribute("open"); }); });
+document.getElementById("copyCode").addEventListener("click",function(){
+  var ta=document.getElementById("codeOut"); ta.select();
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(ta.value).then(function(){toast("복사했습니다");},
+      function(){toast("복사 실패 — 직접 선택해 복사하십시오");});
+  } else { try{ document.execCommand("copy"); toast("복사했습니다"); }catch(e){ toast("직접 선택해 복사하십시오"); } }
+});
+document.getElementById("loadCode").addEventListener("click",function(){
+  var v=document.getElementById("codeIn").value;
+  if(!v.trim()){ toast("코드를 붙여넣으십시오"); return; }
+  try{ S=decodeShow(v); cueTeam=null; save();
+    document.getElementById("codeIn").value="";
+    dlg.close?dlg.close():dlg.removeAttribute("open"); render(); toast("불러왔습니다");
+  }catch(e){ toast("코드를 읽을 수 없습니다 — 전체를 복사했는지 확인하십시오"); }
+});
+document.getElementById("resetAll").addEventListener("click",function(){
+  if(!confirm("현재 구성과 집계를 모두 버리고 기본 구성으로 되돌립니다. 계속할까요?")) return;
+  S=defaults(); cueTeam=null; save();
+  dlg.close?dlg.close():dlg.removeAttribute("open"); render(); toast("초기화했습니다");
+});
+
+var dlBtn=document.getElementById("dlJson");
+dlBtn.classList.add("hide");
+if(window.claude && typeof window.claude.use==="function"){
+  window.claude.use("downloads").then(function(d){
+    if(!d||typeof d.save!=="function") return;
+    dlBtn.classList.remove("hide");
+    dlBtn.addEventListener("click",function(){
+      var name="침묵의증거_구성_"+new Date().toISOString().slice(0,10)+".json";
+      Promise.resolve(d.save({filename:name,data:JSON.stringify(S,null,2)})).then(
+        function(){ toast("파일로 저장했습니다"); },
+        function(){ toast("저장이 취소되었습니다"); });
+    });
+  }, function(){});
+}
+
+setInterval(function(){
+  var r=S.run;
+  if(r.running&&r.startedAt){
+    r.elapsed=Math.floor((Date.now()-r.startedAt)/1000);
+    var c=document.getElementById("clockEl");
+    if(c){ c.textContent=fmt(r.elapsed);
+      c.classList.toggle("over", r.elapsed>phaseTarget()*60); }
+  }
+},500);
+setInterval(function(){ if(S.run.running) save(); },5000);
+
+render();
+</script>

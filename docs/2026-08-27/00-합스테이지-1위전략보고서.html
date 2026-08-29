@@ -1,0 +1,1313 @@
+<title>침묵의 증거 1위 전략</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F3F4F0; --surface:#FCFCFA; --surface-2:#EEF0EB;
+  --ink:#16191C; --ink-2:#4B545B; --ink-3:#79838A;
+  --rule:#D9DED6; --rule-2:#C3CABF;
+  --accent:#1F4E4A; --accent-2:#2F6E66; --accent-soft:#E3EBE7;
+  --p1:#A32B25; --p1-bg:#F6E7E5;
+  --p2:#A96916; --p2-bg:#F7EDDF;
+  --p3:#7E7018; --p3-bg:#F3F0DC;
+  --p4:#767F86; --p4-bg:#ECEEEC;
+  --fact:#2B4A6B; --fact-bg:#E5EBF1;
+  --shadow:0 1px 2px rgba(20,25,28,.05),0 8px 24px -12px rgba(20,25,28,.16);
+  --verdict-bg:#16191C; --verdict-fg:#FCFCFA; --verdict-bd:transparent;
+  --serif:"Nanum Myeongjo",'Apple SD Gothic Neo',serif;
+  --sans:"IBM Plex Sans KR",'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#101314; --surface:#171B1D; --surface-2:#1E2325;
+    --ink:#E9EBE7; --ink-2:#A8B1B3; --ink-3:#818A8D;
+    --rule:#2A3133; --rule-2:#3A4245;
+    --accent:#6FB3A6; --accent-2:#8AC7BB; --accent-soft:#1A2A28;
+    --p1:#E4736A; --p1-bg:#2E1D1C;
+    --p2:#DB9B41; --p2-bg:#2C2317;
+    --p3:#C6B44E; --p3-bg:#282515;
+    --p4:#98A1A6; --p4-bg:#22282A;
+    --fact:#7FA6CE; --fact-bg:#182430;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+    --verdict-bg:#1E2325; --verdict-fg:#E9EBE7; --verdict-bd:#3A4245;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101314; --surface:#171B1D; --surface-2:#1E2325;
+  --ink:#E9EBE7; --ink-2:#A8B1B3; --ink-3:#818A8D;
+  --rule:#2A3133; --rule-2:#3A4245;
+  --accent:#6FB3A6; --accent-2:#8AC7BB; --accent-soft:#1A2A28;
+  --p1:#E4736A; --p1-bg:#2E1D1C;
+  --p2:#DB9B41; --p2-bg:#2C2317;
+  --p3:#C6B44E; --p3-bg:#282515;
+  --p4:#98A1A6; --p4-bg:#22282A;
+  --fact:#7FA6CE; --fact-bg:#182430;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  --verdict-bg:#1E2325; --verdict-fg:#E9EBE7; --verdict-bd:#3A4245;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-weight:400; font-size:16px; line-height:1.75;
+  -webkit-font-smoothing:antialiased; word-break:keep-all; overflow-wrap:break-word;
+}
+
+/* ---------- shell ---------- */
+.shell{max-width:1280px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:224px minmax(0,1fr);gap:56px;align-items:start}
+@media(max-width:1020px){.shell{grid-template-columns:1fr;gap:0}}
+
+/* ---------- index rail ---------- */
+.rail{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:36px 0 48px;border-right:1px solid var(--rule)}
+@media(max-width:1020px){.rail{display:none}}
+.rail-h{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:0 0 14px;padding-right:20px}
+.rail a{display:grid;grid-template-columns:26px 1fr;gap:8px;text-decoration:none;color:var(--ink-2);font-size:13px;line-height:1.45;padding:5px 20px 5px 0;border-left:2px solid transparent;margin-left:-2px;transition:color .15s,border-color .15s}
+.rail a span:first-child{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);padding-top:2px;font-variant-numeric:tabular-nums}
+.rail a:hover{color:var(--accent)}
+.rail a.on{color:var(--accent);border-left-color:var(--accent);padding-left:10px;font-weight:600}
+.rail a.on span:first-child{color:var(--accent)}
+
+main{padding:36px 0 120px;min-width:0}
+
+/* ---------- masthead ---------- */
+.mast{border-top:3px solid var(--ink);padding-top:20px;margin-bottom:56px}
+.mast-tag{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:26px}
+.mast h1{font-family:var(--serif);font-weight:800;font-size:clamp(34px,5.6vw,58px);line-height:1.14;letter-spacing:-.015em;margin:0 0 6px;text-wrap:balance}
+.mast h1 em{font-style:normal;color:var(--accent)}
+.mast-sub{font-size:17px;color:var(--ink-2);max-width:60ch;margin:0 0 32px;line-height:1.65}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.meta div{background:var(--surface);padding:13px 15px}
+.meta dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.meta dd{margin:0;font-size:14px;font-weight:600;line-height:1.4}
+.meta dd .big{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--p1);letter-spacing:-.02em;display:block;line-height:1.1}
+.meta dd small{display:block;font-weight:400;font-size:12px;color:var(--ink-3);margin-top:3px}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+
+/* ---------- sections ---------- */
+section{margin-bottom:72px;scroll-margin-top:24px}
+.sec-h{border-top:1px solid var(--ink);padding-top:14px;margin-bottom:26px}
+.sec-n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;display:block;margin-bottom:7px}
+h2{font-family:var(--serif);font-weight:800;font-size:clamp(25px,3.3vw,34px);line-height:1.28;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.sec-lede{font-size:16.5px;color:var(--ink-2);max-width:66ch;margin:12px 0 0;line-height:1.7}
+h3{font-family:var(--serif);font-weight:700;font-size:20.5px;line-height:1.4;margin:40px 0 12px;text-wrap:balance}
+h4{font-size:15px;font-weight:600;margin:28px 0 9px;color:var(--ink);letter-spacing:-.005em}
+p{margin:0 0 15px;max-width:68ch}
+main a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+strong{font-weight:600}
+em.hl{font-style:normal;background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:600;padding:0 1px}
+ul,ol{margin:0 0 15px;padding-left:20px;max-width:68ch}
+li{margin-bottom:7px}
+li::marker{color:var(--ink-3)}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:2.5px 7px;border-radius:2px;white-space:nowrap;vertical-align:2px}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.p1{color:var(--p1);background:var(--p1-bg)}
+.p2{color:var(--p2);background:var(--p2-bg)}
+.p3{color:var(--p3);background:var(--p3-bg)}
+.p4{color:var(--p4);background:var(--p4-bg)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:2px 6px;border-radius:2px;white-space:nowrap;vertical-align:2px}
+.t-fact{color:var(--fact);background:var(--fact-bg)}
+.t-anal{color:var(--accent);background:var(--accent-soft)}
+.t-prop{color:var(--p2);background:var(--p2-bg)}
+.t-unk{color:var(--p4);background:var(--p4-bg);border:1px dashed var(--rule-2)}
+
+/* ---------- callouts ---------- */
+.call{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:0 3px 3px 0;padding:20px 22px;margin:24px 0}
+.call.key{border-left-color:var(--p1);background:var(--surface)}
+.call.warn{border-left-color:var(--p2)}
+.call-k{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px}
+.call p:last-child,.call ul:last-child,.call ol:last-child{margin-bottom:0}
+.call .big{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.5;margin:0 0 10px;max-width:none}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:22px 0;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;line-height:1.6;min-width:520px}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{background:var(--surface-2);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;border-bottom:1px solid var(--rule-2)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.c,th.c{text-align:center}
+td strong{font-weight:600}
+.hi td{background:var(--accent-soft)}
+.hi:hover td{background:var(--accent-soft)}
+
+/* ---------- score bar viz ---------- */
+.score{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:24px;margin:24px 0}
+.score-h{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin-bottom:18px}
+.bar{display:flex;height:52px;border-radius:2px;overflow:hidden;border:1px solid var(--rule-2)}
+.bar div{display:flex;flex-direction:column;justify-content:center;padding:0 12px;font-family:var(--mono);font-size:11px;font-weight:600;color:#FCFCFA;overflow:hidden;white-space:nowrap}
+.bar div small{font-size:9.5px;font-weight:400;opacity:.85;letter-spacing:.06em}
+.b1{background:#3E4A52;flex:10}
+.b2{background:var(--accent);flex:45}
+.b3{background:#8C4A44;flex:45}
+.b4{background:#A96916;flex:5}
+.score-legend{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:14px;font-size:12.5px;color:var(--ink-2)}
+.score-legend span{display:flex;align-items:center;gap:7px}
+.score-legend i{width:10px;height:10px;border-radius:2px;flex:none}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;margin:26px 0;padding-left:0}
+.tl-row{display:grid;grid-template-columns:82px 14px 1fr;gap:0 14px;align-items:start;position:relative}
+.tl-d{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink-2);padding:14px 0 0;font-variant-numeric:tabular-nums;text-align:right}
+.tl-m{position:relative;padding-top:14px}
+.tl-m::before{content:"";position:absolute;left:5px;top:0;bottom:-14px;width:1px;background:var(--rule-2)}
+.tl-row:last-child .tl-m::before{bottom:auto;height:20px}
+.tl-m i{position:relative;display:block;width:11px;height:11px;border-radius:50%;background:var(--paper);border:2px solid var(--rule-2);z-index:1;margin-top:6px}
+.tl-row.key .tl-m i{background:var(--p1);border-color:var(--p1)}
+.tl-row.key .tl-d{color:var(--p1)}
+.tl-c{padding:12px 0 12px 2px;border-bottom:1px solid var(--rule)}
+.tl-row:last-child .tl-c{border-bottom:none}
+.tl-t{font-size:14.5px;font-weight:600;line-height:1.45}
+.tl-s{font-size:13px;color:var(--ink-2);margin-top:3px;line-height:1.55}
+
+/* ---------- quadrant map ---------- */
+.quad{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:26px 22px;margin:24px 0;overflow-x:auto}
+.quad svg{display:block;min-width:440px;width:100%;height:auto}
+
+/* ---------- pull ---------- */
+.pull{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:26px 0;margin:34px 0}
+.pull p{font-family:var(--serif);font-weight:700;font-size:clamp(20px,2.8vw,27px);line-height:1.45;margin:0;max-width:none;text-wrap:balance}
+.pull .att{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-top:14px;font-weight:500}
+
+/* ---------- verdict (final) ---------- */
+.verdict{background:var(--verdict-bg);color:var(--verdict-fg);border:1px solid var(--verdict-bd);border-radius:4px;padding:clamp(28px,5vw,48px);margin:34px 0}
+.verdict .vk{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--verdict-fg);opacity:.62;margin-bottom:16px}
+.verdict h3{font-family:var(--serif);font-weight:800;font-size:clamp(24px,4.2vw,38px);line-height:1.32;margin:0;color:var(--verdict-fg);text-wrap:balance}
+.verdict p{max-width:64ch;margin:18px 0 0;color:var(--verdict-fg);opacity:.86;font-size:15.5px}
+.verdict strong{color:var(--verdict-fg)}
+
+/* ---------- ask box ---------- */
+.ask{border:2px solid var(--p1);border-radius:3px;padding:24px;margin:28px 0;background:var(--surface)}
+.ask .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--p1);font-weight:600;margin-bottom:11px}
+.ask .q{font-family:var(--serif);font-weight:700;font-size:20px;line-height:1.5;margin:0 0 10px;max-width:none}
+.ask p:last-child{margin-bottom:0}
+
+footer{border-top:1px solid var(--rule);padding-top:22px;margin-top:12px;font-size:12.5px;color:var(--ink-3);line-height:1.75}
+footer a{color:var(--ink-2)}
+footer h4{margin-top:0;color:var(--ink-2);font-size:11px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase}
+footer ul{padding-left:17px;max-width:none}
+footer li{margin-bottom:3px}
+
+a:focus-visible,.rail a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media(max-width:640px){
+  body{font-size:15.5px}
+  .shell{padding:0 16px}
+  .tl-row{grid-template-columns:64px 14px 1fr}
+  .tl-d{font-size:10.5px}
+}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="목차">
+  <p class="rail-h">목차</p>
+  <a href="#p0"><span>00</span><span>전제 정정</span></a>
+  <a href="#pa"><span>A</span><span>공식자료 팩트</span></a>
+  <a href="#p1"><span>01</span><span>현재 상황 진단</span></a>
+  <a href="#p2"><span>02</span><span>심사 구조 분석</span></a>
+  <a href="#p3"><span>03</span><span>타깃 관객</span></a>
+  <a href="#p4"><span>04</span><span>시장·경쟁 분석</span></a>
+  <a href="#p5"><span>05</span><span>작품 고도화</span></a>
+  <a href="#p6"><span>06</span><span>USP</span></a>
+  <a href="#p7"><span>07</span><span>관객개발</span></a>
+  <a href="#p8"><span>08</span><span>홍보 전략</span></a>
+  <a href="#p9"><span>09</span><span>85일 로드맵</span></a>
+  <a href="#p10"><span>10</span><span>최종 심사 전략</span></a>
+  <a href="#p11"><span>11</span><span>재공연·사업화</span></a>
+  <a href="#p12"><span>12</span><span>TOP 10</span></a>
+  <a href="#fin"><span>—</span><span>단 하나의 전략</span></a>
+</nav>
+
+<main>
+<header class="mast">
+  <div class="mast-tag">
+    <span>웨이브 포지 AI 전략실</span><span>2026.08.27</span><span>대외비</span>
+  </div>
+  <h1>법정 추리극 <em>&lt;침묵의 증거&gt;</em><br>최종 1위 전략 보고서</h1>
+  <p class="mast-sub">&lt;합스테이지&gt; 최종 5팀 중 우수 콘텐츠 1팀이 되기 위한 85일 실행 전략. 공식 서류 2건을 1차 근거로 하며, 사실·분석·제안을 구분해 표기했습니다.</p>
+  <dl class="meta">
+    <div><dt>본공연까지</dt><dd><span class="big">D-85</span><small>11.20.(금) 5팀 중 3번째</small></dd></div>
+    <div><dt>최종 심사</dt><dd><span class="big">D-89</span><small>11.24.(화) 14:00–16:00</small></dd></div>
+    <div><dt>총점</dt><dd>105점<small>100점 + 가산점 5점</small></dd></div>
+    <div><dt>관객이 쥔 점수</dt><dd>45점<small>전체의 42.9%</small></dd></div>
+    <div><dt>지원 규모</dt><dd>1,200만 원<small>제작 1,000 · 홍보 200</small></dd></div>
+    <div><dt>경쟁</dt><dd>5팀 중 1팀<small>70점 이상 중 고득점순</small></dd></div>
+  </dl>
+  <div class="legend">
+    <span class="chip p1">필수</span><span class="chip p2">중요</span><span class="chip p3">권장</span><span class="chip p4">선택</span>
+    <span class="tag t-fact">사실</span><span class="tag t-anal">분석</span><span class="tag t-prop">제안</span><span class="tag t-unk">미확인</span>
+  </div>
+</header>
+
+<section id="p0">
+  <div class="sec-h"><span class="sec-n">Part 00 — 전제 정정</span><h2>전략을 세우기 전에, 게임의 규칙부터 바로잡습니다</h2>
+  <p class="sec-lede">공식자료를 읽은 결과 브리핑의 전제 3개가 실제 규정과 다릅니다. 규칙을 잘못 알면 85일을 엉뚱한 데 씁니다.</p></div>
+
+  <h3>정정 1 — “100점 구조에서 30/30/30”이 아닙니다 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-fact">사실</span> 심사 안내 7항의 합산 방식은 이렇습니다. <strong>작품성 30 + 무대구현 30 + 시장성 30 = 90점은 “2차 심사 전체”의 만점</strong>이고, 이 90점을 <em class="hl">전문가와 관객이 정확히 절반씩 나눠 갖습니다.</em></p>
+
+  <div class="score">
+    <p class="score-h">105점의 실제 소유권</p>
+    <div class="bar">
+      <div class="b1">10<small>1차 계획서</small></div>
+      <div class="b2">45<small>전문가 2차</small></div>
+      <div class="b3">45<small>관객 2차</small></div>
+      <div class="b4">5<small>가산</small></div>
+    </div>
+    <div class="score-legend">
+      <span><i style="background:#3E4A52"></i>1차 계획서 심사 · 전문가 2명 · 8/27 종료</span>
+      <span><i style="background:var(--accent)"></i>2차 전문가 5명 · 90점의 50%</span>
+      <span><i style="background:#8C4A44"></i>2차 관객 · 90점의 50%</span>
+      <span><i style="background:#A96916"></i>모객 30명 달성</span>
+    </div>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>누가 채점하나</th><th class="n">배점</th><th class="n">비중</th><th>확보 난이도</th></tr></thead>
+    <tbody>
+      <tr><td>전문가 — 1차 계획서 (2명)</td><td class="n">10</td><td class="n">9.5%</td><td>오늘(8/27) 종료</td></tr>
+      <tr><td>전문가 — 2차 최종공연 (5명)</td><td class="n">45</td><td class="n">42.9%</td><td>11/20 단 1회</td></tr>
+      <tr class="hi"><td><strong>관객 — 2차 최종공연</strong></td><td class="n"><strong>45</strong></td><td class="n"><strong>42.9%</strong></td><td>11/20 단 1회</td></tr>
+      <tr><td>모객 가산점 (30명 이상)</td><td class="n">5</td><td class="n">4.8%</td><td>사전 확보 가능</td></tr>
+      <tr><td><strong>합계</strong></td><td class="n"><strong>105</strong></td><td class="n">100%</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><span class="tag t-anal">분석</span> 대표님은 “관객 평가가 <em>영향을 미친다</em>”고 쓰셨는데 실상은 훨씬 셉니다. <strong>관객은 영향을 미치는 게 아니라 전문가와 동등한 채점자입니다.</strong> 그리고 결정적으로 — 전문가 45점은 5팀 모두가 같은 5명에게 채점받지만, <strong>관객 45점은 팀마다 완전히 다른 사람들에게 채점받습니다.</strong></p>
+  <p><span class="tag t-fact">사실</span> 심사 안내 6항 “공연별 관객 00명”, 기준표 “참가팀별 공연 모객 점수”. 최종 공연은 팀별로 다른 날 진행됩니다. <span class="tag t-anal">분석</span> 즉 관객 심사는 5팀 비교 상대평가가 <strong>아닙니다.</strong> 11월 20일 금요일 그 객석에 누가 앉아 있느냐가 45점을 직접 결정합니다. 이건 편법이 아니라 사업 설계입니다 — 공식자료가 최종 공연 대상을 “<strong>시민(주요 타깃 관객)</strong>, 관계자”라고 명시하고 있습니다.</p>
+
+  <div class="pull">
+    <p>좋은 공연을 만드는 것과, 그 공연을 좋아할 45점을 객석에 앉히는 것은 별개의 과제이며, 배점상 완전히 같은 무게다.</p>
+    <p class="att">이번 프로젝트의 1번 명제</p>
+  </div>
+
+  <h3>정정 2 — “30명 가산점을 어떻게 확보하나”는 질문이 틀렸습니다 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-fact">사실</span> “최소 모집 관객 수(30명 이상) 달성 시 5점 가산.” <span class="tag t-anal">분석</span> 이건 계단 함수입니다. <strong>30명이면 5점, 300명이어도 5점.</strong> 31번째 관객부터 가산점은 0원입니다.</p>
+  <p>그래서 “30명을 넘어 어디까지”라는 질문에 가산점 관점의 답은 “30명이면 끝”입니다. 그게 함정입니다. 31번째 관객부터의 진짜 가치는 가산점이 아니라 <em class="hl">45점짜리 관객 심사의 표본 크기와 품질</em>입니다.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>시나리오</th><th class="n">모객</th><th class="n">만족도 환산</th><th class="n">가산점</th><th class="n">관객 45점 중</th><th class="n">합계</th></tr></thead>
+    <tbody>
+      <tr><td>A. 30명 겨우 채움, 지인 위주</td><td class="n">30</td><td class="n">78%</td><td class="n">5.0</td><td class="n">35.1</td><td class="n"><strong>40.1</strong></td></tr>
+      <tr><td>B. 30명, 타깃 관객</td><td class="n">30</td><td class="n">88%</td><td class="n">5.0</td><td class="n">39.6</td><td class="n"><strong>44.6</strong></td></tr>
+      <tr><td>C. 70명, 타깃 관객</td><td class="n">70</td><td class="n">88%</td><td class="n">5.0</td><td class="n">39.6</td><td class="n"><strong>44.6</strong></td></tr>
+      <tr class="hi"><td>D. 70명, 타깃 관객 + 경험 설계</td><td class="n">70</td><td class="n">93%</td><td class="n">5.0</td><td class="n">41.9</td><td class="n"><strong>46.9</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:13px;color:var(--ink-3)">환산율은 예시입니다 — 실제 관객 평가표는 <span class="tag t-unk">미확인</span></p>
+  <p><strong>A와 D의 차이가 6.8점, 가산점 5점보다 큽니다.</strong> 모객 인원이 아니라 <strong>모객 정확도와 관람 경험</strong>이 승부처입니다. 인원 목표가 필요한 이유는 따로 있습니다 — <strong>표본 분산</strong>입니다. 30명 표본에서는 박하게 채점하는 2~3명이 평균을 눈에 띄게 흔들지만, 60~80명이면 그 영향이 절반 이하로 줄어듭니다.</p>
+  <div class="call"><p class="call-k">결론</p><p>가산점을 위해 <strong>30명</strong>, 점수 안정성을 위해 <strong>60~80명.</strong> 이게 정확한 답입니다.</p></div>
+
+  <h3>정정 3 — 이건 예술성 대회가 아니라 “판매 가능한 공연상품 선발전”입니다 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-fact">사실</span> 공식자료가 6번 반복해 말하고 있습니다.</p>
+  <ol>
+    <li><strong>사업 목적</strong> — “최종 공연을 완성하고, <strong>사업화를 위한 시장 검증 기회를 제공</strong>하고자 함”</li>
+    <li><strong>2차 심사의 공식 명칭</strong> — “<strong>시장성 높은 우수 콘텐츠 선정 심사</strong>”</li>
+    <li><strong>배점</strong> — 유통 및 시장 경쟁력 <strong>30점</strong>, 작품성과 동일</li>
+    <li><strong>지원금 구조</strong> — 제작비와 <strong>별도로</strong> 홍보비 200만 원을 “<strong>IR자료</strong>, 리플릿, 홍보영상” 목적으로 추가 지원</li>
+    <li><strong>우승 상품</strong> — 상금이 아니라 “관내 공연장 섭외를 통한 <strong>유료 공연</strong> 3~4회”</li>
+    <li><strong>심사위원 구성</strong> — 아래 참조</li>
+  </ol>
+  <p><span class="tag t-anal">분석</span> 4번이 특히 강한 신호입니다. <strong>예술성 대회는 참가팀에게 IR자료를 만들라고 돈을 주지 않습니다.</strong> 주최 측은 이 사업의 산출물을 “좋은 공연 한 편”이 아니라 “<strong>팔 수 있는 공연 상품 한 개</strong>”로 정의하고 있습니다.</p>
+  <div class="call key"><p class="call-k">심사위원이 던지는 진짜 질문</p><p class="big">“이 5팀 중 어느 팀에게 유료 공연 3~4회를 맡겼을 때, 표가 실제로 팔릴까?”</p><p>작품성 30점조차 이 질문 아래에 있습니다. 심사위원은 “예술적으로 훌륭한가”가 아니라 <strong>“돈 받고 걸 수 있을 만큼 완성됐는가”</strong>를 봅니다.</p></div>
+
+  <h3>보너스 — 심사위원 5명 중 4명이 “우리 작품을 사갈 수 있는 사람”입니다 <span class="chip p1">필수</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>심사위원</th><th>실제 역할</th><th>이 사람이 보는 것</th><th>우리가 줘야 할 것</th></tr></thead>
+    <tbody>
+      <tr><td><strong>이태근</strong><br><span style="color:var(--ink-3);font-size:12px">이앤조 문화프로덕션 대표 · 1차 겸임</span></td><td>제작·유통업자</td><td>제작 단가, 투어 가능성, 리스크</td><td>회당 운영 원가, 이동 가능한 무대</td></tr>
+      <tr><td><strong>조영선</strong><br><span style="color:var(--ink-3);font-size:12px">문화기획 아로리 대표 · 1차 겸임</span></td><td>기획자·축제 프로그래머</td><td>편성 적합성, 화제성</td><td>한 줄 소개, 관객 참여 요소</td></tr>
+      <tr><td><strong>윤시중</strong><br><span style="color:var(--ink-3);font-size:12px">극단 하땅세 대표 · 10/27 자문</span></td><td>연출가 — 유일한 창작자</td><td>연출력, 미학, 무대 언어</td><td>장면의 완성도, 시각적 아이디어</td></tr>
+      <tr><td><strong>김경회</strong><br><span style="color:var(--ink-3);font-size:12px">KT&amp;G 상상마당 센터장</span></td><td>공연장 운영자 = 바이어</td><td>우리 극장에 걸 수 있나</td><td>대관 스펙, 타깃 관객 데이터</td></tr>
+      <tr><td><strong>이해규</strong><br><span style="color:var(--ink-3);font-size:12px">춘천연극제 이사장(예정)</span></td><td>축제 감독 = 초청권자</td><td>축제에 초청할 만한가</td><td>지역성, 프로그램 적합성</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-anal">분석</span> <strong>5명 중 4명이 이 작품을 사거나 초청할 수 있는 위치에 있습니다. 순수 평론가는 0명, 창작자는 1명뿐입니다.</strong> 45점의 전문가 점수는 예술 심사가 아니라 <em class="hl">바이어 미팅</em>입니다.</p>
+
+  <h4>그리고 우리에게 유리한 사실 하나 <span class="chip p2">중요</span></h4>
+  <p><span class="tag t-fact">사실</span> 이태근·조영선은 1차 심사(오늘)에서 우리 계획서를 심사하고 자문하며, 윤시중 연출은 10/27 중간점검 전문가이자 2차 심사위원입니다. <strong>5명 중 3명(60%)이 11월 20일 이전에 우리를 이미 압니다.</strong> 김경회·이해규 2명만 당일 처음 봅니다.</p>
+  <div class="call"><p class="call-k">두 개의 다른 과제</p>
+  <p><strong>앞 3명</strong>에게는 “8월 계획서 → 10월 자문 → 11월 무대”가 하나의 성장 서사로 보여야 하고, <strong>뒤 2명</strong>에게는 사전 지식 없이 도입 5분에 사건·인물·규칙이 전부 이해되어야 합니다. 이 둘은 충돌하지 않습니다 — <strong>“계획서에 쓴 것을 그대로 지켰고, 처음 보는 사람도 즉시 이해한다”</strong>가 두 그룹 모두에게 최고 점수입니다.</p></div>
+</section>
+
+<section id="pa">
+  <div class="sec-h"><span class="sec-n">Part A — 팩트 시트</span><h2>공식자료에서 그대로 뽑은 15개 항목</h2>
+  <p class="sec-lede">대표님이 요청하신 항목 전수입니다. 근거가 없는 항목은 <span class="tag t-unk">미확인</span>으로 남겼습니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:150px">항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td><strong>사업 목적</strong></td><td>“&lt;합케이스&gt;를 통해 발굴된 우수 콘텐츠 5개작의 콘텐츠 고도화를 통해 최종 공연을 완성하고, <strong>사업화를 위한 시장 검증 기회를 제공</strong>하고자 함”</td></tr>
+      <tr><td><strong>사업 일정</strong></td><td>2026. 8. ~ 12.</td></tr>
+      <tr><td><strong>최종 공연</strong></td><td>2026. 11. 18.(수) ~ 11. 21.(토)</td></tr>
+      <tr class="hi"><td><strong>웨이브 포지 공연일</strong></td><td><strong>11. 20.(금)</strong> — 5팀 중 3번째. (11/18 인디어니언 · 11/19 아코디엠 · <strong>11/20 웨이브 포지</strong> · 11/21 문화기획 WOW + 인형극연구소 인스)</td></tr>
+      <tr><td><strong>최종 심사</strong></td><td>11. 24.(화) 14:00~16:00, 춘천시공연예술창업지원센터</td></tr>
+      <tr><td><strong>심사위원</strong></td><td>1차: 외부 전문가 2명 / 2차: 외부 전문가 5명 + <strong>공연별 관람객 평가</strong></td></tr>
+      <tr><td><strong>심사 항목</strong></td><td>1차: 고도화 계획 완성도 / 2차: 작품성·예술성, 무대 구현력 및 공연 수행 역량, 유통 및 시장 경쟁력</td></tr>
+      <tr><td><strong>배점</strong></td><td>1차 10점 / 2차 30+30+30=90점 / 가산점 5점 = <strong>총 105점</strong></td></tr>
+      <tr><td><strong>관객 심사 방식</strong></td><td>2차 90점을 <strong>전문가 평균 50% + 관객 평균 50%</strong>로 합산</td></tr>
+      <tr><td><strong>모객 가산점</strong></td><td><strong>30명 이상 달성 시 5점</strong> (계단식, 초과분 가산 없음)</td></tr>
+      <tr><td><strong>선정 방식</strong></td><td>총점 <strong>70점 이상 중 고득점순 1개팀.</strong> 70점 이상 중 논의로 예비팀(차순위) 선정 가능</td></tr>
+      <tr><td><strong>선정 후 지원</strong></td><td>11~12월 관내 공연장 섭외를 통한 <strong>유료 공연 3~4회</strong></td></tr>
+      <tr><td><strong>제출 자료</strong></td><td>① 계획서(안) ~8/25 <strong>② 최종 계획서 ~9/11 16:00</strong> ③ 전자계약 9/17~23</td></tr>
+      <tr><td><strong>중간점검</strong></td><td><strong>10/27(화)</strong> 합센터. 제작·연습 진행사항 점검 및 자문. <strong>전문가: 윤시중 연출</strong></td></tr>
+      <tr><td><strong>지원금</strong></td><td>제작비 1,000만 원 + 홍보비 200만 원(IR자료·리플릿·홍보영상) = <strong>최대 1,200만 원</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>전체 일정</h3>
+  <div class="tl">
+    <div class="tl-row key"><div class="tl-d">8/27 목</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">1차 심사 (10점) + 전문가 자문 <span class="chip p1">필수</span></div><div class="tl-s">팀별 15~20분. 이태근·조영선 — 두 사람 모두 2차 심사위원. <strong>자문 전량 기록.</strong></div></div></div>
+    <div class="tl-row key"><div class="tl-d">9/11 금</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">최종 계획서 마감 16:00 <span class="chip p1">필수</span></div><div class="tl-s">계약서이자 <strong>11/24 심사위원이 “약속대로 했나”를 대조하는 문서.</strong></div></div></div>
+    <div class="tl-row"><div class="tl-d">9/17–23</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">전자계약 + 1차 선금</div><div class="tl-s">예산 집행 개시. 공연까지 64일.</div></div></div>
+    <div class="tl-row key"><div class="tl-d">10/10 토</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">대본 락 (자체 마감) <span class="chip p1">필수</span></div><div class="tl-s">10/27 런스루에서 역산한 협상 불가 시점.</div></div></div>
+    <div class="tl-row key"><div class="tl-d">10/27 화</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">중간점검 + 윤시중 연출 자문 <span class="chip p1">필수</span></div><div class="tl-s">자문자가 곧 심사위원. <strong>런스루 가능 상태 필수.</strong></div></div></div>
+    <div class="tl-row"><div class="tl-d">11/12 목</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">스탭 회의</div><div class="tl-s">무대·조명·음향 운영 협의. 큐시트 확정본 지참.</div></div></div>
+    <div class="tl-row"><div class="tl-d">11/16–17</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">셋업 · 테크 · 최종 리허설</div><div class="tl-s">사고 리허설 1회 포함.</div></div></div>
+    <div class="tl-row key"><div class="tl-d">11/20 금</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">최종 공연 + 관객과의 대화 <span class="chip p1">필수</span></div><div class="tl-s"><strong>90점 중 90점이 이 하루에 결정됩니다.</strong></div></div></div>
+    <div class="tl-row"><div class="tl-d">11/24 화</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">2차 심사 14:00–16:00</div><div class="tl-s">공연 후 4일. 시장성 30점의 절반이 이 4일에 결정됩니다.</div></div></div>
+    <div class="tl-row"><div class="tl-d">11/26 목</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">최종 결과 발표</div><div class="tl-s">우수 콘텐츠 1개작 선정 및 통보.</div></div></div>
+  </div>
+
+  <div class="ask">
+    <p class="k">즉시 센터에 확인해야 할 6가지 — 이걸 모르면 85일을 감으로 씁니다</p>
+    <div class="tw" style="margin:0"><table>
+      <thead><tr><th style="width:34px" class="c">#</th><th>확인 사항</th><th>왜 중요한가</th></tr></thead>
+      <tbody>
+        <tr><td class="c">1</td><td><strong>관객 심사 평가표 실물</strong> (문항·척도·배점)</td><td><strong>45점의 설계도.</strong> 문항을 알아야 그 문항에 답하는 공연을 만든다</td></tr>
+        <tr><td class="c">2</td><td>관객 심사단 인원 산정 기준 (“공연별 관객 00명”)</td><td>표본 크기 · 유효 응답 조건</td></tr>
+        <tr><td class="c">3</td><td>전문가 평가표 실물 (30/30/30 세부 문항)</td><td>45점의 나머지 절반</td></tr>
+        <tr><td class="c">4</td><td>1차 10점의 대상 — 8/25본인가 9/11본인가</td><td>9/11 계획서에 쏟을 공수 결정</td></tr>
+        <tr><td class="c">5</td><td>공연 시각 · 러닝타임 제한 · 객석 규모</td><td>모객 카피, 대본 분량, 무대 설계의 전제</td></tr>
+        <tr><td class="c">6</td><td>모객 30명 카운트 기준 (초대권·관계자 포함 여부)</td><td>가산점 5점의 실패 방지</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin-top:14px"><span class="tag t-prop">제안</span> 1~3번은 정중히 요청할 수 있는 정보입니다. 심사 기준을 참가팀에 공개하는 것은 공정성 훼손이 아니라 공정성의 기본입니다. “고도화 방향을 심사 기준에 맞추기 위해 평가 항목을 확인하고 싶다”는 요청은 사업 취지에 정확히 부합합니다.</p>
+  </div>
+</section>
+
+<section id="p1">
+  <div class="sec-h"><span class="sec-n">Part 01</span><h2>현재 상황 진단</h2></div>
+  <p><span class="tag t-anal">분석</span> 합캠프 → 합케이스 10팀 → 상위 5팀 → 합스테이지. 이미 두 관문을 통과했지만, <strong>마지막 관문의 성격이 앞의 둘과 완전히 다릅니다.</strong> 합케이스는 20분 쇼케이스였고, 이번은 완성된 본공연 + 사업성입니다.</p>
+  <div class="call warn"><p class="call-k">가장 큰 구조적 리스크</p>
+  <p><strong>20분은 후크 하나면 됩니다.</strong> 시체 하나, 반전 하나, 강렬한 대사 하나. <strong>70~80분은 단서 배치, 용의자 3~5명의 알리바이 교차, 레드헤링, 페어플레이, 납득 가능한 반전이 전부 필요합니다.</strong></p>
+  <p>쇼케이스에서 좋았던 팀이 본공연에서 무너지는 가장 흔한 경로가 <em class="hl">20분짜리 아이디어를 80분으로 늘리다가 중간이 비는 것</em>입니다. 법정 추리극에서 중간이 비면 관객은 40분쯤에 범인을 맞히고 나머지 40분을 확인 사살하며 봅니다. 그 순간 45점이 무너집니다.</p></div>
+
+  <h3>강점과 약점</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:50%">강점</th><th>약점</th></tr></thead>
+    <tbody>
+      <tr><td>5팀 중 <strong>유일하게 이미 팬덤이 존재하는 장르</strong></td><td>본공연 분량의 추리 구조를 <strong>아직 검증 못 함</strong></td></tr>
+      <tr><td><strong>한 문장으로 설명되는 유일한 작품</strong> — “법정 추리극” 다섯 글자</td><td><strong>금요일 공연</strong> — 토요일 2팀 대비 모객 불리</td></tr>
+      <tr><td>구조적으로 <strong>시즌제가 가능한 유일한 포맷</strong></td><td>법정극은 <strong>아마추어 티가 가장 잘 나는 장르</strong></td></tr>
+      <tr><td><strong>저예산 친화</strong> — 법정 = 단일 공간</td><td>인스타그램 <strong>단일 채널</strong> — 추리 팬덤 서식지에 미도달</td></tr>
+      <tr><td>20~30대 인스타 채널 기반 (@wave_forge)</td><td>춘천 = <strong>연극 관객 모수가 작음</strong></td></tr>
+      <tr><td>금요일 저녁 = 20~40대 직장인 슬롯</td><td>심사위원 중 <strong>창작자는 1명뿐</strong> — 연극적 완성도만으론 부족</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="pull"><p>웨이브 포지는 “5팀 중 가장 팔기 쉬운 작품”을 들고 있으면서, 아직 그것을 “팔 수 있는 상태”로 만들지 못한 팀이다.</p><p class="att">한 문장 진단 · 장르 선택은 이미 이겼고, 남은 85일은 선택의 우위를 실행의 우위로 바꾸는 기간</p></div>
+</section>
+
+<section id="p2">
+  <div class="sec-h"><span class="sec-n">Part 02</span><h2>105점 중 어디에서 승부하는가</h2>
+  <p class="sec-lede">점수를 “배점”이 아니라 “통제 가능성”으로 다시 분류하면 전략이 나옵니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th>구간</th><th class="n">배점</th><th>통제 가능성</th><th>판단</th></tr></thead>
+    <tbody>
+      <tr><td>1차 계획서</td><td class="n">10</td><td>이미 종료</td><td style="color:var(--ink-3)">잊고 간다</td></tr>
+      <tr><td>작품성 (전문가 15 + 관객 15)</td><td class="n">30</td><td>중 — 취향 편차 큼</td><td>방어</td></tr>
+      <tr class="hi"><td>무대구현 (전문가 15 + 관객 15)</td><td class="n">30</td><td><strong>높음</strong> — 준비량에 정직하게 비례</td><td><strong>만점 목표</strong> <span class="chip p1">필수</span></td></tr>
+      <tr class="hi"><td>시장 경쟁력 (전문가 15 + 관객 15)</td><td class="n">30</td><td><strong>높음</strong> — 자료와 논리로 설득 가능</td><td><strong>승부처</strong> <span class="chip p1">필수</span></td></tr>
+      <tr class="hi"><td>모객 가산점</td><td class="n">5</td><td><strong>확정 가능</strong></td><td><strong>무조건 확보</strong> <span class="chip p1">필수</span></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:13px;color:var(--ink-3)">전문가/관객 각 45점을 30/30/30 비율로 3등분한 추정. 실제 세부 배점은 <span class="tag t-unk">미확인</span></p>
+
+  <h3>A. 작품성 및 예술성 30점 — 여기서 이기려 하지 마십시오 <span class="chip p2">중요</span></h3>
+  <p><span class="tag t-anal">분석</span> 한국 공연 심사에서 “작품성”은 관행적으로 <strong>주제 의식·미학적 실험·형식적 도전</strong>으로 해석됩니다. 추리극은 “잘 만든 오락물”로 분류되기 쉽고, 이 프레임에서 인형극·음악극과 예술성 경쟁을 하기 어렵습니다.</p>
+  <div class="call"><p class="call-k">전략</p><p><strong>이기려 하지 말고 감점당하지 마십시오. 그리고 작품성의 정의를 우리 쪽으로 옮기십시오.</strong></p></div>
+  <h4>감점당하는 3가지 — 반드시 피할 것</h4>
+  <div class="tw"><table>
+    <thead><tr><th>감점 요인</th><th>왜 발생하나</th><th>방어</th></tr></thead>
+    <tbody>
+      <tr><td>범인을 30분에 들킨다</td><td>용의자 수 부족, 단서 편중</td><td>최소 4명, 각 인물이 최소 1회 유력 용의자가 되는 구간 확보</td></tr>
+      <tr><td>반전이 억지다</td><td>단서 없이 후반 정보 투하</td><td><strong>페어플레이 원칙</strong> (Part 05)</td></tr>
+      <tr><td>법정 장면이 유치하다</td><td>“이의 있습니다!” 남발, 절차 무지</td><td>실제 형사재판 절차 자문 1회</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> 정의를 옮기는 법: 우리 작품의 예술적 성취를 <em class="hl">“관객 참여를 서사에 통합한 구조적 완성도”</em>로 제시하십시오. “우리는 오락물이 아니라 관객의 판단을 극의 결말에 편입시키는 형식 실험을 했다” — 오브제·형식 실험 계열의 윤시중 연출에게 특히 잘 통할 언어입니다. <span class="tag t-anal">분석</span></p>
+
+  <h3>B. 무대 구현력 30점 — 여기가 만점 구간입니다 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-anal">분석</span> 이 항목의 본질은 <strong>“실수하지 않는 것”</strong>입니다. 창의력이 아니라 정확도를 보고, 정확도는 연습량에 정직하게 비례합니다. <strong>가장 확실하게 만점을 가져올 수 있는 30점</strong>입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>감점 순간</th><th>방지법</th><th class="n">마감</th></tr></thead>
+    <tbody>
+      <tr><td>암전이 1초 길다</td><td>큐투큐 3회 이상</td><td class="n">11/17</td></tr>
+      <tr><td>배우가 대사를 더듬는다</td><td><strong>대본 락 10/10</strong></td><td class="n">10/10</td></tr>
+      <tr><td>소품이 안 나온다 / 늦게 나온다</td><td>소품 전담 1인 + 프리셋 사진</td><td class="n">11/16</td></tr>
+      <tr><td>음향이 대사를 덮는다</td><td>실제 객석 위치에서 검수</td><td class="n">11/17</td></tr>
+      <tr><td>장면 전환이 어색하다</td><td><strong>전환도 연출한다</strong></td><td class="n">10/27</td></tr>
+      <tr><td>사고 시 배우가 얼어붙는다</td><td><strong>사고 리허설 1회</strong></td><td class="n">11/17</td></tr>
+      <tr><td>법정의 위계가 안 보인다</td><td>판사석 높이 + 시선 설계</td><td class="n">10/27</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call key"><p class="call-k">팀 전체에 공유할 정의</p><p class="big">무대 구현력 30점 = 사고 0건</p><p>예술적 판단이 아니라 체크리스트 관리이고, 체크리스트는 반드시 이길 수 있습니다. <strong>5팀 중 사고 0건인 팀은 많아야 2팀입니다.</strong></p>
+  <p style="margin-top:12px"><span class="tag t-prop">제안</span> 추가 득점 — 심사위원 3명(이태근·조영선·김경회)은 제작비를 아는 사람들입니다. <strong>1,000만 원으로 만든 것처럼 보이지 않는 무대</strong>가 강한 인상을 남깁니다. 법정은 단일 공간이므로 예산을 한 곳에 집중해 “진짜 법정 같은 하나의 공간”을 만들 수 있습니다 — 여러 장소를 어설프게 만드는 것보다 압도적으로 유리합니다.</p></div>
+
+  <h3>C. 유통 및 시장 경쟁력 30점 — 진짜 결승선 <span class="chip p1">필수</span></h3>
+  <ul>
+    <li><strong>다른 4팀이 가장 준비 안 되어 있을 항목입니다.</strong> 예술단체는 대개 작품에 90%, 유통에 10%를 씁니다.</li>
+    <li><strong>유일하게 “무대 밖”에서 점수를 딸 수 있는 항목입니다.</strong> 공연 1회가 아니라 IR자료·데이터·계획으로 증명합니다.</li>
+    <li><strong>심사위원 5명 중 4명의 본업이 여기입니다.</strong></li>
+    <li><strong>우리 장르가 구조적으로 가장 강한 항목입니다.</strong></li>
+  </ul>
+  <div class="tw"><table>
+    <thead><tr><th>대표님 항목</th><th>심사위원의 실제 질문</th><th>&lt;침묵의 증거&gt;의 답</th><th class="c">상태</th></tr></thead>
+    <tbody>
+      <tr><td>타깃이 명확한가</td><td>“표를 누가 사나?”</td><td>20~40대 추리 콘텐츠 소비자</td><td class="c"><span class="chip p1">필수</span></td></tr>
+      <tr><td>반복 관람 가치</td><td>“같은 사람이 두 번 오나?”</td><td><strong>회차마다 평결이 다르다</strong></td><td class="c"><span class="chip p1">필수</span></td></tr>
+      <tr><td>지역 공연장 판매</td><td>“우리 극장에 걸 수 있나?”</td><td>단일 세트, 4~6인, 80분</td><td class="c"><span class="chip p2">중요</span></td></tr>
+      <tr><td>다른 지역 확장</td><td>“옮길 수 있나?”</td><td>이동식 법정 세트</td><td class="c"><span class="chip p2">중요</span></td></tr>
+      <tr><td>홍보 용이성</td><td>“포스터 한 장으로 팔리나?”</td><td>장르명이 곧 카피</td><td class="c" style="color:var(--accent)">유리</td></tr>
+      <tr><td>한 문장 설명</td><td>“뭐 하는 공연이죠?”</td><td>“오늘의 판결은, 객석이 내립니다”</td><td class="c"><span class="chip p1">필수</span></td></tr>
+      <tr><td>차별적 관람 경험</td><td>“영상으로 못 하는 게 뭐죠?”</td><td><strong>관객이 판결한다</strong></td><td class="c"><span class="chip p1">필수</span></td></tr>
+      <tr><td>시즌제·시리즈</td><td>“2탄 나오나?”</td><td><strong>사건 교체형 구조</strong></td><td class="c"><span class="chip p1">필수</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="call key"><p class="call-k">이 항목의 승부수</p><p><strong>심사위원에게 “공연”만 보여주지 말고 “상품”을 보여주십시오.</strong> 다른 4팀은 공연만 하고 돌아갑니다. 우리는 공연 + <strong>판매 가능한 상품 문서(IR)</strong>를 함께 제출합니다. 홍보비 200만 원의 용도에 IR자료가 명시되어 있으므로 지원 목적에도 정확히 부합합니다.</p></div>
+
+  <h3>목표 점수 설계</h3>
+  <div class="tw"><table>
+    <thead><tr><th>구간</th><th class="n">최소선</th><th class="n">목표선</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>1차 계획서</td><td class="n">7.0</td><td class="n">8.0</td><td>통제 불가</td></tr>
+      <tr><td>작품성</td><td class="n">21.0</td><td class="n">24.0</td><td>방어 전략</td></tr>
+      <tr><td>무대구현</td><td class="n">24.0</td><td class="n">27.0</td><td>사고 0건</td></tr>
+      <tr><td>시장성</td><td class="n">22.0</td><td class="n">27.0</td><td>승부처</td></tr>
+      <tr><td>모객 가산점</td><td class="n">5.0</td><td class="n">5.0</td><td>필수 확보</td></tr>
+      <tr class="hi"><td><strong>총점</strong></td><td class="n"><strong>79.0</strong></td><td class="n"><strong>91.0</strong></td><td>커트라인 70점</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-anal">분석</span> 커트라인 70점은 5팀 대부분이 넘길 것입니다. <strong>70점은 의미 없고 1등이 전부입니다.</strong> 목표 91점, 그리고 격차는 <strong>시장성 27점과 무대구현 27점</strong>에서 나옵니다.</p>
+</section>
+
+<section id="p3">
+  <div class="sec-h"><span class="sec-n">Part 03</span><h2>“20~40대 추리 팬”을 6개로 쪼갠다</h2>
+  <p class="sec-lede">이 정의로는 모객 카피를 쓸 수 없습니다. 이 사람들은 서로 다른 곳에 살고, 다른 문장에 반응하고, 다른 가격을 지불합니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th>타깃</th><th>공연 선택 기준</th><th>안 오는 이유</th><th>먹히는 카피</th><th>동행</th><th class="c">우선</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td><strong>A. 방탈출·추리게임</strong><br><span style="color:var(--ink-3);font-size:12px">방탈출, 머더미스터리</span></td><td><strong>“내가 참여하나?”</strong></td><td>“연극은 앉아서 보는 거잖아”</td><td><strong>“당신이 배심원입니다”</strong></td><td>친구 2~4인</td><td class="c"><span class="chip p1">1순위</span></td></tr>
+      <tr><td><strong>B. 범죄·수사물</strong><br><span style="color:var(--ink-3);font-size:12px">수사 드라마, 실화 범죄</span></td><td>개연성, 고증</td><td>“아마추어 연극은 유치할 것”</td><td>“실제 재판 절차 기반”</td><td>1~2인 / 혼자</td><td class="c"><span class="chip p2">3순위</span></td></tr>
+      <tr class="hi"><td><strong>C. 추리 예능</strong><br><span style="color:var(--ink-3);font-size:12px">크라임씬, 대탈출, 피의 게임</span></td><td><strong>“같이 갈 사람이 있나”</strong></td><td>“혼자 가면 재미없다”</td><td><strong>“진범은 회차마다 다릅니다”</strong></td><td><strong>3~5인 그룹</strong></td><td class="c"><span class="chip p1">2순위</span></td></tr>
+      <tr><td><strong>D. 법정물 팬</strong><br><span style="color:var(--ink-3);font-size:12px">법정 드라마·영화·웹툰</span></td><td>대사의 밀도</td><td>“법정극은 영상이 낫다”</td><td>“판결은 아직 나지 않았습니다”</td><td>1~2인</td><td class="c"><span class="chip p2">4순위</span></td></tr>
+      <tr><td><strong>E. 연극 애호가</strong></td><td>작품·극단의 신뢰</td><td>“신생 단체는 검증 안 됨”</td><td>“합스테이지 최종 5팀”</td><td>1~2인 / 혼자</td><td class="c"><span class="chip p3">5순위</span></td></tr>
+      <tr class="hi"><td><strong>F. 데이트·모임</strong><br><span style="color:var(--ink-3);font-size:12px">체험형 콘텐츠 탐색</span></td><td><strong>“사진 잘 나오나 / 대화거리 되나”</strong></td><td>“연극은 지루하다”</td><td><strong>“금요일 밤, 당신은 배심원”</strong></td><td><strong>2인 / 4~6인</strong></td><td class="c"><span class="chip p1">1순위</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>이 표에서 나오는 3가지 결론</h3>
+
+  <h4>① 6개 중 5개가 같은 문장에 반응합니다 <span class="chip p1">필수</span></h4>
+  <p>A·C·D·F가 전부 <strong>“당신이 판단한다”</strong> 계열 카피에 반응합니다. B와 E만 다른 축(고증·작품성)입니다. <span class="tag t-prop">제안</span> <em class="hl">하나의 핵심 메시지로 타깃의 80%를 커버할 수 있고, 그 메시지가 “관객이 배심원이 된다”입니다.</em> 이 하나가 모객·USP·시장성·차별성을 동시에 해결합니다.</p>
+
+  <h4>② 모객의 핵심 단위는 “1명”이 아니라 “3~5인 그룹”입니다 <span class="chip p1">필수</span></h4>
+  <p>타깃 C와 F는 혼자 오지 않습니다. 그리고 이 둘이 우리의 1·2순위입니다. <strong>모객 산수가 완전히 달라집니다.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th>접근</th><th>필요한 설득</th><th class="n">60명 달성에 필요한 접촉</th></tr></thead>
+    <tbody>
+      <tr><td>개인 모객</td><td>60명 각각 설득</td><td class="n">60건</td></tr>
+      <tr class="hi"><td><strong>그룹 모객</strong></td><td>그룹 리더 15명 설득</td><td class="n"><strong>15건</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> “1인 티켓”이 아니라 <strong>“배심원단 단체석”</strong>을 파십시오. 4인 1조 단위로 판매하고 “당신의 배심원단을 데려오세요”라고 말하는 순간 모객 난이도가 4분의 1이 됩니다. 그리고 <strong>친구와 함께 온 관객은 혼자 온 관객보다 만족도가 구조적으로 높습니다</strong> — 끝나고 서로 추리를 이야기할 상대가 있기 때문입니다. 45점에 직결됩니다.</p>
+
+  <h4>③ 6개 타깃이 공통으로 대는 “안 오는 이유”가 하나입니다 <span class="chip p1">필수</span></h4>
+  <p><span class="tag t-anal">분석</span> 표현은 다르지만 전부 하나의 불신으로 수렴합니다: <em class="hl">“그 90분이 아깝지 않을 거라는 보장이 없다.”</em></p>
+  <div class="call"><p class="call-k">이 불신을 깨는 법</p><p>“설명”이 아니라 <strong>“증거”</strong>입니다. 홍보물에서 “재밌습니다”라고 말하면 안 됩니다. <strong>실제 장면(심문 클립), 실제 단서(추리 퀴즈), 실제 공간(배심원석 사진)을 보여주고 관객이 직접 판단하게 해야 합니다.</strong> 추리 팬은 특히 “판단하는 것”을 좋아하는 사람들이므로, 홍보 단계부터 판단시키는 게 가장 잘 통합니다.</p></div>
+
+  <h3>객석 80석 배분안 <span class="chip p1">필수</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th class="c">순위</th><th>타깃</th><th class="n">목표</th><th>접근 경로</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td>F. 데이트·모임 (춘천 20~30대)</td><td class="n">24</td><td>인스타 지역 해시태그, 강원대·한림대</td></tr>
+      <tr><td class="c">1</td><td>A. 방탈출·추리게임 팬</td><td class="n">16</td><td>춘천·원주 방탈출 카페 제휴</td></tr>
+      <tr><td class="c">2</td><td>C. 추리 예능 팬</td><td class="n">12</td><td>오픈채팅·커뮤니티</td></tr>
+      <tr><td class="c">3</td><td>B·D. 범죄물·법정물 팬</td><td class="n">8</td><td>카드뉴스 타깃 광고</td></tr>
+      <tr><td class="c">4</td><td>E. 연극 애호가 + 지역 관계자</td><td class="n">10</td><td>센터 기존 관객, 지역 극단</td></tr>
+      <tr><td class="c">—</td><td>지인·가족 — <strong>10명 이하로 제한</strong> <span class="chip p1">필수</span></td><td class="n">≤10</td><td>사유는 Part 07</td></tr>
+      <tr class="hi"><td class="c">—</td><td><strong>합계</strong></td><td class="n"><strong>80</strong></td><td>최소선 60명</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p4">
+  <div class="sec-h"><span class="sec-n">Part 04</span><h2>시장 및 경쟁 콘텐츠 분석</h2>
+  <p class="sec-lede">핵심 질문 — “넷플릭스·추리예능·방탈출을 이미 즐기는 사람이 왜 굳이 공연장에 와야 하는가?”</p></div>
+
+  <p><span class="tag t-anal">분석</span> 추리 콘텐츠 소비의 동기는 “이야기가 궁금해서”가 아닙니다. 셋입니다 — <strong>① 우월감</strong>(남보다 먼저 맞히고 싶다) <strong>② 통제감</strong>(내 판단이 결과를 바꾼다) <strong>③ 대화거리</strong>(끝나고 함께 떠들 소재). 그리고 <strong>각 대체재는 셋 중 일부만 줍니다.</strong></p>
+
+  <div class="tw"><table>
+    <thead><tr><th>대체재</th><th class="c">우월감</th><th class="c">통제감</th><th class="c">대화거리</th><th class="c">라이브</th><th class="c">서사·연기</th><th class="n">1인 단가</th></tr></thead>
+    <tbody>
+      <tr><td>넷플릭스 법정·수사 드라마</td><td class="c">◎</td><td class="c">✕</td><td class="c">△</td><td class="c">✕</td><td class="c">◎</td><td class="n">월 정액</td></tr>
+      <tr><td>추리 예능 (크라임씬류)</td><td class="c">◎</td><td class="c">✕</td><td class="c">◎</td><td class="c">✕</td><td class="c">○</td><td class="n">무료~정액</td></tr>
+      <tr><td>방탈출 카페</td><td class="c">○</td><td class="c">◎</td><td class="c">◎</td><td class="c">○</td><td class="c">✕</td><td class="n">2.5~3.5만</td></tr>
+      <tr><td>머더미스터리 보드게임</td><td class="c">○</td><td class="c">◎</td><td class="c">◎</td><td class="c">○</td><td class="c">△</td><td class="n">1.5~3만</td></tr>
+      <tr><td>추리소설</td><td class="c">◎</td><td class="c">✕</td><td class="c">△</td><td class="c">✕</td><td class="c">◎</td><td class="n">1.5만</td></tr>
+      <tr><td>일반 연극</td><td class="c">✕</td><td class="c">✕</td><td class="c">△</td><td class="c">◎</td><td class="c">◎</td><td class="n">2~5만</td></tr>
+      <tr class="hi"><td><strong>&lt;침묵의 증거&gt;</strong> (배심원 설계 시)</td><td class="c"><strong>◎</strong></td><td class="c"><strong>◎</strong></td><td class="c"><strong>◎</strong></td><td class="c"><strong>◎</strong></td><td class="c"><strong>◎</strong></td><td class="n"><strong>2~3만</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call key"><p class="call-k">핵심 질문에 대한 답</p>
+  <p class="big">6개 칸을 모두 채우는 콘텐츠가 시장에 없기 때문입니다.</p>
+  <ul>
+    <li>넷플릭스는 <strong>결말이 정해져 있고 나는 구경꾼</strong>입니다.</li>
+    <li>추리 예능은 <strong>출연자가 추리하고 나는 구경꾼</strong>입니다.</li>
+    <li>방탈출은 <strong>내가 참여하지만 배우도 서사도 없고 정답은 하나</strong>입니다.</li>
+    <li>보드게임은 <strong>참여하지만 연기가 없습니다.</strong></li>
+    <li>일반 연극은 <strong>서사와 연기는 있지만 나는 구경꾼</strong>입니다.</li>
+  </ul>
+  <p style="margin-top:12px">&lt;침묵의 증거&gt;는 <em class="hl">“전문 배우의 연기로 진행되는 사건을, 내가 판단하고, 그 판단이 오늘의 결말이 되는”</em> 유일한 형태입니다. 영상으로 대체 불가능합니다 — <strong>녹화할 수 없고, 스포일러가 성립하지 않으며, 다시 오면 다른 결과가 나옵니다.</strong></p></div>
+
+  <h3>이 모델은 이미 시장에서 검증되었습니다 <span class="chip p1">필수</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>작품</th><th>구조</th><th>검증된 성과</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td><strong>쉬어매드니스</strong><br><span style="color:var(--ink-3);font-size:12px">Shear Madness</span></td><td>관객이 목격자·배심원, 용의자에게 직접 질문, <strong>매회 결말이 달라짐</strong></td><td><strong>1980년 초연 후 미국 최장기 공연 기록</strong>, 다국가 라이선스 유통</td></tr>
+      <tr><td>오백에삼십</td><td>살인사건 추리 + 생활 밀착 코미디</td><td>2015년부터 대학로 스테디셀러</td></tr>
+      <tr><td>히든퍼즐</td><td>관객 참여형, 상황에 따라 전개 변화</td><td>대학로 장기 공연</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call key"><p class="call-k">IR자료에 반드시 넣을 것</p><p>심사위원 4명은 바이어이고, 바이어가 가장 두려워하는 건 <strong>“검증 안 된 실험”</strong>입니다. <em class="hl">“우리는 새로운 걸 발명하는 게 아니라, 40년간 미국 최장기 흥행을 기록한 검증된 포맷의 한국형·지역형 버전을 만든다”</em>는 문장은 “우리 작품은 창의적입니다”보다 100배 강한 설득력을 가집니다.</p></div>
+
+  <h3>시장의 빈 자리 — 우리가 앉을 좌표</h3>
+  <div class="quad">
+    <svg viewBox="0 0 560 340" role="img" aria-label="참여도와 서사·연기 강도 2축 시장 지도. 오른쪽 위 사분면(전문 연기 + 높은 참여)이 비어 있고 침묵의 증거가 그 자리에 위치.">
+      <defs><style>
+        .ax{stroke:var(--rule-2);stroke-width:1}
+        .gl{stroke:var(--rule);stroke-width:1;stroke-dasharray:3 4}
+        .lb{font-family:var(--mono);font-size:9.5px;fill:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
+        .pt{font-family:var(--sans);font-size:11px;fill:var(--ink-2)}
+        .us{font-family:var(--sans);font-size:12.5px;font-weight:700;fill:var(--accent)}
+        .dot{fill:var(--ink-3)}
+        .gap{font-family:var(--sans);font-size:11px;fill:var(--p1);font-weight:600}
+      </style></defs>
+      <line class="gl" x1="280" y1="24" x2="280" y2="300"/>
+      <line class="gl" x1="40" y1="162" x2="530" y2="162"/>
+      <rect x="284" y="26" width="244" height="134" fill="var(--accent-soft)" opacity=".55"/>
+      <line class="ax" x1="40" y1="300" x2="530" y2="300"/>
+      <line class="ax" x1="40" y1="24" x2="40" y2="300"/>
+      <text class="lb" x="40" y="318">서사·연기 약함</text>
+      <text class="lb" x="530" y="318" text-anchor="end">서사·연기 강함</text>
+      <text class="lb" x="46" y="20">참여도 높음</text>
+      <text class="lb" x="46" y="296">참여도 낮음</text>
+      <circle class="dot" cx="96" cy="62" r="4"/><text class="pt" x="106" y="66">방탈출</text>
+      <circle class="dot" cx="132" cy="104" r="4"/><text class="pt" x="142" y="108">머더미스터리</text>
+      <circle class="dot" cx="118" cy="242" r="4"/><text class="pt" x="128" y="246">추리 예능</text>
+      <circle class="dot" cx="404" cy="238" r="4"/><text class="pt" x="414" y="242">일반 법정극</text>
+      <circle class="dot" cx="452" cy="272" r="4"/><text class="pt" x="462" y="276" text-anchor="end" dx="-16">넷플릭스 드라마</text>
+      <circle cx="424" cy="78" r="7" fill="var(--accent)"/>
+      <text class="us" x="438" y="76">&lt;침묵의 증거&gt;</text>
+      <text class="pt" x="438" y="92">배심원 설계 시</text>
+      <text class="gap" x="296" y="140">← 이 사분면이 비어 있다</text>
+    </svg>
+  </div>
+  <p><span class="tag t-anal">분석</span> <strong>“전문 연기 + 높은 참여” 사분면은 한국 지역 공연 시장에서 사실상 비어 있습니다.</strong> 방탈출은 연기가 없고, 연극은 참여가 없습니다. 이 칸을 차지하는 것이 &lt;침묵의 증거&gt;의 시장 좌표입니다.</p>
+
+  <h3>경쟁 5팀</h3>
+  <div class="call warn"><p class="call-k">중요 전제</p><p><span class="tag t-unk">미확인</span> 공식자료에는 5팀의 <strong>팀명과 작품명만</strong> 있습니다. 각 작품의 장르·내용·타깃은 공개 자료 검색으로 확인되지 않았습니다. <strong>아래 장르 추정은 전적으로 제목에서 추론한 것이며 사실이 아닙니다.</strong> 실제 확인은 11/18·19·21 다른 팀 공연을 직접 관람하는 것이 유일한 방법입니다.</p></div>
+  <div class="tw"><table>
+    <thead><tr><th>팀 · 작품</th><th class="c">공연일</th><th>추정 장르</th><th>예상 강점</th><th>예상 약점</th></tr></thead>
+    <tbody>
+      <tr><td><strong>인형극연구소 인스</strong><br>우체국 소년 아말과 빈 침대의 아이들</td><td class="c">11/21 토</td><td>인형극 · 사회적 주제</td><td><strong>작품성◎ 유통◎</strong> 학교·문화회관 아동극은 국내 최대 유통 시장</td><td>20~40대 자발적 유료 관객은 약함</td></tr>
+      <tr><td><strong>아코디엠</strong><br>멜로디 온 휠</td><td class="c">11/19 목</td><td>음악극 · 이동형</td><td>음악의 즉각적 설득력, 이동성 강조 시 유통◎</td><td>서사 밀도 약할 가능성</td></tr>
+      <tr><td><strong>문화기획 WOW</strong><br>밤의 레시피</td><td class="c">11/21 토</td><td>요리·체험 결합 추정</td><td>체험형이면 참여도◎</td><td>기획사명 — 창작 역량 미지수</td></tr>
+      <tr class="hi"><td><strong>웨이브 포지</strong><br>법정 추리극 &lt;침묵의 증거&gt;</td><td class="c"><strong>11/20 금</strong></td><td><strong>법정 추리</strong></td><td>장르 팬덤 · 한 문장 설명 · 시즌제</td><td>예술성 프레임 불리, 금요일</td></tr>
+      <tr><td><strong>인디어니언</strong><br>불의 그림자</td><td class="c">11/18 수</td><td>이미지·상징극 추정</td><td>시각적 강렬함 가능</td><td>첫 타자 — 기준점 역할, 인상 희석</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>가장 위험한 경쟁자: 인형극연구소 인스 <span class="chip p1">필수</span></h4>
+  <p>① 작품성 프레임에서 압도적 유리 — 인형극 + 난민·전쟁 아동 소재(제목 추정)는 “예술적이고 의미 있다”고 읽기 가장 쉬운 조합입니다. ② 유통 시장이 실재하고 검증되어 있습니다. ③ 11/21 토요일 — 가족 관객 모객이 가장 쉬운 날짜로, 30명 가산점 실패 위험이 사실상 없습니다.</p>
+  <p><span class="tag t-prop">제안</span> <strong>인스와 작품성으로 정면 대결하지 마십시오.</strong> 대신 인스가 구조적으로 답할 수 없는 질문으로 전장을 옮기십시오.</p>
+  <div class="tw"><table>
+    <thead><tr><th>질문</th><th class="c">인형극의 답</th><th class="c">&lt;침묵의 증거&gt;의 답</th></tr></thead>
+    <tbody>
+      <tr><td>20~40대가 자기 돈으로 표를 사나?</td><td class="c">어려움</td><td class="c" style="color:var(--accent);font-weight:600">◎</td></tr>
+      <tr><td>같은 사람이 두 번 오나?</td><td class="c">✕</td><td class="c" style="color:var(--accent);font-weight:600">◎ 평결이 다르므로</td></tr>
+      <tr><td>시즌 2가 나오나?</td><td class="c">새 작품을 다시 만들어야 함</td><td class="c" style="color:var(--accent);font-weight:600">◎ 사건만 교체</td></tr>
+      <tr><td>금요일 밤 성인 관객 상품이 되나?</td><td class="c">✕</td><td class="c" style="color:var(--accent);font-weight:600">◎</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>독보적 포지션 — “다른 4팀과 싸우지 않을 영역” <span class="chip p1">필수</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th></th><th class="c">인스</th><th class="c">아코디엠</th><th class="c">WOW</th><th class="c">웨이브 포지</th><th class="c">인디어니언</th></tr></thead>
+    <tbody>
+      <tr><td>장르 정의가 <strong>형식</strong>인가 <strong>내용</strong>인가</td><td class="c">형식(인형)</td><td class="c">형식(음악)</td><td class="c">형식(체험)</td><td class="c" style="color:var(--accent);font-weight:700">내용(추리)</td><td class="c">형식(이미지)</td></tr>
+      <tr><td>이미 존재하는 <strong>팬덤</strong></td><td class="c">학부모</td><td class="c">음악 팬</td><td class="c">✕</td><td class="c" style="color:var(--accent);font-weight:700">추리 팬덤</td><td class="c">✕</td></tr>
+      <tr><td>관객이 <strong>검색해서</strong> 찾아오나</td><td class="c">✕</td><td class="c">✕</td><td class="c">✕</td><td class="c" style="color:var(--accent);font-weight:700">◎</td><td class="c">✕</td></tr>
+      <tr><td>성인 <strong>자발적 유료</strong> 관객</td><td class="c">△</td><td class="c">○</td><td class="c">○</td><td class="c" style="color:var(--accent);font-weight:700">◎</td><td class="c">○</td></tr>
+      <tr><td><strong>반복 관람</strong> 근거</td><td class="c">✕</td><td class="c">✕</td><td class="c">△</td><td class="c" style="color:var(--accent);font-weight:700">◎</td><td class="c">✕</td></tr>
+      <tr><td><strong>시즌제</strong> 구조적 가능성</td><td class="c">✕</td><td class="c">△</td><td class="c">△</td><td class="c" style="color:var(--accent);font-weight:700">◎</td><td class="c">✕</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call key"><p class="call-k">핵심 통찰</p>
+  <p class="big">다른 4팀의 장르는 “형식”이고, 우리 장르는 “내용”이다.</p>
+  <p>인형극·음악극·체험극·이미지극은 <strong>관객을 설득해야</strong> 합니다 — “인형극인데 어른도 재밌어요”를 설명해야 합니다. 법정 추리극은 <strong>관객을 호출하면 됩니다</strong> — “법정 추리극”이라는 다섯 글자만으로 그 장르를 좋아하는 수백만 명이 자기가 대상인지 즉시 압니다.</p>
+  <p><strong>이건 마케팅 우위가 아니라 구조적 우위이고, 심사위원 중 4명(바이어)이 정확히 이 차이를 압니다.</strong></p></div>
+
+  <div class="pull"><p>&lt;침묵의 증거&gt;는 합스테이지 5팀 중 유일하게, 지원사업이 끝난 뒤에도 혼자 팔릴 수 있는 작품입니다.</p><p class="att">포지셔닝 문장 — IR자료 표지 · 관객과의 대화 마무리 · 11/24 제출자료 첫 줄</p></div>
+</section>
+
+<section id="p5">
+  <div class="sec-h"><span class="sec-n">Part 05</span><h2>작품 고도화 전략</h2>
+  <p class="sec-lede">대본·연출·배우·무대·추리구조·관객경험. 가장 큰 리스크부터.</p></div>
+
+  <h3>대본과 추리 구조 <span class="chip p1">필수</span></h3>
+  <h4>3전환 구조 — 관객 심증의 이동 설계</h4>
+  <p><span class="tag t-anal">분석</span> 70~80분은 <strong>최소 3번의 판단 전환</strong>이 필요합니다. 관객의 심증이 A→B→C로 이동하지 않으면 관객은 초반에 답을 정하고 나머지를 확인하며 봅니다. 이 상태의 관객은 “재밌었지만 뻔했다”고 채점합니다 — <strong>작품성과 시장성(재관람 의향)이 동시에 깎입니다.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th class="n">시간</th><th>구간</th><th>관객의 심증</th><th>반드시 일어나야 할 일</th></tr></thead>
+    <tbody>
+      <tr><td class="n">0–10분</td><td>사건 제시</td><td>“무슨 일이 있었지?”</td><td><strong>10분 안에 사건·피고인·쟁점 확정.</strong> 처음 보는 심사위원 2명 기준</td></tr>
+      <tr><td class="n">10–30분</td><td>1차 심증</td><td>“피고인이 범인 같다”</td><td>유력한 증거 제시</td></tr>
+      <tr><td class="n">30분</td><td><strong>1차 전환</strong></td><td>“어? 아닐 수도”</td><td>반대 증거 등장</td></tr>
+      <tr><td class="n">30–50분</td><td>2차 심증</td><td>“저 증인이 수상하다”</td><td>다른 인물로 의심 이동</td></tr>
+      <tr><td class="n">50분</td><td><strong>2차 전환</strong></td><td>“그것도 아니네”</td><td>알리바이 성립</td></tr>
+      <tr class="hi"><td class="n">60–70분</td><td><strong>평결</strong></td><td>“내가 정해야 한다”</td><td><strong>관객 배심원단 평결</strong></td></tr>
+      <tr><td class="n">70–80분</td><td>진실</td><td>“아, 그래서 그랬구나”</td><td>모든 복선 회수</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>페어플레이 원칙 — 추리극의 생사</h4>
+  <p><span class="tag t-anal">분석</span> 추리 팬은 반전 자체에 열광하지 않습니다. <em class="hl">“내가 맞힐 수 있었는데 못 맞혔다”</em>에 열광합니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>규칙</th><th>내용</th><th>검증 방법</th></tr></thead>
+    <tbody>
+      <tr><td>① 모든 단서는 평결 전에</td><td>진실 규명에 필요한 정보 100%가 60분 이전에 무대에 나와야 함</td><td><strong>단서 관리표</strong>에 등장 시점 기록</td></tr>
+      <tr><td>② 거짓말은 하되 은폐는 금지</td><td>인물이 거짓말하는 건 OK. 작가가 정보를 숨기는 건 반칙</td><td>“관객이 못 본 정보로 반전이 성립하는가?” 점검</td></tr>
+      <tr><td>③ 단서는 2회 제시</td><td>1회 제시는 놓칩니다. 다른 맥락에서 한 번 더</td><td>단서 관리표에 등장 횟수 열 추가</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call"><p class="call-k">실행 — 단서 관리표</p>
+  <div class="tw" style="margin:0 0 12px"><table><thead><tr><th>단서</th><th class="n">최초 등장</th><th class="n">재등장</th><th>오독 유도</th><th class="n">회수 시점</th></tr></thead>
+  <tbody><tr><td>(예) 깨진 시계</td><td class="n">12분</td><td class="n">38분</td><td>“사망 시각 조작”</td><td class="n">74분</td></tr></tbody></table></div>
+  <p><strong>이 표 한 장이 추리극의 품질을 80% 결정합니다.</strong> 대본 회의의 중심 문서로 쓰십시오. 작품성 항목의 “반전이 억지다” 감점을 원천 차단하고, 관객과의 대화에서 “저 시계 그래서 그랬구나”라는 반응이 나오면 만족도가 급상승합니다.</p></div>
+
+  <h4>러닝타임 — 70~80분, 인터미션 없음 <span class="chip p2">중요</span></h4>
+  <p><strong>몰입:</strong> 추리극에서 인터미션은 긴장을 리셋하고 로비에서 답을 서로 말해버립니다. <strong>유통:</strong> 70~80분은 지역 공연장이 사기 가장 좋은 길이 — 하루 2회전 가능, 학교·기업 공연 가능. <strong>일정:</strong> 관객과의 대화까지 합해도 100분 이내. <span class="tag t-unk">미확인</span> 공식 러닝타임 규정 없음 — 센터 확인 필요.</p>
+
+  <h3>핵심 설계 — 관객 배심원 평결 구현안 <span class="chip p1">필수</span></h3>
+  <div class="call key"><p class="call-k">설계 원칙</p><p class="big">평결은 관객이, 무대는 우리가 통제한다</p>
+  <p>관객 참여의 최대 리스크는 <strong>공연이 통제 불능이 되는 것</strong>입니다. 심사위원 앞에서 이건 치명적입니다 — 무대 구현력 30점이 무너집니다. 그래서 <strong>참여의 자유도를 결말에만 국한</strong>시킵니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th>단계</th><th>방식</th><th>필요 준비</th><th class="c">리스크</th><th class="c">권장도</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lv.1</strong> 안전형</td><td>관객 전원 거수·투표 카드로 유무죄 평결 → <strong>결말 2종</strong></td><td>엔딩 2종 대본·연습</td><td class="c">낮음</td><td class="c"><span class="chip p2">최소선</span></td></tr>
+      <tr class="hi"><td><strong>Lv.2</strong> 권장형</td><td>평결 + <strong>양형 또는 진범 지목</strong> → <strong>결말 3종</strong></td><td>엔딩 3종, 분기 큐시트</td><td class="c">중</td><td class="c"><span class="chip p1">권장</span></td></tr>
+      <tr><td><strong>Lv.3</strong> 도전형</td><td>중간에 관객이 <strong>증인에게 질문</strong> + 평결</td><td>배우 즉흥 대응 훈련</td><td class="c">높음</td><td class="c"><span class="chip p3">역량 확인 후</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Lv.2 상세 진행</h4>
+  <div class="tl">
+    <div class="tl-row"><div class="tl-d">입장</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">배심원 번호표 + 평결 카드 배부</div><div class="tl-s">이 순간부터 관객은 관람객이 아니라 배심원. <strong>SNS 인증샷 발생 지점</strong> — 모객·홍보 자산.</div></div></div>
+    <div class="tl-row"><div class="tl-d">0–60분</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">재판 진행 — 판사가 주기적으로 “배심원 여러분” 호명</div><div class="tl-s">객석이 무대의 일부라는 것을 계속 확인시킴.</div></div></div>
+    <div class="tl-row key"><div class="tl-d">60분</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">“배심원단은 평결하십시오” — 거수, 30초 집계</div><div class="tl-s">진행 인력 2인이 색깔 카드로 즉시 판별. <strong>이 30초도 연출합니다</strong> — 긴장 음악.</div></div></div>
+    <div class="tl-row key"><div class="tl-d">62분</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">평결 선포 → 분기</div><div class="tl-s">유죄 다수 → 엔딩 A · 무죄 다수 → 엔딩 B · <strong>동수/근소차 → 엔딩 C</strong>(가장 강렬한 엔딩을 여기 배치).</div></div></div>
+    <div class="tl-row key"><div class="tl-d">70–80분</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">진실 공개 — 관객의 판결이 옳았는지 밝혀짐</div><div class="tl-s"><strong>공연 전체의 정점.</strong> 관객이 SNS에 쓰는 문장이 여기서 나옵니다.</div></div></div>
+    <div class="tl-row"><div class="tl-d">커튼콜</div><div class="tl-m"><i></i></div><div class="tl-c"><div class="tl-t">“2026년 11월 20일 배심원단의 평결은 ○○ 였습니다”</div><div class="tl-s"><strong>“내 회차” 소속감 발생</strong> = 재관람·추천 동기.</div></div></div>
+  </div>
+
+  <div class="call key"><p class="call-k">이 설계 하나가 30/30/30을 동시에 공략합니다</p>
+  <div class="tw" style="margin:0"><table><thead><tr><th>항목</th><th>어떻게 득점되나</th></tr></thead><tbody>
+    <tr><td><strong>작품성 30</strong></td><td>관객 참여를 서사에 통합한 <strong>형식적 완성도.</strong> 단순 오락물 프레임에서 탈출</td></tr>
+    <tr><td><strong>무대구현 30</strong></td><td>실시간 집계 + 분기 상연은 <strong>고난도 라이브 기술.</strong> 성공 시 “이 팀은 실력이 있다”는 강한 증거</td></tr>
+    <tr><td><strong>시장성 30</strong></td><td>반복 관람 근거 · 한 문장 설명 · 영상 대체 불가 · 시즌제 · SNS 확산을 <strong>한 번에</strong></td></tr>
+  </tbody></table></div></div>
+
+  <h4>리스크와 방어</h4>
+  <div class="tw"><table>
+    <thead><tr><th>리스크</th><th>방어책</th><th class="n">마감</th></tr></thead>
+    <tbody>
+      <tr><td>집계 지연으로 흐름이 끊긴다</td><td>거수 집계 전담 2인, 색깔 카드로 시각적 즉시 판별, <strong>30초 룰</strong></td><td class="n">10/27</td></tr>
+      <tr><td>관객이 참여를 안 한다</td><td>입장 시 <strong>배심원 선서</strong>, 극 중 판사의 반복 호명으로 미리 훈련</td><td class="n">대본 반영</td></tr>
+      <tr><td>엔딩 3종 연습량 부담</td><td>분기는 <strong>마지막 8~10분에만</strong> 적용. 앞 60분은 완전 동일</td><td class="n">대본 설계</td></tr>
+      <tr><td>“장치일 뿐”이라는 평가</td><td>평결이 <strong>진실 공개와 논리적으로 연결</strong>되게 설계 — 단순 분기가 아니라 주제와 맞물릴 것</td><td class="n">9/11</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>배우 — 법정극의 아마추어 티를 없애는 3가지 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-anal">분석</span> 법정 추리극은 관객이 드라마로 <strong>기준선을 이미 갖고 있는</strong> 장르입니다. 비교 대상이 &lt;비밀의 숲&gt;, &lt;이상한 변호사 우영우&gt;입니다. 불리한 조건이지만, 동시에 <strong>딱 3가지만 지키면 급격히 좋아지는</strong> 장르이기도 합니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>문제</th><th>해결책</th><th class="n">마감</th></tr></thead>
+    <tbody>
+      <tr><td><strong>“이의 있습니다!” 남발</strong></td><td>실제 형사재판 절차 자문 1회. 이의는 전체에서 <strong>2~3회로 제한</strong>하고 각각 다른 사유(유도신문/전문증거/관련성)를 명시</td><td class="n">9월</td></tr>
+      <tr><td><strong>감정 과잉 — 법정에서 소리 지름</strong></td><td><strong>법정의 긴장은 볼륨이 아니라 침묵과 속도에서 옵니다.</strong> 제목이 &lt;침묵의 증거&gt;인 만큼 “침묵을 연출하는 것”을 연기 지침의 핵심으로</td><td class="n">10월</td></tr>
+      <tr><td>증인이 너무 쉽게 무너진다</td><td>증인마다 <strong>“절대 말하지 않는 것” 1개</strong>를 부여. 그것이 무너지는 순간이 그 인물의 클라이맥스</td><td class="n">9월</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> <strong>배우별 “진실표”</strong> — 각 배우에게 <strong>내 인물이 아는 진실 / 숨기는 것 / 거짓말하는 것 / 진짜 동기</strong> 4칸 표를 작성시키십시오. 추리극에서 배우가 자기 인물의 비밀을 정확히 모르면 관객은 그 흔들림을 감지합니다. 이 표는 관객과의 대화에서도 그대로 콘텐츠가 됩니다.</p>
+
+  <h3>무대 — 1,000만 원으로 법정을 만드는 법</h3>
+  <p><span class="tag t-anal">분석</span> 법정의 권위는 공간 전체가 아니라 <strong>높이 차이</strong>에서 옵니다. 판사석이 한 단 높고, 증인석이 고립되어 있고, 방청석(=객석)이 아래에 있으면 나머지는 의자와 조명만으로도 법정이 됩니다. <strong>예산을 분산하지 말고 판사석에 집중하십시오.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th>요소</th><th>최소 사양</th><th class="c">배분</th><th>유통 고려</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td><strong>판사석 단</strong></td><td>높이 40~60cm 평상 + 정면 패널</td><td class="c"><span class="chip p1">최우선</span></td><td>조립·분해식 필수</td></tr>
+      <tr class="hi"><td><strong>증인석</strong></td><td>독립 조명이 떨어지는 단독 위치</td><td class="c"><span class="chip p1">최우선</span></td><td>이동 가능</td></tr>
+      <tr><td>검사/변호인석</td><td>대칭 테이블 2개</td><td class="c"><span class="chip p3">중</span></td><td>접이식</td></tr>
+      <tr><td>객석 = 방청석/배심원석</td><td>배심원 번호표·평결 카드</td><td class="c"><span class="chip p2">저비용·고효과</span></td><td>소모품, 재제작 용이</td></tr>
+      <tr><td>조명</td><td><strong>증인석 단독 특수 1대는 반드시 확보</strong></td><td class="c"><span class="chip p1">필수</span></td><td>일반 극장 상비 장비로 구현</td></tr>
+      <tr><td>영상</td><td>증거 사진·문서 투사 (선택)</td><td class="c"><span class="chip p3">권장</span></td><td><strong>없어도 성립하게 설계</strong></td></tr>
+      <tr><td>음향</td><td>법봉, 평결 집계 긴장음, 정적</td><td class="c"><span class="chip p2">중요</span></td><td>파일만 있으면 어디서든 재현</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call key"><p class="call-k">유통 관점의 결정적 원칙</p><p class="big">영상 없이도 성립하게 설계하십시오.</p>
+  <p>영상을 무대의 필수 요소로 만들면 프로젝터·스크린이 없는 지역 소극장에 팔 수 없습니다. <strong>시장성 30점을 스스로 깎는 선택입니다.</strong> 영상은 있으면 좋은 보너스로 두십시오. 그러면 11/24 심사에서 <em class="hl">“이 작품은 어떤 극장에 가져가도 됩니다”</em>라고 말할 수 있게 됩니다 — 이 한 문장이 바이어 4명에게 결정적입니다.</p></div>
+
+  <h3>관객 경험 설계 — 45점이 실제로 만들어지는 곳</h3>
+  <p><span class="tag t-anal">분석</span> 관객 심사 45점은 무대 위 80분에서만 만들어지지 않습니다. <strong>입장 30분 전부터 퇴장 후까지</strong>입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>구간</th><th>설계</th><th class="c">우선</th><th class="n">마감</th></tr></thead>
+    <tbody>
+      <tr><td>공연 3일 전</td><td>예매자 대상 “사건 개요 카드” 발송 → 사전 몰입 + 노쇼 방지</td><td class="c"><span class="chip p2">중요</span></td><td class="n">11/17</td></tr>
+      <tr class="hi"><td>입장</td><td><strong>배심원 번호표 + 평결 카드 배부</strong> = 그 순간부터 참여자. 포토존</td><td class="c"><span class="chip p1">필수</span></td><td class="n">11/5</td></tr>
+      <tr><td>개막 직전</td><td><strong>배심원 선서</strong> — 참여 규칙 학습 + 몰입 진입</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/10</td></tr>
+      <tr><td>0–10분</td><td>사건·피고인·쟁점 확정. 백지 상태 관객 기준</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/10</td></tr>
+      <tr><td>10–60분</td><td>3전환 구조</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/10</td></tr>
+      <tr class="hi"><td>60분 평결</td><td>정점. 30초 집계도 연출한다</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/27</td></tr>
+      <tr><td>70–80분 진실</td><td>복선 전량 회수</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/10</td></tr>
+      <tr><td>커튼콜</td><td>오늘의 평결 공표 = “우리 회차” 소속감</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/27</td></tr>
+      <tr class="hi"><td>관객과의 대화</td><td><strong>45점의 마지막 20분</strong> — Part 07 참조</td><td class="c"><span class="chip p1">필수</span></td><td class="n">11/17</td></tr>
+      <tr><td>퇴장</td><td>“오늘의 평결” 카드 지참 → SNS 공유 자산</td><td class="c"><span class="chip p2">중요</span></td><td class="n">11/5</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p6">
+  <div class="sec-h"><span class="sec-n">Part 06</span><h2>USP — 왜 하필 &lt;침묵의 증거&gt;인가</h2>
+  <p class="sec-lede">모든 문구는 “관객이 판결한다” 하나의 축에서 파생됩니다. 축이 하나여야 반복 노출로 각인됩니다.</p></div>
+
+  <div class="verdict">
+    <p class="vk">① 한 문장 소개 — 5초 안에 이해</p>
+    <h3>“오늘의 판결은, 객석이 내립니다.”</h3>
+    <p>12자. 장르(재판)·차별점(관객 결정)·긴장(오늘)이 전부 들어 있고, 설명이 필요 없습니다. <strong>대안:</strong> “관객이 배심원이 되는 법정 추리극”(공연장 소개·보도자료용) / “진범은, 회차마다 다릅니다”(추리 팬 타깃 A·C에 가장 강함).</p>
+  </div>
+
+  <h4>② 10초 홍보 문구 — SNS 광고</h4>
+  <div class="call"><p class="big" style="margin-bottom:6px">당신은 오늘 밤, 배심원입니다.<br>증언을 듣고, 단서를 찾고, 판결하십시오.<br>당신의 평결이 오늘의 결말이 됩니다.</p>
+  <p style="margin-top:12px"><strong>단문 변형</strong> (릴스 자막·썸네일) — “당신이 판결합니다” / “진범은 회차마다 다릅니다” / “이 재판의 배심원은 관객입니다”</p></div>
+
+  <h4>③ 30초 소개 — 공연장 담당자·바이어용 <span class="chip p1">필수</span></h4>
+  <div class="call key"><p>“&lt;침묵의 증거&gt;는 <strong>관객이 배심원석에 앉는 법정 추리극</strong>입니다. 80분간 재판이 진행되고, <strong>관객이 직접 평결을 내리며, 그 평결에 따라 결말이 달라집니다.</strong> 타깃은 방탈출·추리 예능·법정 드라마를 즐기는 20~40대이고, <strong>이들은 3~5인 그룹으로 움직이기 때문에 단체 판매가 용이합니다.</strong> 무대는 단일 법정 세트이며 <strong>영상 장비 없이도 성립하도록 설계</strong>되어 소극장부터 중극장까지 이동 가능합니다. <strong>사건을 교체하는 방식으로 시즌 2·3 제작이 가능한 구조</strong>입니다.”</p>
+  <p style="margin-top:12px"><span class="tag t-anal">분석</span> 이 30초에 바이어가 알고 싶은 5가지가 전부 있습니다 — <strong>뭐냐 / 누가 사냐 / 어떻게 파냐 / 우리 극장 되냐 / 다음이 있냐.</strong> 11/24 심사에서 이 문단을 그대로 말할 수 있게 암기하십시오.</p></div>
+
+  <h4>④ 관객 구매 이유</h4>
+  <div class="call"><p class="big">“드라마에서는 판사가 판결하고, 방탈출에서는 정답이 정해져 있고, 추리 예능에서는 남이 추리합니다. 여기서는 당신이 판결합니다. 그리고 그 판결이 틀렸을 수도 있다는 걸, 80분 뒤에 알게 됩니다.”</p>
+  <p><span class="tag t-anal">분석</span> 마지막 문장이 핵심입니다. “당신이 결정한다”만으로는 부담스럽습니다. <strong>“당신의 판단이 시험받는다”</strong>가 추리 팬이 진짜 원하는 것입니다.</p></div>
+
+  <h4>⑤ 경쟁 콘텐츠 대비 차별점</h4>
+  <div class="tw"><table>
+    <thead><tr><th>비교 대상</th><th>그것이 주는 것</th><th>그것이 못 주는 것</th><th>&lt;침묵의 증거&gt;</th></tr></thead>
+    <tbody>
+      <tr><td>넷플릭스 법정 드라마</td><td>완성도 높은 서사·연기</td><td>내 판단이 아무것도 바꾸지 않음</td><td><strong>내 판단이 결말을 바꾼다</strong></td></tr>
+      <tr><td>추리 예능</td><td>심리전, 대화거리</td><td>나는 시청자일 뿐</td><td><strong>내가 출연자다</strong></td></tr>
+      <tr><td>방탈출</td><td>참여, 통제감</td><td>배우도 서사도 없음, 3~5인 한정</td><td><strong>전문 배우의 연기 + 전체 객석의 집단 판단</strong></td></tr>
+      <tr><td>머더미스터리 보드게임</td><td>참여, 역할</td><td>연기력·무대·조명이 없음</td><td><strong>공연의 완성도</strong></td></tr>
+      <tr><td>추리소설</td><td>밀도 높은 논리</td><td>혼자, 정적</td><td><strong>함께, 라이브</strong></td></tr>
+      <tr><td>일반 연극</td><td>라이브, 연기</td><td>나는 구경꾼, 결말 고정</td><td><strong>결말이 오늘 정해진다</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>⑥ 공연만이 제공할 수 있는 경험 — 영상 대체 불가 4가지 <span class="chip p1">필수</span></h4>
+  <div class="tw"><table>
+    <thead><tr><th class="c">#</th><th>요소</th><th>왜 영상이 못 하나</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td><strong>오늘의 평결</strong></td><td>결과가 상연 시점에 생성됩니다. 녹화본에는 “그날의 평결”만 남고 내 판단은 없습니다</td></tr>
+      <tr><td class="c">2</td><td><strong>집단 판단의 압력</strong></td><td>60명이 동시에 손을 드는 순간의 공기. 내 손과 옆 사람 손이 다를 때의 긴장. 물리적 공간에서만 발생합니다</td></tr>
+      <tr class="hi"><td class="c">3</td><td><strong>스포일러 무효</strong></td><td>결말이 회차마다 다르므로 “이미 안다”가 성립하지 않습니다 — <strong>반복 관람의 구조적 근거</strong></td></tr>
+      <tr><td class="c">4</td><td><strong>평결 후의 대화</strong></td><td>극장을 나와 “너 왜 유죄 들었어?”를 하는 시간. 이 대화가 콘텐츠의 절반입니다</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> <strong>3번을 IR자료에 반드시 명시하십시오.</strong> 공연 유통에서 가장 어려운 질문이 “왜 재공연이 되나”인데, “결말이 매번 다르므로 스포일러가 성립하지 않는다”는 것은 <strong>바이어가 이해하는 언어로 된 명확한 답</strong>입니다.</p>
+</section>
+
+<section id="p7">
+  <div class="sec-h"><span class="sec-n">Part 07</span><h2>관객개발 — 45점 + 5점을 확보하는 법</h2></div>
+
+  <h3>먼저, 하지 말아야 할 것 <span class="chip p1">필수</span></h3>
+  <p>심사 공정성을 훼손하는 방식은 제안하지 않습니다. 다만 실무에서 유혹이 큰 지점이 명확하므로 경계선을 먼저 긋습니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:50%">정당하며 사업 취지에 부합</th><th>하지 말 것</th></tr></thead>
+    <tbody>
+      <tr><td>타깃 관객을 정확히 찾아 초청하는 것</td><td>관객에게 특정 점수를 요청하는 것</td></tr>
+      <tr><td>공연 전 사건 개요를 제공해 이해를 돕는 것</td><td>평가지 작성 과정에 개입하는 것</td></tr>
+      <tr><td>관람 경험을 개선해 만족도를 높이는 것</td><td>고득점을 조건으로 보상을 제공하는 것</td></tr>
+      <tr><td>관객과의 대화를 충실히 설계하는 것</td><td>지인에게 “점수 잘 줘”라고 부탁하는 것</td></tr>
+      <tr><td>지인·가족을 관객으로 초대하는 것 (초대 자체는 정당)</td><td>객석을 지인으로만 채우는 것</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-anal">분석</span> 공식자료가 최종 공연 대상을 “<strong>시민(주요 타깃 관객)</strong>”이라고 명시한 이상, <strong>타깃 관객을 데려오는 것은 편법이 아니라 사업이 요구하는 과제입니다.</strong></p>
+
+  <h3>30명 가산점 — 실패 확률 0으로 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-anal">분석</span> 5점은 작지만 <strong>못 받으면 사실상 1위가 불가능한 점수</strong>입니다. 팀 간 격차가 5점 이내로 좁혀질 가능성이 크기 때문입니다.</p>
+  <div class="call warn"><p class="call-k">노쇼 산수 — 반드시 짚어야 할 함정</p><p>무료 초청 공연의 노쇼율은 일반적으로 20~40%입니다. <strong>30명 예약 = 실참 18~24명.</strong> 즉 <em class="hl">30명 예약은 가산점 실패 시나리오입니다.</em> 반드시 40명 이상 예약해야 30명이 앉습니다.</p></div>
+  <div class="tw"><table>
+    <thead><tr><th class="c">층</th><th>조치</th><th class="n">확보</th><th class="n">마감</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1층</td><td><strong>확정 예약 40명</strong> (30명 + 노쇼 버퍼 33%)</td><td class="n">40</td><td class="n">10/31</td></tr>
+      <tr><td class="c">2층</td><td><strong>예약자 전원 확인 연락</strong> (문자·DM) — 노쇼 사전 파악</td><td class="n">—</td><td class="n">11/13</td></tr>
+      <tr><td class="c">3층</td><td><strong>예비 명단 20명 확보</strong> (당일 연락 가능한 지역 커뮤니티·학생)</td><td class="n">+20</td><td class="n">11/19</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> <strong>노쇼를 줄이는 가장 효과적인 장치</strong> — 무료라도 <strong>“배심원 위촉”</strong> 형식으로 예약을 받으십시오. “예약”은 잊히지만 “위촉된 배심원 12번”은 잊히지 않습니다. 공연 3일 전 “배심원 12번님, 사건 개요를 보내드립니다” 메시지 1통이 노쇼를 크게 낮춥니다.</p>
+  <p><span class="tag t-unk">미확인</span> <strong>즉시 확인:</strong> 30명 카운트에 초대권·관계자·스태프 지인이 포함되는지 센터에 확인하십시오. 여기서 착오가 나면 5점을 통째로 날립니다.</p>
+
+  <h3>춘천에서 60~80명을 어떻게 모으나</h3>
+  <p><span class="tag t-anal">분석</span> 춘천은 대학로가 아닙니다. “연극 좋아하는 사람” 모수가 작습니다. <strong>“연극 관객”을 찾지 말고 “추리 콘텐츠 소비자”를 찾아야 합니다.</strong> 그 사람들은 극장에 없고 다른 곳에 있습니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th class="c">#</th><th>채널</th><th>접근 방법</th><th class="n">목표</th><th class="c">우선</th><th class="n">마감</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td class="c">1</td><td><strong>춘천·원주 방탈출 카페 제휴</strong></td><td>매장 리플릿 비치 + 상호 홍보. <strong>타깃 A가 물리적으로 모여 있는 유일한 장소</strong></td><td class="n">16</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/15</td></tr>
+      <tr><td class="c">2</td><td>강원대·한림대 동아리</td><td>추리·보드게임·연극·법학 동아리 직접 접촉. <strong>금요일 저녁은 대학생 최적 슬롯</strong></td><td class="n">20</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/20</td></tr>
+      <tr><td class="c">3</td><td>춘천 지역 인스타 (@wave_forge)</td><td>지역 해시태그 + 릴스. <strong>4인 단체석</strong> 중심 소구</td><td class="n">16</td><td class="c"><span class="chip p1">필수</span></td><td class="n">상시</td></tr>
+      <tr><td class="c">4</td><td>보드게임 카페 / 머더미스터리 모임</td><td>매장 제휴 + 오픈채팅방</td><td class="n">12</td><td class="c"><span class="chip p2">중요</span></td><td class="n">10/25</td></tr>
+      <tr><td class="c">5</td><td>춘천 직장인 커뮤니티·동호회</td><td>금요일 저녁 모임 수요</td><td class="n">8</td><td class="c"><span class="chip p2">중요</span></td><td class="n">11/1</td></tr>
+      <tr class="hi"><td class="c">6</td><td><strong>센터 기존 관객 DB</strong></td><td><strong>센터에 협조 요청</strong> — 합케이스 관객평가단, 센터 뉴스레터 구독자</td><td class="n">10</td><td class="c"><span class="chip p1">필수</span></td><td class="n">10/10</td></tr>
+      <tr><td class="c">7</td><td>지역 극단·예술계 관계자</td><td>상호 초청</td><td class="n">6</td><td class="c"><span class="chip p3">권장</span></td><td class="n">11/10</td></tr>
+      <tr><td class="c">8</td><td>지인·가족</td><td><strong>10명 이하로 제한</strong></td><td class="n">≤10</td><td class="c"><span class="chip p1">필수</span></td><td class="n">—</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> <strong>1번이 투입 대비 효과가 가장 큽니다.</strong> 타깃 A와 C가 물리적으로 모여 있고, 그들은 이미 <em class="hl">“추리 콘텐츠에 2.5~3.5만 원을 지불하는 것이 정상”</em>이라고 학습된 사람들입니다. 설득 비용이 거의 0이고, 매장 입장에서도 손해가 없으므로 제휴 성사율이 높습니다.</p>
+  <p><span class="tag t-prop">제안</span> <strong>6번을 반드시 요청하십시오.</strong> 합케이스 때 25명의 시민 관객평가단이 운영된 전례가 있습니다. 센터는 지역 관객 접점을 갖고 있고, 모객은 센터의 사업 성과이기도 합니다. <strong>요청하지 않으면 받을 수 없습니다.</strong></p>
+
+  <h3>“관객과의 대화” — 45점의 마지막 20분 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-fact">사실</span> 일정 안내: “공연 발표 후 <strong>관객과의 대화 시간 진행</strong>”</p>
+  <p><span class="tag t-anal">분석</span> 이 시간을 “감사 인사”로 쓰면 20분을 버리는 것입니다. <strong>관객이 평가지를 작성하기 직전이자, 심사위원이 마지막 인상을 형성하는 구간입니다.</strong> 그리고 시장성 30점에 직결됩니다 — 관객이 흥분해서 말하면 심사위원은 그 자리에서 “이건 팔린다”를 목격합니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th class="n">시간</th><th>내용</th><th>목적</th></tr></thead>
+    <tbody>
+      <tr><td class="n">0–2분</td><td><strong>오늘의 평결 결과 재공표</strong> + “다른 회차는 결과가 달랐습니다”</td><td><strong>“내 회차”의 고유성 각인</strong> = 재관람 동기</td></tr>
+      <tr><td class="n">2–7분</td><td><strong>“유죄 드신 분, 왜 그렇게 판단하셨나요?”</strong> — 관객에게 먼저 질문</td><td>관객이 말하게 한다. 자기 판단을 말한 관객은 작품에 관여합니다</td></tr>
+      <tr><td class="n">7–12분</td><td>단서 해설 — “12분에 나온 시계 보셨나요?”</td><td>“아 그거!” 반응 = 페어플레이 증명 = 작품성 인정</td></tr>
+      <tr><td class="n">12–16분</td><td>배우가 각 인물의 “숨긴 진실” 공개 (진실표)</td><td>몰입의 확장, 배우 매력</td></tr>
+      <tr class="hi"><td class="n">16–19분</td><td><strong>“이 작품, 어디서 다시 보고 싶으신가요?”</strong></td><td><strong>시장성 30점을 관객 앞에서 실연.</strong> 심사위원이 수요를 직접 목격</td></tr>
+      <tr><td class="n">19–20분</td><td>시즌 2 예고 (한 문장) + SNS 안내</td><td>“이건 계속되는 IP다”</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-anal">분석</span> 16–19분 구간이 특히 중요합니다. 점수를 부탁하는 게 아니라 <strong>실제 시장 수요를 확인하는 정당한 절차</strong>이며, 동시에 바이어 4명이 <strong>“관객이 다음 공연을 원한다”는 장면을 눈으로 보는</strong> 순간입니다. 서면 IR자료보다 강력합니다.</p>
+
+  <h3>왜 지인 모객을 10명 이하로 제한하는가 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-anal">분석</span> 30명을 채우는 가장 쉬운 방법은 지인 30명입니다. 그리고 그게 가장 큰 실수입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>문제</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td>지인은 작품에 대한 <strong>진짜 반응이 없습니다</strong></td><td>관객과의 대화가 죽습니다. 질문이 안 나오고 어색한 침묵이 흐릅니다</td></tr>
+      <tr><td>심사위원 5명은 <strong>그 침묵을 정확히 읽습니다</strong></td><td>“이 팀은 자기 관객이 없다” = <strong>시장성 30점 직격</strong></td></tr>
+      <tr><td>후하게 채점하지만 <strong>무성의하게 채점</strong>합니다</td><td>전 항목 일괄 고득점 = 변별력 없는 데이터</td></tr>
+      <tr><td>타깃 관객이 아니므로 <strong>재관람·추천 데이터가 안 나옵니다</strong></td><td>IR자료에 쓸 근거가 사라집니다</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call key"><p class="call-k">선택</p><p class="big">“지인 30명으로 안전하게 5점”이 아니라 “타깃 60명으로 45+5점”</p><p>전자는 40점, 후자는 47점입니다. 타깃 관객 60명이 앉아 있으면 관객과의 대화에서 손이 올라가고, 추리 이야기가 튀어나오고, “이거 서울에서도 하나요?”라는 질문이 나옵니다. <strong>그 장면 자체가 시장성 30점의 증거물입니다.</strong></p></div>
+</section>
+
+<section id="p8">
+  <div class="sec-h"><span class="sec-n">Part 08</span><h2>홍보 전략</h2>
+  <p class="sec-lede">목적은 인지도 확대가 아닙니다. ① 11/20 객석에 타깃 60~80명을 앉히는 것 ② “이 작품에 수요가 있다”는 증거를 축적하는 것.</p></div>
+
+  <div class="call key"><p class="call-k">대부분의 팀이 놓치는 지점</p><p><strong>홍보 활동의 부산물인 데이터가 그대로 IR자료가 됩니다.</strong> 팔로워 증가율, 릴스 조회수, 예약 전환율, 문의 건수 — 이것들이 11/24 심사에서 “우리는 시장이 있다”를 증명하는 유일한 객관적 근거입니다.</p>
+  <p style="margin-top:12px"><span class="chip p1">필수</span> <strong>오늘부터 모든 홍보 지표를 기록하십시오.</strong> 8월 말 기준선(팔로워·평균 조회수)을 오늘 캡처해두지 않으면 11월에 “우리가 성장했다”를 증명할 수 없습니다.</p></div>
+
+  <h3>릴스 콘텐츠 5종 — 추리 팬에게 통하는 포맷 <span class="chip p1">필수</span></h3>
+  <p><span class="tag t-anal">분석</span> 추리 팬은 <strong>“보여주는 것”보다 “시키는 것”에 반응합니다.</strong> 공연 홍보 릴스가 실패하는 이유는 대부분 “공연이 이렇습니다”라고 보여주기만 하기 때문입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th class="c">#</th><th>포맷</th><th>내용</th><th>왜 통하나</th><th class="c">타깃</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td class="c">1</td><td><strong>단서 퀴즈</strong></td><td>15초 안에 증거 사진 3장 → “범인은 누구?” → 댓글 유도</td><td><strong>참여 유발 = 알고리즘 + 우월감 자극</strong></td><td class="c">A, C</td></tr>
+      <tr class="hi"><td class="c">2</td><td><strong>심문 클립</strong></td><td>검사 vs 증인 20초 대치 (실제 공연 장면)</td><td><strong>연기력 증명</strong> — “아마추어일 것”이라는 불신 해소</td><td class="c">B, D, E</td></tr>
+      <tr class="hi"><td class="c">3</td><td><strong>“당신이 판결합니다”</strong></td><td>배심원석·평결 카드 보여주고 규칙 설명</td><td><strong>차별점 전달 = 우리의 유일한 USP</strong></td><td class="c">전체</td></tr>
+      <tr><td class="c">4</td><td>회차별 평결 결과</td><td>“1회차 유죄 62%, 2회차 무죄 55%”</td><td>반복 관람 근거의 시각화</td><td class="c">A, C, F</td></tr>
+      <tr><td class="c">5</td><td>법정 용어 해설</td><td>“이의 있습니다는 실제로 언제 쓰나?”</td><td>고증 신뢰도 + 정보성 저장 유발</td><td class="c">B, D</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> <strong>게시 빈도</strong> — 9월 주 1회(빌드업) → 10월 주 2회 → 11월 1~19일 <strong>주 3~4회</strong>(모객 집중). 총 30~35편.</p>
+  <div class="call warn"><p class="call-k">사규 준수</p><p>회사 규칙에 따라 <strong>실제 업로드는 대표님이 직접 진행</strong>합니다. AI 부서는 기획·대본·촬영 리스트까지만 준비합니다. (사규 1-2)</p></div>
+
+  <h3>포스터 — 한 장이 해야 할 일</h3>
+  <div class="tw"><table>
+    <thead><tr><th class="c">#</th><th>요소</th><th>이유</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td><strong>법정 추리극</strong> (장르명)</td><td>다섯 글자가 최고의 카피</td></tr>
+      <tr><td class="c">2</td><td>&lt;침묵의 증거&gt;</td><td>—</td></tr>
+      <tr class="hi"><td class="c">3</td><td><strong>“오늘의 판결은, 객석이 내립니다”</strong></td><td>유일한 차별점. 이게 없으면 그냥 연극 포스터</td></tr>
+      <tr><td class="c">4</td><td>2026.11.20(금) / 장소 / 시각</td><td>—</td></tr>
+      <tr class="hi"><td class="c">5</td><td><strong>예약 QR</strong></td><td>포스터→예약 전환 경로. 없으면 도달이 낭비됨</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> <strong>비주얼 방향</strong> — 인물 사진 나열(연극 포스터의 관습)보다 <strong>단일 오브제 하나</strong>(법봉, 빈 증인석, 멈춘 시계)가 추리 장르 코드에 맞고, SNS 썸네일에서 작게 축소돼도 읽힙니다.</p>
+
+  <h3>브랜드 검수 기준 준수 (사규 5항)</h3>
+  <p><span class="tag t-fact">사실</span> 금칙어(욕설·정치적 발언·혐오 표현) 금지 / 어투는 따뜻하지만 단정하게 종결, 권유형으로 흐리지 않음 / 숫자는 아라비아 숫자, AI 모델명은 영문.</p>
+  <p><span class="tag t-anal">분석</span> 본 보고서의 모든 카피는 이 기준을 적용했습니다. 특히 <strong>“~해보세요”, “~어떠세요?” 같은 권유형을 배제하고 단정형(“판결하십시오”, “당신은 배심원입니다”)을 사용</strong>했습니다. 브랜드 기준과 부합할 뿐 아니라 <strong>법정극의 톤(선언·명령)과도 일치</strong>합니다.</p>
+  <div class="call warn"><p class="call-k">별도 점검 필요</p><p>범죄 소재 특성상 <strong>혐오 표현 및 특정 집단 희화화 여부를 대본 검수 단계에서 별도 점검</strong>하십시오. 법정극은 가해자·피해자 묘사에서 무의식적으로 선을 넘기 쉬운 장르입니다. <span class="chip p1">필수</span> <strong>검수 마감 10/10</strong> (대본 락과 동시).</p></div>
+</section>
+
+<section id="p9">
+  <div class="sec-h"><span class="sec-n">Part 09</span><h2>85일 역산 로드맵</h2></div>
+
+  <div class="call warn"><p class="call-k">이 장의 한계를 먼저 밝힙니다</p>
+  <p><span class="tag t-unk">미확인</span> 본 보고서 작성 시점에 AI 부서가 받은 자료는 <strong>&lt;합스테이지&gt; 공식 서류 2건뿐</strong>입니다. 다음은 확인되지 않았습니다 — <strong>대본 및 시놉시스 / 합케이스 쇼케이스 영상 / 8월 25일 제출 계획서 / 배우·스태프 구성 / 예산 계획 / 객석 규모·무대 사양·공연 시각.</strong></p>
+  <p style="margin-top:10px">따라서 아래 체크리스트의 <strong>“현재 상태”는 전부 미확인</strong>이며, 각 항목은 “일반적인 법정 추리극 제작에서 이 시점에 확보되어야 하는 상태”를 기준으로 작성했습니다. <strong>대본과 계획서를 공유해주시면 각 항목을 실제 진단으로 교체합니다.</strong> (사규 2항 — <code>.hwp</code>는 이 세션에서 텍스트 추출이 불가하므로 PDF 또는 텍스트로 변환이 필요합니다.)</p></div>
+
+  <h3>Phase 1 — 전략 확정 <span style="color:var(--ink-3);font-weight:400;font-size:15px">8/27 – 9/11 · 15일</span> <span class="chip p1">최우선</span></h3>
+  <div class="tw"><table><tbody>
+    <tr><td style="width:104px"><strong>해야 할 일</strong></td><td>① 1차 심사 자문 전량 기록 ② 미확인 6가지 센터 확인 ③ <strong>“관객 배심원” 도입 여부 결정</strong> ④ USP·타깃 확정 ⑤ <strong>9/11 최종 계획서 작성</strong></td></tr>
+    <tr><td><strong>결과물</strong></td><td>9/11 최종 계획서 / 전략 1페이지 / 확인 사항 회신</td></tr>
+    <tr><td><strong>담당</strong></td><td>대표(의사결정) · 연출 · 기획</td></tr>
+    <tr><td><strong>마감</strong></td><td><strong>9/11(금) 16:00</strong> — 공식 마감</td></tr>
+    <tr><td><strong>실패 위험</strong></td><td><strong>자문 내용을 기억에만 의존해 흘려보내는 것.</strong> 오늘 자문한 2명은 11/24 심사위원입니다</td></tr>
+  </tbody></table></div>
+  <div class="call key"><p class="call-k">9/11 계획서의 진짜 성격 — 이걸 놓치면 안 됩니다</p>
+  <p>이 문서는 두 가지입니다. ① 계약서(9/17 계약의 근거) ② <strong>11/24 심사위원이 “약속대로 했는가”를 대조하는 문서.</strong> 심사위원 5명 중 3명이 이 계획서를 읽었거나 읽게 됩니다. 즉 <em class="hl">계획서에 쓰는 언어가 3개월 뒤 우리가 채점받는 기준이 됩니다.</em></p>
+  <p style="margin-top:12px"><strong>따라서 두 가지를 반드시 넣으십시오:</strong></p>
+  <ol style="margin-top:8px"><li><strong>지킬 수 있는 것만</strong> 쓸 것. 못 지킨 약속 1개가 무대 구현력 30점을 깎습니다.</li>
+  <li><strong>우리가 채점받고 싶은 언어를 미리 심을 것.</strong> “관객 배심원 평결 시스템”, “회차별 분기 엔딩”, “이동 가능한 단일 세트”, “시즌제 확장 구조” — 이 단어들을 써두면 11/24에 심사위원은 그 프레임으로 우리를 봅니다. 쓰지 않으면 그냥 “법정극 한 편”으로 봅니다.</li></ol></div>
+
+  <h3>Phase 2 — 대본 및 콘텐츠 고도화 <span style="color:var(--ink-3);font-weight:400;font-size:15px">9/12 – 10/10 · 29일</span> <span class="chip p1">가장 중요</span></h3>
+  <div class="tw"><table><tbody>
+    <tr><td style="width:104px"><strong>해야 할 일</strong></td><td>① 3전환 구조 재설계 ② <strong>단서 관리표 작성</strong> ③ 페어플레이 검증 ④ 분기 엔딩 2~3종 집필 ⑤ 법정 절차 자문 1회 ⑥ 캐릭터 진실표 ⑦ 브랜드·혐오표현 검수</td></tr>
+    <tr><td><strong>결과물</strong></td><td><strong>10/10 대본 락(최종 확정본)</strong> / 단서 관리표 / 엔딩 3종</td></tr>
+    <tr><td><strong>담당</strong></td><td>극작가팀 · 연출 · 검수팀</td></tr>
+    <tr><td><strong>실패 위험</strong></td><td><strong>대본이 10월 말까지 흔들리는 것.</strong> 배우 암기 불가 → 무대 구현력 30점 붕괴. <strong>연극 실패의 1번 원인</strong></td></tr>
+    <tr><td><strong>반드시 확인</strong></td><td><strong>외부인 3명에게 대본을 읽히고 “범인이 누구인지, 몇 페이지에서 알았는지” 물을 것.</strong> 절반 지점 이전에 맞히면 재설계</td></tr>
+  </tbody></table></div>
+  <p><span class="tag t-prop">제안</span> <strong>대본 락 10/10은 협상 불가 원칙으로 두십시오.</strong> 10/27 중간점검에서 런스루를 보여주려면 최소 2주 연습이 필요하고, 역산하면 10/10입니다. 락 이후 수정은 <strong>대사 다듬기만 허용</strong>하고 구조 변경은 금지하십시오.</p>
+
+  <h3>Phase 3 — 제작 <span style="color:var(--ink-3);font-weight:400;font-size:15px">9/24 – 11/10 · Phase 2와 병행</span></h3>
+  <div class="tw"><table><tbody>
+    <tr><td style="width:104px"><strong>해야 할 일</strong></td><td>판사석·증인석 제작 / 조명 플랜 / 음향 소스 / 소품(증거물) / 의상 / <strong>배심원 번호표·평결 카드</strong> / 홍보물 · <strong>IR자료</strong></td></tr>
+    <tr><td><strong>마감</strong></td><td>세트 11/10 / <strong>홍보물 10/15</strong> / IR 11/17</td></tr>
+    <tr><td><strong>실패 위험</strong></td><td><strong>홍보물이 10월 말에 나오는 것</strong> → 모객 기간 소멸 → 30명 가산점 실패</td></tr>
+    <tr><td><strong>반드시 확인</strong></td><td><strong>모든 세트가 조립·분해 가능한가</strong>(유통성 = 시장성 30점) / <strong>영상 없이도 성립하는가</strong></td></tr>
+  </tbody></table></div>
+
+  <h3>Phase 4 — 연습 <span style="color:var(--ink-3);font-weight:400;font-size:15px">9/24 – 11/17 · 55일</span> <span class="chip p1">필수</span></h3>
+  <div class="tw"><table><tbody>
+    <tr><td style="width:104px"><strong>해야 할 일</strong></td><td>리딩 → 장면 → 동선 → 런스루 → <strong>분기 엔딩 3종 각각 연습</strong> → 큐투큐 → 테크 → 드레스</td></tr>
+    <tr><td><strong>마감</strong></td><td>런스루 <strong>10/25</strong> / 테크 11/16–17</td></tr>
+    <tr><td><strong>실패 위험</strong></td><td><strong>분기 엔딩 연습을 미루는 것.</strong> 엔딩 3종은 각각 완성도가 같아야 합니다 — 어느 엔딩이 나올지 모릅니다</td></tr>
+    <tr><td><strong>반드시 확인</strong></td><td><strong>사고 리허설 1회</strong> — 조명 큐 미스, 소품 누락, 대사 블랙아웃 상황에서 극을 이어가는 훈련. 무대 구현력 30점의 마지막 보험</td></tr>
+  </tbody></table></div>
+  <div class="call key"><p class="call-k">10/27 중간점검을 “점검”이 아니라 “1차 심사”로 취급하십시오</p>
+  <p>윤시중 연출은 <strong>2차 심사위원 5명 중 1명</strong>입니다. 이날 그가 보는 것이 11/24 그의 채점에 영향을 미칩니다. 그리고 더 중요한 것 — <strong>이날 받은 자문을 11/20 무대에 반영하면 그는 자기 조언이 실현된 것을 봅니다.</strong> 이건 자문 사업의 취지 그 자체이고, 정당하며, 대단히 효과적입니다.</p>
+  <p style="margin-top:10px"><strong>이날 반드시:</strong> 런스루 가능 상태 / 자문 받고 싶은 질문 3개 사전 준비 / 자문 전량 기록 / <strong>11/20에 “10월 27일 주신 조언대로 이렇게 바꿨습니다”라고 말할 수 있게 할 것.</strong></p></div>
+
+  <h3>Phase 5 — 관객 테스트 <span style="color:var(--ink-3);font-weight:400;font-size:15px">11/1 – 11/10</span> <span class="chip p1">필수</span></h3>
+  <p style="color:var(--ink-3);font-size:14px;margin-top:-6px">대부분의 팀이 건너뛰는 단계 — 그래서 여기서 격차가 벌어집니다.</p>
+  <div class="tw"><table><tbody>
+    <tr><td style="width:104px"><strong>해야 할 일</strong></td><td><strong>소규모 테스트 관객 10~15명 대상 시연 1~2회</strong> (연습실 가능)</td></tr>
+    <tr><td><strong>결과물</strong></td><td><strong>“몇 분에 범인을 맞혔나” 데이터</strong> / 이해도 조사 / 만족도 · 추천 의향</td></tr>
+    <tr><td><strong>실패 위험</strong></td><td>시간 없다고 생략 → <strong>11/20에 처음으로 관객 반응을 확인하게 됨. 그날은 45점이 걸린 날입니다</strong></td></tr>
+    <tr><td><strong>3가지 질문</strong></td><td>① <strong>몇 분에 범인을 짐작했나</strong> ② <strong>이해 안 된 지점이 있었나</strong> ③ <strong>친구에게 추천하겠나(0~10)</strong></td></tr>
+  </tbody></table></div>
+  <div class="call"><p class="call-k">이 단계가 두 배로 중요한 이유</p><p>① 45점의 사전 검증 ② <strong>여기서 나온 데이터가 그대로 IR자료가 됩니다.</strong> <em class="hl">“테스트 관객 15명 중 13명이 추천 의향 8점 이상”</em>은 11/24 심사에서 시장성 30점을 증명하는 <strong>유일한 객관적 근거</strong>입니다. 다른 4팀은 이 데이터가 없습니다.</p></div>
+
+  <h3>Phase 6 — 최종 공연 <span style="color:var(--ink-3);font-weight:400;font-size:15px">11/16 – 11/20</span> <span class="chip p1">필수</span></h3>
+  <div class="tw"><table><tbody>
+    <tr><td style="width:104px"><strong>해야 할 일</strong></td><td>11/12 스탭 회의(큐시트 지참) → 11/16–17 셋업·테크·최종 리허설 → 11/19 예비 명단 가동 → <strong>11/20 공연 + 관객과의 대화</strong></td></tr>
+    <tr><td><strong>결과물</strong></td><td><strong>90점 중 90점</strong></td></tr>
+    <tr><td><strong>실패 위험</strong></td><td>노쇼로 30명 미달 / 기술 사고 / 관객과의 대화 부실</td></tr>
+    <tr><td><strong>반드시 확인</strong></td><td><strong>공연 기록 촬영·사진 필수</strong> — 11/24 심사 자료이자 향후 유통 영업 자료. <strong>이걸 안 찍으면 작품이 증발합니다</strong></td></tr>
+  </tbody></table></div>
+
+  <h3>Phase 7 — 최종 심사 대응 <span style="color:var(--ink-3);font-weight:400;font-size:15px">11/21 – 11/24 · 4일</span> <span class="chip p1">필수</span></h3>
+  <div class="tw"><table><tbody>
+    <tr><td style="width:104px"><strong>해야 할 일</strong></td><td>① <strong>11/21 다른 팀 공연 관람</strong> ② 관객 데이터 집계 ③ <strong>IR자료 최종본</strong> ④ 3분 발표 준비</td></tr>
+    <tr><td><strong>실패 위험</strong></td><td><strong>공연이 끝났다고 긴장을 푸는 것.</strong> 시장성 30점의 절반이 이 4일에 결정됩니다</td></tr>
+    <tr><td><strong>반드시 확인</strong></td><td><strong>“공연 후 3일 안에 다음 공연 계획을 말할 수 있는 팀”이 1위입니다</strong></td></tr>
+  </tbody></table></div>
+  <p><span class="tag t-unk">미확인</span> 2차 심사 시 참가팀 발표 여부는 공식자료에 없습니다. 다만 심사가 2시간이고 대상이 5팀이라는 점에서 팀당 발표·질의 시간이 있을 가능성이 높습니다 <span class="tag t-anal">분석</span> — <strong>센터에 발표 유무·형식·제출자료를 즉시 확인하십시오.</strong></p>
+  <p><span class="tag t-prop">제안</span> <strong>11/18·19·21 다른 팀 공연을 반드시 관람하십시오.</strong> ① 경쟁 작품을 아는 유일한 방법입니다(공개 자료로는 확인 불가) ② 심사위원이 어떤 반응을 보이는지 관찰할 수 있습니다 ③ 11/24에 “5팀 중 우리가 왜 시장성이 높은가”를 <strong>실제 비교로</strong> 말할 수 있게 됩니다.</p>
+</section>
+
+<section id="p10">
+  <div class="sec-h"><span class="sec-n">Part 10</span><h2>최종 심사 전략 — 5명을 각각 어떻게 설득하는가</h2>
+  <p class="sec-lede">5명은 같은 공연을 보지만 다른 것을 봅니다. 다행히 네 개의 서로 다른 답이 하나의 무대에서 동시에 성립합니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th>심사위원</th><th>이 사람의 관심</th><th>우리가 심어야 할 한 문장</th><th>무대에서 증명하는 방법</th></tr></thead>
+    <tbody>
+      <tr><td><strong>윤시중</strong><br><span style="color:var(--ink-3);font-size:12px">유일한 창작자 · 10월 자문자</span></td><td>연출력, 형식적 도전</td><td><em>“관객의 판단을 극의 결말에 편입시킨 형식 실험이다”</em></td><td>10/27 자문을 무대에 명확히 반영 + 평결 장면의 연출적 완성도</td></tr>
+      <tr><td><strong>김경회</strong><br><span style="color:var(--ink-3);font-size:12px">공연장 운영자 · 바이어</span></td><td>“우리 극장에 걸 수 있나”</td><td><em>“단일 세트, 4~6인, 80분, 영상 장비 불필요”</em></td><td>IR자료에 대관 스펙 시트 + 관객 데이터</td></tr>
+      <tr><td><strong>이해규</strong><br><span style="color:var(--ink-3);font-size:12px">축제 감독 · 초청권자</span></td><td>“우리 축제에 부를 수 있나”</td><td><em>“지역 관객이 실제로 반응했고 축제 프로그램으로 편성 가능하다”</em></td><td>관객과의 대화에서 지역 관객의 반응 자체가 증거</td></tr>
+      <tr><td><strong>이태근</strong><br><span style="color:var(--ink-3);font-size:12px">프로덕션 대표</span></td><td>제작 단가, 투어 리스크</td><td><em>“이동 가능하고, 재제작 비용이 낮고, 시즌 2가 가능하다”</em></td><td>IR에 회당 운영 원가 · 이동 소요 명시</td></tr>
+      <tr><td><strong>조영선</strong><br><span style="color:var(--ink-3);font-size:12px">기획자 · 축제·거리예술</span></td><td>프로그램 적합성, 참여성</td><td><em>“관객 참여형이라 어떤 공간·행사에도 편성된다”</em></td><td>“관객이 배심원” 컨셉의 확장성 (체험 프로그램)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="pull"><p>이 작품은 관객이 참여하는 검증된 포맷이고, 이동 가능하며, 반복 판매된다.</p><p class="att">다섯 문장이 수렴하는 하나의 문장 — 5명 전원을 동시에 설득한다</p></div>
+
+  <h3>공연 당일, 심사위원이 반드시 목격해야 할 4장면 <span class="chip p1">필수</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th class="c">#</th><th>장면</th><th>어느 항목을 잡나</th><th>왜</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td>입장 시 관객이 배심원 번호표를 받고 사진 찍는 장면</td><td>시장성</td><td>공연 시작 전에 이미 “이건 상품이다”가 각인됨</td></tr>
+      <tr class="hi"><td class="c">2</td><td><strong>60분, 객석 60명이 동시에 평결 카드를 드는 장면</strong></td><td><strong>작품성 + 무대구현 + 시장성 동시</strong></td><td>이 장면 하나가 보고서 전체를 대체합니다</td></tr>
+      <tr><td class="c">3</td><td>오류 없이 끝나는 80분</td><td>무대구현</td><td>감점 0</td></tr>
+      <tr><td class="c">4</td><td>관객과의 대화에서 관객이 흥분해 말하는 장면</td><td>시장성</td><td>바이어 4명이 수요를 직접 목격</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call key"><p class="call-k">2번 장면은 반드시 사진과 영상으로 기록하십시오</p><p>이 한 장이 IR자료의 표지이고, 향후 지역 공연장 영업의 첫 슬라이드이며, 다음 지원사업 신청서의 대표 이미지입니다. <strong>찍지 않으면 존재하지 않은 것이 됩니다.</strong></p></div>
+
+  <h3>11/24 — 3분 발표 구성 <span class="chip p1">필수</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th class="n">시간</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td class="n">0:00–0:20</td><td><strong>“오늘의 판결은 객석이 내립니다.” 관객이 배심원이 되는 법정 추리극입니다.</strong></td></tr>
+      <tr><td class="n">0:20–1:00</td><td><strong>11/20 데이터</strong> — 관객 ○명, 평결 유죄 ○% / 무죄 ○%, 추천 의향 ○점, 재관람 의향 ○%</td></tr>
+      <tr><td class="n">1:00–1:40</td><td><strong>시장 근거</strong> — 타깃 정의 + 쉬어매드니스 레퍼런스 + 방탈출·추리예능 시장</td></tr>
+      <tr><td class="n">1:40–2:20</td><td><strong>상품 스펙</strong> — 단일 세트 / 4~6인 / 80분 / 영상 불필요 / 이동 가능 / 회당 운영 원가</td></tr>
+      <tr><td class="n">2:20–3:00</td><td><strong>다음 계획</strong> — 후속 공연 3~4회 운영안 + 시즌 2 구조 + 접촉 중인 공연장</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-anal">분석</span> 다른 4팀은 대부분 “작품이 어땠는지”를 말할 것입니다. <strong>우리만 “이걸로 어떻게 돈을 버는지”를 말하면, 심사 명칭(“시장성 높은 우수 콘텐츠 선정 심사”)에 정확히 답하는 유일한 팀이 됩니다.</strong></p>
+
+  <h3>11/24까지 반드시 집계할 데이터</h3>
+  <div class="tw"><table>
+    <thead><tr><th>데이터</th><th>어떻게 얻나</th><th>어디에 쓰나</th></tr></thead>
+    <tbody>
+      <tr><td>총 관객 수 · 예약 대비 실참율</td><td>현장 집계</td><td>가산점 + 모객 역량 증명</td></tr>
+      <tr class="hi"><td><strong>연령대 분포</strong></td><td>입장 시 배심원 등록에서 자연 수집</td><td><strong>“20~40대 타깃이 실제로 왔다”의 유일한 증거</strong></td></tr>
+      <tr><td>유입 경로</td><td>예약 시 1문항</td><td>홍보 채널 효율 = 재현 가능성 증명</td></tr>
+      <tr><td>평결 결과</td><td>현장 집계</td><td>“회차마다 다르다”의 실증</td></tr>
+      <tr class="hi"><td><strong>추천 의향 (0~10)</strong></td><td>자체 설문 (심사 평가지와 별개)</td><td><strong>시장성 30점의 핵심 근거</strong></td></tr>
+      <tr><td>재관람 의향</td><td>자체 설문</td><td>반복 관람 가치 증명</td></tr>
+      <tr><td>SNS 지표 (8월 대비 성장)</td><td>채널 통계</td><td>홍보 역량 증명</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> 자체 설문은 <strong>공식 심사 평가지와 물리적·시간적으로 분리</strong>하십시오. 관객과의 대화 종료 후 퇴장 시 별도 QR로 받는 것이 깔끔합니다. 심사 평가와 섞이면 오해의 소지가 있습니다.</p>
+</section>
+
+<section id="p11">
+  <div class="sec-h"><span class="sec-n">Part 11</span><h2>재공연 · 사업화 전략</h2>
+  <p class="sec-lede">“춘천에서 한 번 하고 끝내지 않으려면 무엇이 있어야 하는가”</p></div>
+
+  <p><span class="tag t-anal">분석</span> 지역 공연 유통에서 작품이 한 번으로 끝나는 이유는 작품이 나빠서가 아닙니다. <strong>세 가지가 없어서입니다.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th>없는 것</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td>① <strong>문서화된 상품 스펙</strong></td><td>공연장 담당자가 검토할 수 없음 → 검토 자체가 시작되지 않음</td></tr>
+      <tr><td>② <strong>이동 가능한 무대</strong></td><td>견적이 안 나옴 → 대관료보다 이동비가 비쌈</td></tr>
+      <tr><td>③ <strong>관객 데이터</strong></td><td>“표가 팔릴까”에 답할 근거 없음 → 담당자가 리스크를 못 짐</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call key"><p class="call-k">그래서</p><p class="big">IR자료는 심사용 서류가 아니라 영업 도구입니다.</p><p>홍보비 200만 원에 IR자료가 명시된 것은 우연이 아닙니다. <strong>11/24 이후에도 계속 쓸 문서를 지금 만드는 것입니다.</strong></p></div>
+
+  <h3>공연 상품 스펙 시트 <span class="chip p1">필수</span></h3>
+  <p>아래 표를 그대로 IR자료 1페이지에 넣으십시오. <strong>공연장 담당자는 이 한 장으로 검토합니다.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:150px">항목</th><th>사양</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><strong>작품명</strong></td><td>법정 추리극 &lt;침묵의 증거&gt;</td><td>—</td></tr>
+      <tr><td><strong>장르</strong></td><td>관객 참여형 법정 추리극</td><td>—</td></tr>
+      <tr><td><strong>한 줄</strong></td><td>“오늘의 판결은, 객석이 내립니다”</td><td>—</td></tr>
+      <tr><td><strong>러닝타임</strong></td><td>80분 (인터미션 없음)</td><td><strong>2회전 가능</strong></td></tr>
+      <tr><td><strong>관람 등급</strong></td><td><span class="tag t-unk">미확인</span> 사건 수위에 따라 확정 필요</td><td>12세/15세 권장</td></tr>
+      <tr><td><strong>타깃</strong></td><td>20~40대 추리·법정 콘텐츠 소비자</td><td>3~5인 그룹 단위</td></tr>
+      <tr><td><strong>출연</strong></td><td>4~6인</td><td>인건비 예측 가능</td></tr>
+      <tr><td><strong>스태프</strong></td><td>연출·무대·조명·음향·진행 (5~7인)</td><td>—</td></tr>
+      <tr class="hi"><td><strong>공연장 규모</strong></td><td><strong>50~200석 블랙박스·소극장</strong></td><td>배심원 참여의 최적 규모</td></tr>
+      <tr class="hi"><td><strong>무대 요구</strong></td><td>단일 법정 세트 (조립·분해식)</td><td><strong>영상 장비 불필요</strong></td></tr>
+      <tr><td><strong>조명 요구</strong></td><td>일반 소극장 상비 장비 + 증인석 특수 1</td><td><strong>특수 장비 없음</strong></td></tr>
+      <tr><td><strong>셋업 소요</strong></td><td>반나절~1일</td><td>당일 셋업·공연 가능 설계 목표</td></tr>
+      <tr class="hi"><td><strong>이동</strong></td><td><strong>1톤 트럭 1대 목표</strong></td><td>유통 가능성의 핵심 지표</td></tr>
+      <tr><td><strong>적정 티켓가</strong></td><td>2~3만 원</td><td>방탈출 대비 경쟁력</td></tr>
+      <tr><td><strong>손익분기 관객</strong></td><td><span class="tag t-unk">미확인</span> 실제 원가 산출 후 확정</td><td>11/17까지 산출</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-prop">제안</span> <strong>“1톤 트럭 1대”를 제작 단계의 설계 제약으로 삼으십시오.</strong> 세트를 만든 뒤 “옮길 수 있나”를 묻는 게 아니라 <strong>처음부터 옮길 수 있게 만드는 것</strong>입니다. 이 제약 하나가 시장성 30점과 실제 투어 가능성을 동시에 결정합니다.</p>
+
+  <h3>확장 로드맵</h3>
+  <div class="tw"><table>
+    <thead><tr><th class="c">단계</th><th class="n">시기</th><th>내용</th><th class="c">우선</th></tr></thead>
+    <tbody>
+      <tr><td class="c">0</td><td class="n">2026.11</td><td>합스테이지 최종 공연</td><td class="c"><span class="chip p1">필수</span></td></tr>
+      <tr><td class="c">1</td><td class="n">2026.11–12</td><td>선정 시 관내 공연장 <strong>3~4회 유료 공연</strong> (공식 지원)</td><td class="c"><span class="chip p1">필수</span></td></tr>
+      <tr><td class="c">2</td><td class="n">2027 상반기</td><td>지역 확장 — 원주·강릉 등 강원권 → 수도권 소극장</td><td class="c"><span class="chip p2">중요</span></td></tr>
+      <tr><td class="c">3</td><td class="n">2027</td><td>축제 초청 — 춘천연극제 등 (이해규 이사장이 심사위원인 점은 이 경로의 시작점)</td><td class="c"><span class="chip p2">중요</span></td></tr>
+      <tr class="hi"><td class="c">4</td><td class="n">2027</td><td><strong>시즌 2 — 사건 교체형.</strong> 세트·인물 구조 재사용, 사건만 신규</td><td class="c"><span class="chip p1">필수</span></td></tr>
+      <tr><td class="c">5</td><td class="n">2027~</td><td>기업·기관 공연 — 워크숍·팀빌딩 결합형 (배심원 = 팀 활동)</td><td class="c"><span class="chip p3">권장</span></td></tr>
+      <tr><td class="c">6</td><td class="n">2027~</td><td>교육 프로그램 — 청소년 법 교육·토론 교육 결합. <strong>학교 시장은 국내 최대 공연 유통 시장</strong></td><td class="c"><span class="chip p3">권장</span></td></tr>
+      <tr><td class="c">7</td><td class="n">2028~</td><td>라이선스 — 타 지역 극단에 대본·연출 매뉴얼 판매 (쉬어매드니스 모델)</td><td class="c"><span class="chip p4">선택</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call key"><p class="call-k">4번(시즌제)이 왜 구조적으로 가능한가</p>
+  <p>법정 추리극은 <strong>“공간(법정) + 역할(판사·검사·변호인·증인) + 절차(재판)”가 고정</strong>되고 <strong>“사건”만 변수</strong>입니다. 즉 세트·조명·음향·연기 훈련·관객 참여 구조를 <strong>100% 재사용</strong>하고, 새 대본만 쓰면 시즌 2가 됩니다.</p>
+  <p style="margin-top:10px"><strong>이건 5팀 중 우리만 가진 구조입니다.</strong> 인형극·음악극은 시즌 2를 만들려면 처음부터 다시 만들어야 합니다. <em class="hl">이 논리를 11/24에 명확히 말하십시오 — 바이어에게 가장 매력적인 문장입니다.</em></p></div>
+
+  <p><span class="tag t-prop">제안</span> <strong>6번(교육) 부연</strong> — &lt;침묵의 증거&gt;는 “증거와 판단”을 다루므로 <strong>청소년 법 교육·미디어 리터러시·토론 교육과 자연스럽게 결합</strong>됩니다. 지자체 교육 예산은 공연 예산보다 크고 안정적입니다. 지금 하라는 게 아니라 <strong>IR자료에 한 줄 넣으라는 뜻</strong>입니다 — 확장 가능성은 그 자체로 시장성 점수입니다.</p>
+
+  <h3>예산 배분안 — 1,200만 원 <span class="chip p2">중요</span></h3>
+  <p><span class="tag t-unk">미확인</span> 실제 계획서 예산안 미확인 상태의 참고안입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>항목</th><th class="n">금액</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>무대 세트 (판사석·증인석 중심, 조립식)</td><td class="n">250만</td><td>집중 투자 + 재사용 자산</td></tr>
+      <tr><td>배우 출연료</td><td class="n">300만</td><td>4~6인</td></tr>
+      <tr><td>스태프 (조명·음향·무대감독)</td><td class="n">180만</td><td>—</td></tr>
+      <tr><td>소품·의상 (증거물, 법복)</td><td class="n">120만</td><td>—</td></tr>
+      <tr class="hi"><td><strong>배심원 키트</strong> (번호표·평결 카드·포토존)</td><td class="n"><strong>50만</strong></td><td><strong>투입 대비 효과 최대</strong></td></tr>
+      <tr><td>연습실·기타</td><td class="n">100만</td><td>—</td></tr>
+      <tr><td><strong>제작비 소계</strong></td><td class="n"><strong>1,000만</strong></td><td>—</td></tr>
+      <tr><td>포스터·리플릿 디자인·인쇄</td><td class="n">60만</td><td>—</td></tr>
+      <tr><td>홍보 영상 (릴스·티저)</td><td class="n">60만</td><td>—</td></tr>
+      <tr class="hi"><td><strong>IR자료 제작</strong></td><td class="n"><strong>50만</strong></td><td><strong>11/24 심사 + 이후 영업 자산</strong></td></tr>
+      <tr><td>SNS 광고 (타깃 광고)</td><td class="n">30만</td><td>모객 직결</td></tr>
+      <tr><td><strong>홍보비 소계</strong></td><td class="n"><strong>200만</strong></td><td>—</td></tr>
+      <tr><td><strong>총계</strong></td><td class="n"><strong>1,200만</strong></td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-anal">분석</span> <strong>배심원 키트 50만 원이 이 예산에서 가장 효율이 높은 항목입니다.</strong> 관객 참여 경험 전체를 만들고, 포토존과 SNS 자산이 되며, 재공연 시 소모품 재제작만으로 재사용됩니다.</p>
+</section>
+
+<section id="p12">
+  <div class="sec-h"><span class="sec-n">Part 12</span><h2>가장 중요한 TOP 10</h2>
+  <p class="sec-lede">우선순위 순서입니다. 위에서부터 하십시오.</p></div>
+  <div class="tw"><table>
+    <thead><tr><th class="c">#</th><th>할 일</th><th>왜</th><th class="n">마감</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td class="c"><strong>1</strong></td><td><strong>관객·전문가 평가표 실물을 센터에 요청</strong></td><td><strong>45점의 설계도.</strong> 문항을 모르면 85일을 감으로 씀</td><td class="n">8/29</td></tr>
+      <tr class="hi"><td class="c"><strong>2</strong></td><td><strong>9/11 최종 계획서에 “관객 배심원 평결” 명시</strong></td><td>계획서 언어 = 11/24 채점 프레임. 안 쓰면 그냥 법정극으로 채점됨</td><td class="n">9/11</td></tr>
+      <tr class="hi"><td class="c"><strong>3</strong></td><td><strong>대본 락 10/10</strong> — 3전환 구조 + 단서 관리표 + 분기 엔딩</td><td>대본이 흔들리면 무대 구현력 30점이 통째로 무너짐</td><td class="n">10/10</td></tr>
+      <tr><td class="c"><strong>4</strong></td><td><strong>모객 60~80명 착수</strong> — 방탈출 카페 제휴 + 대학 동아리</td><td>45+5=50점. 홍보물 없이 못 함 → <strong>10/15 홍보물 마감</strong></td><td class="n">10/15</td></tr>
+      <tr><td class="c"><strong>5</strong></td><td><strong>10/27 중간점검을 “심사”로 준비</strong> — 런스루 가능 상태</td><td>윤시중 연출 = 2차 심사위원. 자문 반영이 곧 득점</td><td class="n">10/25</td></tr>
+      <tr><td class="c"><strong>6</strong></td><td><strong>테스트 관객 시연 1~2회 + 3문항 조사</strong></td><td>45점의 사전 검증 + IR 데이터. <strong>다른 팀은 안 함</strong></td><td class="n">11/10</td></tr>
+      <tr><td class="c"><strong>7</strong></td><td><strong>IR자료 제작</strong> — 상품 스펙 + 관객 데이터 + 시즌제 구조</td><td>시장성 30점. 심사위원 5명 중 4명이 바이어</td><td class="n">11/17</td></tr>
+      <tr><td class="c"><strong>8</strong></td><td><strong>관객과의 대화 20분 설계</strong></td><td>45점 채점 직전 구간 + 바이어가 수요를 목격하는 장면</td><td class="n">11/17</td></tr>
+      <tr><td class="c"><strong>9</strong></td><td><strong>11/18·19·21 다른 4팀 공연 관람</strong></td><td>경쟁 작품을 아는 유일한 방법 + 11/24 비교 논거</td><td class="n">11/21</td></tr>
+      <tr><td class="c"><strong>10</strong></td><td><strong>11/20 공연 기록 촬영</strong> (특히 객석 평결 장면)</td><td>안 찍으면 작품이 증발함. IR·영업·차기 사업 자산</td><td class="n">11/20</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="fin">
+  <div class="sec-h"><span class="sec-n">최종 답변</span><h2>단 하나의 전략만 선택한다면</h2></div>
+
+  <div class="verdict">
+    <p class="vk">웨이브 포지가 1위를 하기 위한 단일 전략</p>
+    <h3>관객을 배심원으로 만들고,<br>그 평결이 실제로 결말을 바꾸게 하라.</h3>
+  </div>
+
+  <h3>왜 이것인가 — 근거 5개</h3>
+
+  <h4>① 105점 중 50점을 직접 움직입니다 <span class="chip p1">필수</span></h4>
+  <p>관객 심사 45점 + 모객 가산점 5점 = <strong>50점(47.6%)이 객석에서 나옵니다.</strong> 그리고 <strong>참여한 관객은 관람한 관객보다 반드시 높게 평가합니다.</strong> 이건 점수 유도가 아니라 관객이 실제로 더 좋은 경험을 하기 때문에 발생하는 정당한 결과입니다. <em class="hl">우리는 점수를 부탁하는 게 아니라 더 좋은 공연을 만들어서 더 좋은 점수를 받는 것입니다.</em></p>
+
+  <h4>② 30/30/30 세 항목을 하나의 설계로 동시에 공략합니다 <span class="chip p1">필수</span></h4>
+  <p>대본을 다듬으면 작품성만, 조명을 늘리면 무대구현만 오릅니다. <strong>다른 어떤 개선안도 세 항목을 동시에 올리지 못합니다.</strong></p>
+
+  <h4>③ 다른 4팀이 구조적으로 따라할 수 없습니다 <span class="chip p1">필수</span></h4>
+  <p>인형극에 배심원을 넣을 수 없고, 음악극에 평결을 넣을 수 없습니다. <strong>법정극만이 “관객 = 배심원”이라는 설정을 억지 없이 가질 수 있습니다.</strong> 법정에는 원래 배심원석이 있고, 객석이 곧 방청석입니다. 이건 우리가 만든 우위가 아니라 <strong>장르가 준 우위</strong>이며, 그래서 복제 불가능합니다.</p>
+
+  <h4>④ 바이어는 “작품”이 아니라 “포맷”을 삽니다 <span class="chip p1">필수</span></h4>
+  <p>작품 한 편은 한 번 팔립니다. <strong>포맷은 반복해서 팔립니다.</strong> 쉬어매드니스가 1980년부터 지금까지 팔리는 이유는 대본이 뛰어나서가 아니라 <strong>“관객이 참여하는 추리극”이라는 포맷이기 때문</strong>입니다. 심사 명칭이 “<strong>시장성 높은 우수 콘텐츠</strong> 선정 심사”인 이상, 심사위원이 찾는 건 정확히 이것입니다.</p>
+
+  <h4>⑤ 모객이 4배 쉬워집니다 <span class="chip p1">필수</span></h4>
+  <p>“법정 추리극 보러 오세요”는 평범한 연극 초대이고 반응이 낮습니다. <strong>“11월 20일 금요일, 배심원 60명을 모집합니다”</strong>는 역할 제안이고, 추리 팬은 이 문장을 거절하기 어렵습니다. 그리고 배심원은 <strong>혼자 오지 않습니다</strong> — 4인 단위로 모객되므로 필요한 설득 건수가 4분의 1이 됩니다. <em class="hl">50점짜리 과제의 난이도가 4분의 1이 되는 것입니다.</em></p>
+
+  <h3>이 전략의 리스크와 방어</h3>
+  <div class="tw"><table>
+    <thead><tr><th>리스크</th><th>방어</th></tr></thead>
+    <tbody>
+      <tr><td>참여가 산만해져 공연이 무너진다</td><td><strong>자유도를 결말에만 국한.</strong> 앞 60분은 완전히 통제된 정극</td></tr>
+      <tr><td>엔딩 3종 연습 부담</td><td>분기는 마지막 8~10분만. 앞 60분은 동일</td></tr>
+      <tr><td>“장치일 뿐”이라는 평가</td><td>평결이 <strong>주제와 논리적으로 맞물리게</strong> 설계 — “관객의 판단이 시험받는” 구조로</td></tr>
+      <tr><td>관객이 소극적</td><td>입장 시 배심원 위촉 + 선서 + 극 중 반복 호명으로 사전 훈련</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>만약 이 전략을 채택하지 않는다면</h3>
+  <p><span class="tag t-anal">분석</span> 정직하게 말씀드립니다. 배심원 설계 없이도 <strong>&lt;침묵의 증거&gt;는 좋은 공연이 될 수 있습니다.</strong> 그러나 그 경우 우리는 인형극·음악극과 <strong>작품성 30점 정면 대결</strong>을 하게 되고, 그 승부는 장르 특성상 불리합니다. 시장성 30점에서도 “재미있는 법정극”이라는 답밖에 못 합니다.</p>
+  <div class="pull"><p>배심원 설계는 우리를 “5팀 중 하나의 좋은 공연”에서 “5팀 중 유일하게 다른 종류의 물건”으로 바꿉니다.<br>1위는 잘한 팀이 아니라 다른 팀과 비교가 안 되는 팀이 가져갑니다.</p></div>
+
+  <h3>AI 부서가 지금 막혀 있는 것</h3>
+  <div class="tw"><table>
+    <thead><tr><th>막힌 것</th><th>이유</th><th>필요한 조치</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td>작품 자체에 대한 실제 진단</td><td><strong>대본·시놉시스 미제공</strong></td><td><strong>대본을 PDF 또는 텍스트로 공유</strong> (사규 2항 — <code>.hwp</code>는 추출 불가)</td></tr>
+      <tr><td>합케이스 쇼케이스 평가</td><td>영상·기록 미제공</td><td>영상 링크 또는 기록 공유</td></tr>
+      <tr><td>8/25 제출 계획서와의 정합성</td><td>계획서 미제공</td><td>계획서 공유</td></tr>
+      <tr><td>경쟁 4팀 작품 분석</td><td><strong>공개 자료 없음</strong></td><td>11/18·19·21 직접 관람</td></tr>
+      <tr><td>객석 규모·공연 시각·러닝타임 제한</td><td>공식자료에 없음</td><td>센터 문의</td></tr>
+      <tr class="hi"><td>관객·전문가 평가표</td><td>공식자료에 없음</td><td><strong>센터 요청 (최우선)</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="ask">
+    <p class="k">오늘 결정할 단 하나</p>
+    <p class="q">“관객 배심원 평결 시스템을 &lt;침묵의 증거&gt;에 도입할 것인가.”</p>
+    <p>이 결정이 9/11 계획서의 내용을 바꾸고, 대본 구조를 바꾸고, 모객 카피를 바꾸고, 예산 배분을 바꿉니다. <strong>9월 11일 이후에는 되돌리기 어렵습니다.</strong></p>
+  </div>
+</section>
+
+<footer>
+  <h4>참고 자료</h4>
+  <p><strong>공식 자료 (1차 근거)</strong> — 「공연 콘텐츠 고도화 사업 &lt;합스테이지&gt; 일정 안내」 · 「2026 &lt;합스테이지&gt; 최종 우수 공연 선정 심사 안내」, 춘천시공연예술창업지원센터</p>
+  <p style="margin-top:10px"><strong>외부 확인 자료</strong></p>
+  <ul>
+    <li><a href="https://www.thehab.co.kr/html/center/center.php">춘천시공연예술창업지원센터</a></li>
+    <li><a href="https://www.mhns.co.kr/news/articleView.html?idxno=752464">‘합케이스’로 신작 공연 발굴… 시민 관객평가단에 기대 모인다 — 문화뉴스</a></li>
+    <li><a href="https://www.kwtotalnews.kr/63674">춘천시공연예술창업지원센터 합케이스 성료, 최종 5개 작품 선정 — 강원종합뉴스</a></li>
+    <li><a href="https://www.sangsangmadang.com/main/CC">KT&amp;G 상상마당 춘천</a></li>
+    <li><a href="https://www.sfac.or.kr/theater/WZ020400/webzine_view.do?wtIdx=13551">극단 하땅세 &lt;시간을 칠하는 사람&gt; — 연극in</a> · <a href="https://www.khan.co.kr/article/202211021438001">15년차 극단 ‘하땅세’ — 경향신문</a></li>
+    <li><a href="https://www.k-trendynews.com/news/articleView.html?idxno=190290">무대 위의 인간학② 참여형 연극의 진화 — KtN</a></li>
+    <li><a href="https://brunch.co.kr/@dailynews/950">‘연극의 메카’ 대학로 인기 연극 10 (쉬어매드니스 등)</a></li>
+    <li><a href="https://namu.wiki/w/%EB%B0%A9%ED%83%88%EC%B6%9C%20%EC%B9%B4%ED%8E%98">방탈출 카페 — 나무위키</a></li>
+  </ul>
+  <p style="margin-top:16px">본 보고서는 웨이브 포지 AI 전략실이 공식 서류 2건과 공개 자료를 근거로 작성했습니다. <strong>사실</strong> 이외의 모든 내용은 분석 또는 제안이며, 최종 판단과 실행은 대표님께 있습니다. 사규 1항에 따라 메일 발송 · SNS 게시 · 결제는 수행하지 않았습니다.</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
+  var secs = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
+  if(!secs.length || !('IntersectionObserver' in window)) return;
+  var visible = new Map();
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) visible.set(e.target.id, e.intersectionRatio);
+      else visible.delete(e.target.id);
+    });
+    var best=null, bestTop=Infinity;
+    visible.forEach(function(_, id){
+      var top = document.getElementById(id).getBoundingClientRect().top;
+      if(top < bestTop){ bestTop = top; best = id; }
+    });
+    if(!best) return;
+    links.forEach(function(a){
+      a.classList.toggle('on', a.getAttribute('href') === '#' + best);
+    });
+  }, {rootMargin:'-10% 0px -70% 0px', threshold:[0,0.05,0.2]});
+  secs.forEach(function(s){ io.observe(s); });
+})();
+</script>

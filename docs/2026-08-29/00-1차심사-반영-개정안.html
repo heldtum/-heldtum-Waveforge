@@ -1,0 +1,649 @@
+<title>침묵의 증거 개정안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F3F4F0; --surface:#FCFCFA; --surface2:#EAEDE6;
+  --ink:#16191C; --ink2:#4B545B; --ink3:#79838A;
+  --rule:#D9DED6; --rule2:#C3CABF;
+  --acc:#1F4E4A; --acc2:#2F6E66; --accSoft:#E3EBE7;
+  --drop:#A32B25; --dropSoft:#F6E7E5;
+  --keep:#3F7340; --keepSoft:#E6EFE4;
+  --boost:#A96916; --boostSoft:#F7EDDF;
+  --serif:"Nanum Myeongjo",'Apple SD Gothic Neo',serif;
+  --sans:"IBM Plex Sans KR",'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#101314; --surface:#171B1D; --surface2:#1E2325;
+  --ink:#E9EBE7; --ink2:#A8B1B3; --ink3:#818A8D;
+  --rule:#2A3133; --rule2:#3A4245;
+  --acc:#6FB3A6; --acc2:#8AC7BB; --accSoft:#1A2A28;
+  --drop:#E4736A; --dropSoft:#2E1D1C;
+  --keep:#71B06F; --keepSoft:#17251A;
+  --boost:#DB9B41; --boostSoft:#2C2317;
+}}
+:root[data-theme="dark"]{
+  --paper:#101314; --surface:#171B1D; --surface2:#1E2325;
+  --ink:#E9EBE7; --ink2:#A8B1B3; --ink3:#818A8D;
+  --rule:#2A3133; --rule2:#3A4245;
+  --acc:#6FB3A6; --acc2:#8AC7BB; --accSoft:#1A2A28;
+  --drop:#E4736A; --dropSoft:#2E1D1C;
+  --keep:#71B06F; --keepSoft:#17251A;
+  --boost:#DB9B41; --boostSoft:#2C2317;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;word-break:keep-all;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:0 22px 120px}
+
+/* masthead */
+.mast{border-top:3px solid var(--ink);padding-top:20px;margin:34px 0 52px}
+.mtag{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:24px}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(32px,5.4vw,54px);line-height:1.15;letter-spacing:-.015em;margin:0 0 10px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:17px;color:var(--ink2);max-width:62ch;margin:0 0 30px;line-height:1.7}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.meta div{background:var(--surface);padding:13px 15px}
+.meta dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px}
+.meta dd{margin:0;font-size:14px;font-weight:600;line-height:1.4}
+.meta dd .big{font-family:var(--mono);font-size:25px;font-weight:600;color:var(--drop);display:block;line-height:1.1;letter-spacing:-.02em}
+.meta dd small{display:block;font-weight:400;font-size:12px;color:var(--ink3);margin-top:3px}
+
+section{margin-bottom:66px;scroll-margin-top:20px}
+.sh{border-top:1px solid var(--ink);padding-top:14px;margin-bottom:24px}
+.sn{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:600;display:block;margin-bottom:7px}
+h2{font-family:var(--serif);font-weight:800;font-size:clamp(24px,3.2vw,33px);line-height:1.3;margin:0;text-wrap:balance}
+.sub{font-size:16px;color:var(--ink2);max-width:66ch;margin:11px 0 0;line-height:1.7}
+h3{font-family:var(--serif);font-weight:700;font-size:20px;line-height:1.4;margin:38px 0 11px;text-wrap:balance}
+h4{font-size:15px;font-weight:600;margin:26px 0 8px}
+p{margin:0 0 14px;max-width:68ch}
+ul,ol{margin:0 0 14px;padding-left:20px;max-width:68ch}
+li{margin-bottom:6px}
+li::marker{color:var(--ink3)}
+strong{font-weight:600}
+em.hl{font-style:normal;background:linear-gradient(transparent 62%,var(--accSoft) 62%);font-weight:600;padding:0 1px}
+a{color:var(--acc);text-underline-offset:2px}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.07em;padding:2.5px 7px;border-radius:2px;white-space:nowrap;vertical-align:2px}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.c-drop{color:var(--drop);background:var(--dropSoft)}
+.c-keep{color:var(--keep);background:var(--keepSoft)}
+.c-boost{color:var(--boost);background:var(--boostSoft)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.07em;padding:2px 6px;border-radius:2px;vertical-align:2px}
+.t-f{color:#2B4A6B;background:#E5EBF1}
+.t-a{color:var(--acc);background:var(--accSoft)}
+.t-p{color:var(--boost);background:var(--boostSoft)}
+.t-u{color:var(--ink3);background:var(--surface2);border:1px dashed var(--rule2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .t-f{color:#7FA6CE;background:#182430}}
+:root[data-theme="dark"] .t-f{color:#7FA6CE;background:#182430}
+
+/* judge quote → reading → decision */
+.jc{border:1px solid var(--rule);border-radius:3px;background:var(--surface);margin-bottom:14px;overflow:hidden}
+.jc .q{padding:14px 18px;border-left:3px solid var(--rule2);background:var(--surface2);font-family:var(--serif);font-size:16px;line-height:1.65;color:var(--ink)}
+.jc .q::before{content:"“";color:var(--ink3);margin-right:2px}
+.jc .q::after{content:"”";color:var(--ink3)}
+.jc .b{padding:15px 18px}
+.jc .b .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px}
+.jc .b p{margin:0 0 12px;font-size:14.5px;line-height:1.7}
+.jc .b p:last-child{margin:0}
+.jc .d{border-top:1px solid var(--rule);padding-top:12px;margin-top:12px}
+.jc .d b{font-size:14.5px}
+
+/* callouts */
+.call{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--acc);border-radius:0 3px 3px 0;padding:19px 21px;margin:22px 0}
+.call.hot{border-left-color:var(--drop)}
+.call.warm{border-left-color:var(--boost)}
+.call .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+.call .big{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.5;margin:0 0 10px;max-width:none}
+.call p:last-child,.call ul:last-child,.call ol:last-child{margin-bottom:0}
+
+/* tables */
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;line-height:1.6;min-width:540px}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{background:var(--surface2);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.c,th.c{text-align:center}
+.hi td{background:var(--accSoft)}
+.bad td{background:var(--dropSoft)}
+.good td{background:var(--keepSoft)}
+
+/* pull */
+.pull{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:24px 0;margin:32px 0}
+.pull p{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2.7vw,26px);line-height:1.45;margin:0;max-width:none;text-wrap:balance}
+.pull .att{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);margin-top:13px}
+
+/* before after */
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:0 14px;align-items:stretch;margin:18px 0}
+@media(max-width:620px){.ba{grid-template-columns:1fr;gap:8px}.ba .arw{transform:rotate(90deg);padding:2px 0}}
+.ba .col{border:1px solid var(--rule);border-radius:3px;padding:14px 16px;background:var(--surface)}
+.ba .col.b4{border-left:3px solid var(--drop)}
+.ba .col.af{border-left:3px solid var(--keep)}
+.ba .col .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.ba .col p{margin:0;font-size:14px;line-height:1.65}
+.ba .arw{display:flex;align-items:center;color:var(--ink3);font-size:18px}
+
+/* timeline bar */
+.tlbar{display:flex;height:44px;border-radius:2px;overflow:hidden;border:1px solid var(--rule2);margin:16px 0 8px}
+.tlbar i{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#FCFCFA;overflow:hidden;white-space:nowrap;font-style:normal}
+.tl-a{background:#5C6B72}.tl-b{background:#7E8A6A}.tl-c{background:var(--acc)}.tl-d{background:#8C4A44}.tl-e{background:#6B5B8A}
+.tlleg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--ink2)}
+.tlleg span{display:flex;align-items:center;gap:7px}
+.tlleg i{width:10px;height:10px;border-radius:2px;flex:none}
+
+.step{display:grid;grid-template-columns:44px 1fr;gap:0 16px;position:relative}
+.step .n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--acc);padding-top:15px;text-align:right}
+.step .c{border-bottom:1px solid var(--rule);padding:13px 0}
+.step:last-child .c{border-bottom:none}
+.step .t{font-size:15px;font-weight:600;line-height:1.45}
+.step .s{font-size:13.5px;color:var(--ink2);margin-top:4px;line-height:1.6}
+
+/* reference cards */
+.ref{border:1px solid var(--rule);border-radius:3px;background:var(--surface);margin-bottom:14px;overflow:hidden}
+.ref .rh{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:13px 17px;background:var(--surface2);border-bottom:1px solid var(--rule)}
+.ref .rh b{font-family:var(--serif);font-size:17px;font-weight:700}
+.ref .rh .yr{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink3)}
+.ref .rb{padding:15px 17px}
+.ref .rb p{margin:0 0 11px;font-size:14.5px;line-height:1.7}
+.ref .rb p:last-child{margin:0}
+.ref .learn{border-top:1px solid var(--rule);margin-top:12px;padding-top:12px}
+.ref .learn .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);font-weight:600;margin-bottom:5px}
+.ref .lk{font-family:var(--mono);font-size:12px;word-break:break-all}
+.rank{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--acc);color:var(--paper);font-family:var(--mono);font-size:11px;font-weight:600;flex:none}
+:root:not([data-theme="dark"]) .rank{color:#FCFCFA}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .rank{color:#101314}}
+:root[data-theme="dark"] .rank{color:#101314}
+footer{border-top:1px solid var(--rule);padding-top:20px;font-size:12.5px;color:var(--ink3);line-height:1.75}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:640px){body{font-size:15.5px}.wrap{padding:0 15px 90px}}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="mtag"><span>웨이브 포지 AI 전략실</span><span>2026.08.29</span><span>1차 심사 반영 개정안</span></div>
+  <h1>조사를 줄이고<br><em>재판을 키운다</em></h1>
+  <p class="lede">1차 심사평 아홉 항목, 쇼케이스 대본, 풀버전 스토리를 대조한 결과입니다. 결론부터 말하면 — 지난주에 세운 분산 조사 설계는 접고, 쇼케이스가 이미 갖고 있던 구조로 돌아가야 합니다.</p>
+  <dl class="meta">
+    <div><dt>본공연까지</dt><dd><span class="big">D-83</span><small>11.20.(금)</small></dd></div>
+    <div><dt>최종 계획서</dt><dd><span class="big">D-13</span><small>9.11.(금) 16:00</small></dd></div>
+    <div><dt>핵심 판정</dt><dd>분산 조사 철회<small>2팀 구조로 복귀</small></dd></div>
+    <div><dt>반복 구조</dt><dd><span class="big">4곳</span><small>브리핑 73.7% 동일</small></dd></div>
+    <div><dt>손익분기 답</dt><dd>6명·2회전·3.5만<small>회당 44명</small></dd></div>
+  </dl>
+</header>
+
+<section>
+  <div class="sh"><span class="sn">진단</span><h2>심사평 여덟 항목은 한 문장이다</h2>
+  <p class="sub">따로 보면 중구난방이지만, 겹쳐 놓으면 전부 같은 곳을 가리킵니다.</p></div>
+
+  <div class="pull">
+    <p>조사 파트를 키우지 마라. 재판 파트를 키워라.<br>조사는 재판으로 가기 위한 짧고 명확한 준비 운동이다.</p>
+    <p class="att">심사평 8항목의 공통 해석</p>
+  </div>
+
+  <p><span class="tag t-f">사실</span> 심사평에서 가장 결정적인 문장은 이것입니다.</p>
+  <div class="call hot"><p class="k">놓치면 안 되는 한 줄</p>
+  <p class="big">“쇼케이스에서는 증거들을 볼 시간이 부족했었지만 관객의 역할이 명확하게 되어 있었고, 재판 연극장면에서 잘 풀어서 뽑혔는데 그게 조금 다시 흐려졌다.”</p>
+  <p><span class="tag t-a">분석</span> <strong>조사 시간이 부족했던 것은 문제가 아니었습니다.</strong> 심사위원은 그걸 알면서도 뽑았다고 말하고 있습니다. 통과의 이유는 <em class="hl">역할의 명확성</em>과 <em class="hl">재판 장면의 연극적 완성도</em> 두 가지였습니다. 즉 조사 시간을 늘리고 장소를 늘리는 방향은 <strong>선정 이유를 강화하는 게 아니라 희석하는 방향</strong>입니다.</p></div>
+
+  <p><span class="tag t-a">분석</span> 이 해석을 받아들이면 나머지 항목이 전부 같은 말로 읽힙니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:44%">심사평</th><th>같은 말로 번역하면</th></tr></thead>
+    <tbody>
+      <tr><td>“관객이 어디서 뭘 해야 할지 모를 것 같다”</td><td rowspan="3" style="vertical-align:middle"><strong>관객 과제를 개수로 못 박고, 통제 인력을 붙여라</strong></td></tr>
+      <tr><td>“조사마다 사람 컨트롤 어떻게 할지 필요 ★”</td></tr>
+      <tr><td>“사람마다 속도감이 너무나 다르다”</td></tr>
+      <tr><td>“재판 부분 때매 뽑혔다”(2회 반복)</td><td rowspan="2" style="vertical-align:middle"><strong>강점은 조사가 아니라 재판과 연기다</strong></td></tr>
+      <tr><td>“배우들이 연극적인 것을 잘 표현했기 때문”</td></tr>
+      <tr><td>“이머시브 말고 이동형만으로 충분”</td><td rowspan="2" style="vertical-align:middle"><strong>화려함으로 승부하지 마라. 진지한 극으로 몰입을 가져가라</strong></td></tr>
+      <tr><td>“이머시브는 화려해야 하는데 사건은 화려하기 어렵다”</td></tr>
+      <tr><td>“단계별로 1~5단계로 나눠서”</td><td><strong>초연에서 다 해결하려 하지 마라</strong></td></tr>
+      <tr><td>“인원에 맞는 판매모델을 찾아야 한다”</td><td><strong>손익분기를 숫자로 답해라</strong></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">근거</span><h2>쇼케이스는 이미 정답을 갖고 있었다</h2>
+  <p class="sub">대본을 읽고 나서 생각이 바뀌었습니다. 지난 보고서에서 제가 “새로 도입하자”고 제안한 것들은 이미 거기 있었습니다.</p></div>
+
+  <p><span class="tag t-f">사실</span> 7월 8일 쇼케이스 대본에 실제로 들어 있던 것:</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:32%">장치</th><th>대본에 적힌 그대로</th></tr></thead>
+    <tbody>
+      <tr class="good"><td><strong>2팀 대립 구조</strong></td><td>“빨간색 줄에 계신 분들은 검사 측 조사단으로, 파란색 줄에 계신 분들은 변호사 측 조사단으로”</td></tr>
+      <tr class="good"><td><strong>이동형</strong></td><td>“검사 측은 오픈스튜디오, 변호사 측은 스튜디오3으로 이동”</td></tr>
+      <tr class="good"><td><strong>명확한 관객 과제</strong></td><td>“손 들어주시면 원하시는 <strong>증거 사진 5개</strong> 찍어드리도록 하겠습니다”</td></tr>
+      <tr class="good"><td><strong>시간 통제</strong></td><td>“지금부터 조사 시간 <strong>3분</strong> 드리겠습니다” — 타이머를 누른다</td></tr>
+      <tr class="good"><td><strong>동선 통제</strong></td><td>“이제 이동하시겠습니다. <strong>한 줄로 서서</strong> 이동하시겠습니다”</td></tr>
+      <tr class="good"><td><strong>관객 행동 → 극 반영</strong></td><td>“형사와 감식반이 찍은 증거를 검사와 변호사에게 준다” → 판사: “각 조사단이 제출한 증거 채택하세요”</td></tr>
+      <tr class="good"><td><strong>배심원 평결</strong></td><td>“조사관 분들은 이 사건의 배심원이 됩니다 … 빨간색 부분을, 파란색 부분을 들어주십쇼”</td></tr>
+      <tr class="good"><td><strong>분기 엔딩 2종</strong></td><td>[인혜 유죄] / [인혜 무죄] — 각각 다른 판결문과 인혜의 마지막 대사</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call hot"><p class="k">정정합니다</p>
+  <p>지난 보고서에서 저는 <strong>“관객을 배심원으로 만들고 평결이 결말을 바꾸게 하라”</strong>를 이번 프로젝트의 단일 전략으로 제안했습니다. 방향 자체는 심사평과 맞습니다만, <strong>그것을 새로 도입할 것처럼 쓴 것은 틀렸습니다.</strong> 쇼케이스에 이미 있었고, 그게 선정 이유입니다.</p>
+  <p style="margin-top:10px">따라서 전략 문장을 이렇게 고쳐 씁니다 — <em class="hl">새로 만드는 것이 아니라, 이미 통한 것을 지키고 날카롭게 만드는 것.</em> 지난 85일 계획은 “없는 것을 더하는” 계획이었고, 지금 필요한 것은 “있는 것을 잃지 않는” 계획입니다.</p></div>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">판정</span><h2>철회 · 유지 · 강화</h2>
+  <p class="sub">지난주 세운 이동형 분산 조사 설계와 제가 만든 운영 콘솔의 전제를 심사평에 대조했습니다. 제 제안도 예외 없이 같은 기준으로 판정했습니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:30%">항목</th><th class="c" style="width:88px">판정</th><th>사유</th></tr></thead>
+    <tbody>
+      <tr><td><strong>스테이션 6개 · 라운드 3회 분산 조사</strong></td><td class="c"><span class="chip c-drop">철회</span></td><td>배우가 6곳에 흩어지면 재판에 설 사람이 없습니다. “재판 때문에 뽑혔다”와 정면 충돌</td></tr>
+      <tr><td><strong>팀 4~6개 · 팀마다 다른 증거</strong></td><td class="c"><span class="chip c-drop">철회</span></td><td>“관객이 뭘 할지 모를 것 같다”는 지적의 원인 그 자체. 2팀으로 복귀</td></tr>
+      <tr><td><strong>1심·2심·최종 3회 투표</strong></td><td class="c"><span class="chip c-boost">연기</span></td><td>통제 부담이 3배. 초연은 쇼케이스대로 <strong>1회 평결</strong>, 2단계에서 2심 도입</td></tr>
+      <tr><td><strong>스테이션마다 장면 상연</strong></td><td class="c"><span class="chip c-drop">철회</span></td><td>배우 1인당 같은 장면 3회 반복 = 체력 소모, 재판 집중력 저하</td></tr>
+      <tr><td><strong>이머시브 지향</strong></td><td class="c"><span class="chip c-drop">철회</span></td><td>심사평 그대로. “사건을 다루니 화려하기 어렵다”</td></tr>
+      <tr class="hi"><td><strong>이동형 (공간 분리)</strong></td><td class="c"><span class="chip c-keep">유지</span></td><td>쇼케이스가 이미 이동형. 심사위원도 이동형을 제안</td></tr>
+      <tr class="hi"><td><strong>검사팀 / 변호팀 2팀 대립</strong></td><td class="c"><span class="chip c-keep">유지</span></td><td>“팀이 이기고 싶게”라는 의도의 정답. 이미 검증됨</td></tr>
+      <tr class="hi"><td><strong>증거 관찰(수집 아님)</strong></td><td class="c"><span class="chip c-keep">유지</span></td><td>“손대지 마시고 사진 요청” — 이미 구현되어 있음</td></tr>
+      <tr class="hi"><td><strong>배심원 평결 + 분기 엔딩</strong></td><td class="c"><span class="chip c-keep">유지</span></td><td>선정 이유. 절대 건드리지 않음</td></tr>
+      <tr class="hi"><td><strong>진지한 톤앤매너</strong></td><td class="c"><span class="chip c-keep">유지</span></td><td>“요란하지 않고 진지해서 좋았다” — 명시적 칭찬</td></tr>
+      <tr><td><strong>재판 장면 분량</strong></td><td class="c"><span class="chip c-boost">강화</span></td><td>전체의 40% 이상으로. 아래 러닝타임 설계</td></tr>
+      <tr><td><strong>관객 과제의 명시성</strong></td><td class="c"><span class="chip c-boost">강화</span></td><td>사진 5장 → 개인별 조사관 카드. 아래 상세</td></tr>
+      <tr><td><strong>페어플레이 단서</strong></td><td class="c"><span class="chip c-boost">강화</span></td><td>창틀 발자국·찢긴 일기장 추가. 아래 상세</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="ba">
+    <div class="col b4"><div class="k">지난주 설계</div><p>6개 장소 · 4개 팀 · 3라운드 회전 · 팀마다 다른 증거 · 3회 투표<br><span style="color:var(--ink3);font-size:13px">배우가 흩어지고 관객은 헤맨다</span></p></div>
+    <div class="arw">→</div>
+    <div class="col af"><div class="k">개정 설계</div><p>2개 장소 · 2개 팀 · 1라운드 · 같은 현장, 다른 목표 · 1회 평결<br><span style="color:var(--ink3);font-size:13px">배우가 모이고 관객은 자기 할 일을 안다</span></p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">★ 최우선</span><h2>관객 통제 — 조사관 카드</h2>
+  <p class="sub">심사위원이 유일하게 별표를 친 항목입니다. “조사마다 사람 컨트롤 어떻게 할지도 필요 ★” 그리고 “사람마다 속도감이 너무나 다르다.”</p></div>
+
+  <h3>지금 방식의 구조적 약점</h3>
+  <p><span class="tag t-f">사실</span> 쇼케이스 방식은 <strong>“손 들어주시면 원하시는 증거 사진 5개 찍어드립니다”</strong>였습니다. 명확하다는 점에서 좋은 장치였지만, 약점이 하나 있습니다.</p>
+  <div class="call warm"><p class="k">문제</p>
+  <p><strong>손을 든 사람만 참여합니다.</strong> 목소리 큰 3명이 5장을 다 써버리면 나머지 20명은 구경꾼이 됩니다. 그리고 “5장”은 <em>팀 전체</em>의 몫이지 <em>내</em> 몫이 아니어서, 관객 개인에게는 여전히 “내가 뭘 해야 하지?”가 남습니다.</p>
+  <p style="margin-top:10px"><span class="tag t-a">분석</span> 속도 편차도 여기서 옵니다. 빠른 사람은 3분 안에 6개를 다 보고 남는 시간에 지루해지고, 느린 사람은 하나도 제대로 못 본 채 법정에 들어가 재판을 따라가지 못합니다.</p></div>
+
+  <h3>해결 — 1인 1카드, 1인 1지목 <span class="chip c-boost">강화</span></h3>
+  <p><span class="tag t-p">제안</span> 입장 시 모든 관객에게 <strong>조사관 카드</strong>를 줍니다. 카드에는 딱 세 칸이 있습니다.</p>
+
+  <div class="call"><p class="k">조사관 카드 — 앞면</p>
+  <div class="tw" style="margin:0"><table>
+    <thead><tr><th class="c" style="width:60px">칸</th><th style="width:32%">내용</th><th>왜 이 칸인가</th></tr></thead>
+    <tbody>
+      <tr><td class="c mono"><strong>1</strong></td><td><strong>소속</strong> — 검사 측 / 변호인 측 조사관 <span style="color:var(--ink3)">(인쇄됨)</span></td><td>내가 어느 편인지가 카드에 박혀 있다. 정체성 부여</td></tr>
+      <tr class="hi"><td class="c mono"><strong>2</strong></td><td><strong>내가 재판에 올릴 증거 번호 1개</strong> — ①~⑦ 중 하나에 동그라미</td><td><strong>과제가 단 하나.</strong> 빠른 사람도 느린 사람도 같은 시간에 끝난다</td></tr>
+      <tr><td class="c mono"><strong>3</strong></td><td><strong>한 줄 이유</strong> <span style="color:var(--ink3)">(선택)</span></td><td>빨리 끝낸 사람이 지루하지 않게. 관객과의 대화에서 낭독</td></tr>
+    </tbody>
+  </table></div></div>
+
+  <p><span class="tag t-a">분석</span> 이 설계가 세 가지 지적을 한 번에 해결합니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:36%">심사평</th><th>카드가 어떻게 답하는가</th></tr></thead>
+    <tbody>
+      <tr><td>“관객이 뭘 해야 할지 모른다”</td><td>카드에 <strong>“증거 번호 하나에 동그라미”</strong>라고 인쇄되어 있습니다. 배우가 설명할 필요도 없습니다</td></tr>
+      <tr><td>“속도감이 너무 다르다”</td><td>과제가 <strong>1개</strong>이므로 6개를 다 본 사람과 2개만 본 사람이 <strong>같은 순간에 완료</strong>합니다</td></tr>
+      <tr><td>“사람 컨트롤”</td><td>카드를 <strong>걷는 행위</strong>가 곧 퇴장 신호입니다. “카드 내시고 한 줄로 이동하겠습니다”</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call hot"><p class="k">그리고 이게 재판으로 이어집니다</p>
+  <p>걷은 카드를 세어 <strong>가장 많이 지목된 증거 3개</strong>가 그 팀의 채택 증거가 됩니다. 법정에서 판사가 호명합니다.</p>
+  <p style="margin-top:10px;font-family:var(--serif);font-size:17px;line-height:1.6">“검사 측 조사단이 채택한 증거 — 제1호 일기장, 제2호 정신과 처방서, 제3호 상담 기록. 검사, 심문 시작하세요.”</p>
+  <p style="margin-top:10px"><span class="tag t-a">분석</span> 관객은 <strong>자기가 고른 증거가 실제로 법정에서 불리는 것</strong>을 듣습니다. 쇼케이스의 “찍은 사진을 검사에게 전달”보다 훨씬 또렷하고, 무엇보다 <em class="hl">관객 개인이 자기 기여를 확인할 수 있습니다.</em></p></div>
+
+  <h4>대본이 흔들리지 않게 하는 안전장치 <span class="chip c-keep">필수</span></h4>
+  <p><span class="tag t-p">제안</span> 관객 선택에 따라 재판 대사가 바뀌면 배우가 감당할 수 없습니다. <strong>채택 순서만 바뀌고 내용은 고정</strong>하십시오. 검사는 어차피 6개 증거를 다 제시하지만, <strong>관객이 1위로 뽑은 증거부터 꺼냅니다.</strong> 대사는 블록 단위로 순서만 조립하면 되므로 배우 부담이 거의 없고, 관객에게는 “우리가 정한 순서대로 재판이 간다”로 보입니다.</p>
+
+  <h4>느린 관객 안전망</h4>
+  <p><span class="tag t-p">제안</span> 브리핑에서 인솔 배우가 <strong>핵심 증거 3개를 손으로 짚어 줍니다.</strong> 하나도 못 찾은 사람도 그 셋 중 하나를 고르면 되므로 낙오가 없습니다. 이건 쇼케이스 브리핑 대사에 이미 절반쯤 들어 있습니다 — “바닥에는 음료수가 있었고… 두부 타격이 하나 있는데 도구 거치대에 숨겨져 있었습니다.”</p>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">설계</span><h2>재판을 키운다 — 러닝타임 재배분</h2>
+  <p class="sub">“재판 때문에 뽑혔다”를 시간 배분으로 번역하면 이렇게 됩니다.</p></div>
+
+  <div class="tlbar">
+    <i class="tl-a" style="flex:8">도입 8</i>
+    <i class="tl-b" style="flex:10">조사 10</i>
+    <i class="tl-c" style="flex:34">재판 34</i>
+    <i class="tl-d" style="flex:8">평결 8</i>
+    <i class="tl-e" style="flex:15">엔딩·진실 15</i>
+  </div>
+  <div class="tlleg">
+    <span><i class="tl-a"></i>입장·팀 배분·조사관 위촉 (8분)</span>
+    <span><i class="tl-b"></i>브리핑 3분 + 현장 조사 7분</span>
+    <span><i class="tl-c"></i><strong>재판 34분 — 전체의 45%</strong></span>
+    <span><i class="tl-d"></i>최후변론·평결 거수·집계</span>
+    <span><i class="tl-e"></i>분기 엔딩 + 진실 공개</span>
+  </div>
+  <p style="font-size:13px;color:var(--ink3);margin-top:10px">합계 75분 · 관객과의 대화 별도 20분 <span class="tag t-u">러닝타임 규정 미확인</span></p>
+
+  <div class="call"><p class="k">재판 34분의 내부 구성</p>
+  <div class="step"><div class="n">1</div><div class="c"><div class="t">증거 채택 · 개정 <span style="color:var(--ink3);font-weight:400">3분</span></div><div class="s">판사가 양측 조사단의 채택 증거를 호명. 관객이 자기 선택을 확인하는 순간</div></div></div>
+  <div class="step"><div class="n">2</div><div class="c"><div class="t">검사 직접심문 <span style="color:var(--ink3);font-weight:400">10분</span></div><div class="s">일기장 → 처방서 → 상담 기록 → 문자. 인혜를 계획 살인으로 몰아간다. 쇼케이스 대본 그대로 확장</div></div></div>
+  <div class="step"><div class="n">3</div><div class="c"><div class="t">변호인 반대심문 <span style="color:var(--ink3);font-weight:400">12분</span></div><div class="s">장갑흔 → 음료 잔량 → 약물 전문성 → 작업실 위치. <strong>여기가 반전의 엔진</strong></div></div></div>
+  <div class="step"><div class="n">4</div><div class="c"><div class="t">제3자 지목 <span style="color:var(--ink3);font-weight:400">5분</span></div><div class="s">고윤수 지목. 방청석의 윤수가 고개를 숙인다 — <strong>관객이 조사 파트에서 이미 본 얼굴</strong>(아래 참조)</div></div></div>
+  <div class="step"><div class="n">5</div><div class="c"><div class="t">양측 최후변론 <span style="color:var(--ink3);font-weight:400">4분</span></div><div class="s">평결 직전 마지막 설득. 관객이 자기 팀 쪽으로 기울게 하는 구간</div></div></div>
+  </div>
+
+  <p><span class="tag t-a">분석</span> 쇼케이스 법정 장면은 이미 이 구조를 갖고 있습니다. <strong>새로 쓸 것이 아니라 늘리는 것입니다.</strong> 특히 변호인 반대심문(장갑흔 → 음료 → 약물 → 위치)은 논리가 단계적으로 쌓이는 훌륭한 구조라, 각 단계에 증인 반응과 정적을 넣는 것만으로 12분이 채워집니다.</p>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">추리 설계</span><h2>풀버전에서 반드시 넣어야 할 단서 두 개</h2>
+  <p class="sub">풀버전 스토리에는 있는데 쇼케이스 증거 목록에는 없는 것들입니다. 이게 빠지면 반전이 “억지”가 됩니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:24%">단서</th><th style="width:34%">풀버전 스토리의 근거</th><th>왜 무대에 올려야 하나</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td><strong>창틀 발자국</strong></td><td>“창문을 통해 빠져나간다. 그 과정에서 <strong>창틀에 발자국이 남게 된다</strong>”</td><td><strong>제3자의 유일한 물리적 증거.</strong> 이게 없으면 변호인의 제3자 주장은 추측일 뿐입니다. 장갑흔만으로는 “누군가 있었다”가 성립하지 않습니다</td></tr>
+      <tr class="hi"><td><strong>찢긴 일기장 마지막 장</strong></td><td>“마지막 장에 실제로 사랑에 빠져 용서하게 된 내용을 본 윤수는 … <strong>마지막 용서하는 내용을 교묘하게 찢는다</strong>”</td><td><strong>조작의 증거이자 인혜의 무죄 근거.</strong> 검사가 일기장으로 동기를 세우는데, 그 일기장이 훼손됐다는 사실 자체가 반격 지점입니다</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call hot"><p class="k">페어플레이 — 추리극의 생사</p>
+  <p><span class="tag t-a">분석</span> 추리 관객은 반전에 열광하지 않습니다. <strong>“내가 맞힐 수 있었는데 못 맞혔다”</strong>에 열광합니다. 지금 쇼케이스 구조에서 진범 고윤수를 가리키는 단서는 <strong>장갑흔 하나뿐</strong>이고, 그마저 법정에서 변호인이 처음 꺼냅니다. 관객이 조사 파트에서 볼 기회가 없습니다.</p>
+  <p style="margin-top:10px"><strong>그래서 관객은 “아, 그랬구나”는 해도 “아, 내가 봤었는데!”는 못 합니다.</strong> 후자가 훨씬 강한 경험이고, 관객과의 대화를 살리는 것도 후자입니다.</p></div>
+
+  <h3>결정적 제안 — 윤수를 조사 파트에 세운다 <span class="chip c-boost">강화</span></h3>
+  <p><span class="tag t-p">제안</span> 고윤수를 <strong>조사 현장에 등장시키십시오.</strong> 피해자의 주치의 자격으로 참관 중인 인물로, 대사는 두세 마디면 충분합니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th class="c" style="width:36px"></th><th>효과</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td><strong>페어플레이 성립.</strong> 관객은 진범을 두 눈으로 보고도 의심하지 않았습니다. 법정에서 지목되는 순간 “그 사람이었어?”가 터집니다</td></tr>
+      <tr><td class="c">2</td><td><strong>배우 1명 절약.</strong> 지금 윤수는 법정 방청석에 앉아 고개만 숙이는 역할이라 인건비 대비 효율이 낮습니다</td></tr>
+      <tr><td class="c">3</td><td><strong>관객과의 대화 소재.</strong> “아까 옆에 서 계셨던 분 기억나세요?” — 이 한마디가 만족도를 올립니다</td></tr>
+      <tr><td class="c">4</td><td><strong>재관람 근거.</strong> 두 번째 보는 관객은 윤수의 행동을 다시 봅니다. 시장성 항목의 실증</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-p">제안</span> 연출 디테일 하나 — 윤수가 조사 중 <strong>창가 쪽에 서 있게</strong> 하거나 <strong>일기장 근처에서 잠깐 멈추게</strong> 하십시오. 대사 없이도 두 번째 관람에서 회수되는 복선이 됩니다.</p>
+
+  <h4>증거 번호 재구성 <span class="tag t-p">제안</span></h4>
+  <div class="tw"><table>
+    <thead><tr><th class="c" style="width:44px">번호</th><th style="width:26%">증거</th><th class="c" style="width:100px">유리한 쪽</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c mono">①</td><td>인혜의 일기장 <strong>(마지막 장 찢김)</strong></td><td class="c">검찰</td><td>찢김을 발견하면 변호 쪽으로 뒤집힘</td></tr>
+      <tr><td class="c mono">②</td><td>과거 정신과 진단서</td><td class="c">검찰</td><td>약물 성분 일치</td></tr>
+      <tr><td class="c mono">③</td><td>음료수 통 (지문·반쯤 빔)</td><td class="c">양측</td><td>“반쯤 비었다”가 변호 측 반격 지점</td></tr>
+      <tr><td class="c mono">④</td><td>조각 망치 (장갑흔)</td><td class="c">변호</td><td>은닉 사실은 검찰에 유리</td></tr>
+      <tr class="hi"><td class="c mono">⑤</td><td><strong>창틀 발자국</strong> <span class="chip c-boost">신규</span></td><td class="c">변호</td><td>제3자의 유일한 물증</td></tr>
+      <tr><td class="c mono">⑥</td><td>민호의 휴대폰 (동반자살 문자)</td><td class="c">검찰</td><td>가장 강한 검찰 증거</td></tr>
+      <tr><td class="c mono">⑦</td><td>깨진 조각상</td><td class="c">—</td><td><strong>맥거핀</strong> — 이미 스토리에 있음. 유지</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-a">분석</span> 검찰 유리 3개(①②⑥), 변호 유리 2개(④⑤), 양측 1개(③), 맥거핀 1개(⑦). <strong>양 팀 모두 자기 편 증거가 확실히 있으면서, 상대 증거도 눈앞에 있습니다.</strong> 대표님이 원하신 “팀이 이기고 싶게”는 증거를 숨겨서가 아니라 <em class="hl">같은 현장을 다른 목표로 보게 해서</em> 만듭니다. 이게 훨씬 단순하고, 훨씬 잘 통합니다.</p>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">경제성</span><h2>“3만원이면 손익분기 못 넘는다”에 대한 답</h2>
+  <p class="sub">심사위원이 직접 물었고 “계산 잘해야 한다”고 했습니다. 계산했습니다.</p></div>
+
+  <div class="call warm"><p class="k">계산 전제 <span class="tag t-u">미확인 · 추정치</span></p>
+  <p>배우 1일 25만 원 · 스태프 1일 20만 원 · 대관 1일 80만 원 · 소모품·운영 1일 20만 원. <strong>실제 단가는 대표님이 넣어야 합니다</strong> — 운영 콘솔에 계산기를 넣어두었으니 실제 숫자로 다시 돌리십시오. 아래는 구조를 보여주기 위한 모델입니다.</p></div>
+
+  <p><span class="tag t-f">사실</span> 쇼케이스 배역은 <strong>검사·변호사·인혜·판사·형사·감식반·윤수·보안관 = 8명</strong>입니다.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>시나리오</th><th class="n">회당 원가</th><th class="n">회당 매출</th><th class="n">손익</th><th class="n">손익분기</th><th class="c">판정</th></tr></thead>
+    <tbody>
+      <tr class="bad"><td>① <strong>현행 8명</strong> · 1일 1회 · 3만원 · 50석</td><td class="n">380만</td><td class="n">150만</td><td class="n">−230만</td><td class="n">127명</td><td class="c">불가</td></tr>
+      <tr class="bad"><td>② 현행 8명 · <strong>1일 2회</strong> · 3만원 · 50석</td><td class="n">190만</td><td class="n">150만</td><td class="n">−40만</td><td class="n">63명</td><td class="c">불가</td></tr>
+      <tr class="bad"><td>③ <strong>6명 겸역</strong> · 1일 2회 · 3만원 · 50석</td><td class="n">155만</td><td class="n">150만</td><td class="n">−5만</td><td class="n">52명</td><td class="c">간당</td></tr>
+      <tr class="good"><td>④ 6명 · 1일 2회 · <strong>3.5만원</strong> · 50석</td><td class="n">155만</td><td class="n">175만</td><td class="n">+20만</td><td class="n"><strong>44명</strong></td><td class="c"><strong>가능</strong></td></tr>
+      <tr class="bad"><td>⑤ 6명 · 1일 2회 · 3.5만원 · <strong>40석</strong></td><td class="n">155만</td><td class="n">140만</td><td class="n">−15만</td><td class="n">44명</td><td class="c">불가</td></tr>
+      <tr class="good"><td>⑥ 6명 · <strong>1일 3회</strong> · 3.5만원 · 50석</td><td class="n">103만</td><td class="n">175만</td><td class="n">+72만</td><td class="n"><strong>30명</strong></td><td class="c"><strong>여유</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call hot"><p class="k">답</p>
+  <p class="big">배우 6명 · 1일 2회전 · 3.5만원 · 회당 50석 — 손익분기 44명.</p>
+  <p><span class="tag t-a">분석</span> 심사위원의 직관이 정확했습니다. <strong>현행 8명에 3만원이면 회당 127명이 필요한데, 이동형 구조상 불가능한 숫자입니다.</strong> 그리고 ⑤가 중요합니다 — <strong>팀당 20명(총 40석)으로는 어떤 조합으로도 흑자가 안 납니다.</strong> 최소 <strong>팀당 25명, 총 50석</strong>이 손익의 하한선입니다.</p></div>
+
+  <h3>배우 8명 → 6명 겸역안 <span class="chip c-boost">강화</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th class="c" style="width:44px">#</th><th style="width:22%">배우</th><th>조사 파트</th><th>법정 파트</th></tr></thead>
+    <tbody>
+      <tr><td class="c mono">1</td><td><strong>인혜</strong></td><td>—</td><td>피고인</td></tr>
+      <tr><td class="c mono">2</td><td><strong>세미</strong></td><td>검사팀 인솔·브리핑</td><td>검사</td></tr>
+      <tr><td class="c mono">3</td><td><strong>충하</strong></td><td>변호팀 인솔·브리핑</td><td>변호인</td></tr>
+      <tr><td class="c mono">4</td><td><strong>판사</strong></td><td>—</td><td>재판장</td></tr>
+      <tr class="hi"><td class="c mono">5</td><td><strong>형사</strong></td><td>검사팀 현장 통제·타이머</td><td><strong>보안관 겸역</strong></td></tr>
+      <tr class="hi"><td class="c mono">6</td><td><strong>윤수</strong></td><td><strong>변호팀 현장 참관인</strong> <span class="chip c-boost">신규</span></td><td>방청석 → 지목당함</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-a">분석</span> 감식반과 보안관을 없앤 것이 아니라 <strong>기능을 옮겼습니다.</strong> 감식반의 브리핑 대사는 변호사 충하가 흡수하고(쇼케이스에서도 충하가 먼저 설명함), 현장 통제는 윤수가 참관인 자격으로 맡습니다. 보안관은 형사가 법정에서 이어받습니다. <strong>대사량은 거의 그대로, 인건비는 25% 감소, 그리고 페어플레이가 성립합니다.</strong></p>
+  <p><span class="tag t-p">제안</span> 검사팀에는 형사가, 변호팀에는 윤수가 붙습니다. <strong>변호팀 관객만 진범을 가까이서 봅니다.</strong> 최종 평결에서 변호팀이 무죄를 밀었다면 관객과의 대화에서 이 사실이 극적으로 회수됩니다 — “여러분 옆에 계셨던 분입니다.”</p>
+
+  <h3>티켓 3.5만원을 정당화하는 근거</h3>
+  <ul>
+    <li><strong>방탈출 대비</strong> — 춘천·수도권 방탈출 1인 2.5~3.5만 원. 우리는 전문 배우 6명 + 75분 + 결말 분기. 가격 저항이 낮은 구간입니다</li>
+    <li><strong>회차 한정성</strong> — 회당 50석, 1일 2회. 희소성이 가격을 지지합니다</li>
+    <li><strong>단체 판매</strong> — 4인 배심원단 단체석 12만 원. 그룹 단위로 팔면 객석이 빨리 찹니다</li>
+  </ul>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">로드맵</span><h2>1~5단계 개발 계획</h2>
+  <p class="sub">“한 번에 공연을 만들어서 해결하려 하지 말고 단계별로” — 심사위원이 직접 제안한 프레임입니다. 그대로 채택했습니다.</p></div>
+
+  <div class="call"><p class="k">왜 그대로 채택하는가</p>
+  <p><span class="tag t-a">분석</span> 이 프레임을 채택하면 11월 공연이 <strong>“완성되지 않은 공연”이 아니라 “1단계가 완성된 공연”</strong>이 됩니다. 심사위원 입장에서는 자기 조언이 구조로 반영된 것이고, 우리 입장에서는 초연에서 못 한 것이 실패가 아니라 계획이 됩니다. <strong>2차 심사에서 “다음이 있다”를 말할 수 있는 유일한 방법이기도 합니다.</strong></p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th class="c" style="width:52px">단계</th><th style="width:14%">시기</th><th style="width:26%">목표</th><th>이 단계에서 확정하는 것</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td class="c"><strong>1</strong></td><td><strong>2026.11</strong><br><span style="color:var(--ink3);font-size:12px">합센터 초연</span></td><td><strong>기틀 확정</strong></td><td>2팀 구조 · 조사관 카드 · 재판 34분 · 1회 평결 · 분기 엔딩 2종 · 배우 6명. <strong>고정 공간 전제</strong></td></tr>
+      <tr><td class="c"><strong>2</strong></td><td>2027 상반기<br><span style="color:var(--ink3);font-size:12px">후속 유료 공연</span></td><td>구조 심화</td><td><strong>2심 도입</strong>(중간 평결 → 최종 평결). 카드 시스템 정착. 관객 데이터 축적</td></tr>
+      <tr><td class="c"><strong>3</strong></td><td>2027 하반기</td><td><strong>패키지화</strong></td><td>1톤 트럭 1대 · 셋업 반나절 · 조명 특수 1대 · <strong>영상 장비 불필요</strong>. 대관 스펙 시트 완성</td></tr>
+      <tr><td class="c"><strong>4</strong></td><td>2028</td><td>지역 유통</td><td>공간 요구 최소화 — <strong>분리 가능한 공간 2개면 성립</strong>(커튼 분할 허용). 원주·강릉 → 수도권</td></tr>
+      <tr><td class="c"><strong>5</strong></td><td>2028~</td><td><strong>공간 자유형 법정 연극</strong></td><td>사건 교체형 시즌제. 법정·역할·절차는 고정, 사건만 신규. 카페·강당·회의실 적용</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><span class="tag t-p">제안</span> <strong>9월 11일 계획서에 이 표를 그대로 넣으십시오.</strong> 그리고 제목을 <em class="hl">“1단계 — 초연을 통한 기틀 확정”</em>으로 다십시오. 11월에 우리가 하는 것이 5단계 중 1단계라는 것이 문서에 박히면, 11월 24일 심사에서 “왜 이건 안 했나”라는 질문이 “그건 3단계입니다”로 답해집니다.</p>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">문서</span><h2>9월 11일 계획서에 들어갈 문장</h2>
+  <p class="sub">계획서에 쓰는 언어가 11월 24일의 채점 프레임이 됩니다. 심사평을 반영했다는 것이 문장으로 보여야 합니다.</p></div>
+
+  <div class="call"><p class="k">작품 정의 — 한 문단</p>
+  <p style="font-family:var(--serif);font-size:16.5px;line-height:1.75">“&lt;침묵의 증거&gt;는 관객이 검사 측·변호인 측 <strong>조사관</strong>으로 나뉘어 사건 현장을 관찰하고, 자신이 고른 증거가 실제 법정에서 채택되며, 최종적으로 <strong>배심원</strong>으로서 평결하는 <strong>이동형 법정 추리극</strong>입니다. 관객의 평결에 따라 결말이 달라집니다. 화려한 이머시브 연출 대신 <strong>진지한 법정극의 몰입</strong>을 택했으며, 전체 75분 중 34분을 재판 장면에 배분해 배우의 연극적 표현을 중심에 둡니다.”</p></div>
+
+  <p><span class="tag t-p">제안</span> 계획서에 반드시 등장시킬 단어들 — 각각 심사평의 어느 항목에 답하는지 표시했습니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:34%">계획서에 쓸 표현</th><th>어느 지적에 답하는가</th></tr></thead>
+    <tbody>
+      <tr><td><strong>“이동형 법정 추리극”</strong> (이머시브 표기 삭제)</td><td>“이머시브 말고 이동형만으로 충분”</td></tr>
+      <tr><td><strong>“조사관 카드 — 1인 1지목”</strong></td><td>“관객이 뭘 해야 하는지 분명하게” · “속도감이 다르다”</td></tr>
+      <tr><td><strong>“인솔 배우 1인당 1팀 전담”</strong></td><td>“조사마다 사람 컨트롤 ★”</td></tr>
+      <tr><td><strong>“재판 34분 / 전체 75분”</strong></td><td>“재판 부분 때문에 뽑혔다”</td></tr>
+      <tr><td><strong>“진지한 톤의 법정극”</strong></td><td>“요란하지 않고 진지해서 좋았다”</td></tr>
+      <tr><td><strong>“1단계 — 초연을 통한 기틀 확정”</strong></td><td>“단계별로 1~5단계”</td></tr>
+      <tr><td><strong>“배우 6명 · 1일 2회전 · 손익분기 44명”</strong></td><td>“인원에 맞는 판매모델” · “계산 잘해야 한다”</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call hot"><p class="k">지키지 못할 약속은 쓰지 마십시오</p>
+  <p>이 계획서는 <strong>11월 24일 심사위원이 “약속대로 했나”를 대조하는 문서</strong>입니다. 심사위원 5명 중 3명이 이 문서를 읽습니다. <strong>“재판 34분”이라고 썼으면 34분을 해야 하고, “배우 6명”이라고 썼으면 6명으로 해야 합니다.</strong> 확신이 없는 항목은 아예 쓰지 않는 편이 낫습니다.</p></div>
+</section>
+
+
+<section>
+  <div class="sh"><span class="sn">추가 심사평</span><h2>반복 구조 — 대본에서 실제로 측정했습니다</h2>
+  <p class="sub">“반복구조가 계속 걸린다”는 지적을 받고 쇼케이스 대본을 문자 단위로 대조했습니다. 심사위원이 걸린 지점이 네 곳 있고, 그중 하나는 우리 USP를 무너뜨립니다.</p></div>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:30%">반복 지점</th><th class="n" style="width:110px">측정값</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr class="bad"><td><strong>양 팀 브리핑</strong></td><td class="n"><strong>73.7% 동일</strong></td><td>형사와 감식반이 <strong>363자를 글자 하나 안 틀리고</strong> 각각 읊습니다. “피해자는 노민호, 33세 남성…”부터 “물건은 손 대시면 안됩니다”까지 통째로 복제</td></tr>
+      <tr class="bad"><td><strong>심문 루프</strong></td><td class="n"><strong>15회 응답</strong></td><td>“증거 제시 → 인혜 수긍 → 다음 증거”가 반복. 초반 8회 중 <strong>“…네” 4회, “잘 모르겠어요” 1회</strong></td></tr>
+      <tr class="bad"><td><strong>이의 제기</strong></td><td class="n"><strong>5회</strong></td><td>사유는 전부 다른데 <strong>첫 마디가 매번 “이의 있습니다”</strong></td></tr>
+      <tr class="bad"><td><strong>두 엔딩의 결말부</strong></td><td class="n"><strong>58.4% 동일</strong></td><td>판사 대사·판사봉·보안관 퇴장·꺅 소리·암전이 <strong>완전히 같습니다</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call hot"><p class="k">가장 치명적인 것</p>
+  <p class="big">우리 USP는 “관객의 평결이 결말을 바꾼다”인데, 두 결말의 마지막이 같습니다.</p>
+  <p><span class="tag t-a">분석</span> 유죄든 무죄든 인혜의 대사만 다르고 그 뒤는 동일합니다 — <em>“보안관, 피고인 진정되면 데리고 들어오세요. 잠시 휴정하겠습니다.” → 판사봉 → 보안관 퇴장 → 꺅 소리 → 암전.</em> <strong>관객은 자기 평결이 무언가를 바꿨다고 느끼기 어렵습니다.</strong> 시장성 30점의 핵심 근거(반복 관람 가치)가 여기서 새고 있습니다.</p></div>
+
+  <h3>해결 A — 브리핑을 두 개의 다른 장면으로 <span class="chip c-boost">강화</span></h3>
+  <div class="ba">
+    <div class="col b4"><div class="k">현재</div><p>형사 → 검사팀에게 363자<br>감식반 → 변호팀에게 <b>같은 363자</b><br><span style="color:var(--ink3);font-size:13px">정보도 같고 문장도 같다</span></p></div>
+    <div class="arw">→</div>
+    <div class="col af"><div class="k">개정</div><p>형사 → 검사팀에게 <b>수사 보고</b><br>윤수 → 변호팀에게 <b>주치의 증언</b><br><span style="color:var(--ink3);font-size:13px">사실은 같고 장면은 다르다</span></p></div>
+  </div>
+  <p><span class="tag t-p">제안</span> 두 팀이 같은 사실을 알되 <strong>다른 사람에게, 다른 톤으로</strong> 듣게 하십시오.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:14%"></th><th style="width:43%">검사팀 — 형사의 수사 보고</th><th>변호팀 — 윤수의 주치의 증언</th></tr></thead>
+    <tbody>
+      <tr><td><strong>톤</strong></td><td>딱딱한 사실 나열. 확신에 차 있다</td><td>인간적이고 조심스럽다. 망설인다</td></tr>
+      <tr><td><strong>프레임</strong></td><td>“유력 용의자의 거주 공간입니다”</td><td>“민호 씨를 3년간 봤습니다. 그 애는…”</td></tr>
+      <tr><td><strong>같은 사실</strong></td><td>“음료에서 항우울제 7종, 용기에 피고인 지문”</td><td>“약은 제가 처방한 게 아닙니다. 그건 확실합니다”</td></tr>
+      <tr><td><strong>부수 효과</strong></td><td>—</td><td><strong>변호팀만 진범을 가까이서 본다</strong> — 페어플레이 성립</td></tr>
+    </tbody>
+  </table></div>
+  <p><span class="tag t-a">분석</span> 이 하나로 <strong>반복이 사라지고, 두 팀의 정체성이 브리핑에서부터 갈리고, 진범이 관객 앞에 서게 됩니다.</strong> 앞에서 제안한 윤수 참관인 안과 정확히 맞물립니다.</p>
+  <p><span class="tag t-p">제안</span> 더 밀어붙인다면 — <strong>변호팀은 인혜를 만납니다.</strong> 구치소 접견 형식으로 2분. 검사팀은 현장 보고를 듣습니다. 두 장면이 완전히 달라지고, 변호팀은 피고인에게 감정적으로 연결됩니다. 인혜 배우의 동선 부담만 확인하십시오.</p>
+
+  <h3>해결 B — 법정 중간에 증인을 세운다 <span class="chip c-boost">강화</span></h3>
+  <p><span class="tag t-a">분석</span> 인혜 한 사람이 15회 연속 답하는 구조라 리듬이 평탄합니다. <strong>인물을 바꾸는 것이 반복을 깨는 가장 확실한 방법</strong>입니다.</p>
+  <div class="call"><p class="k">검사 심문 10분의 재구성</p>
+  <div class="step"><div class="n">1</div><div class="c"><div class="t">인혜 심문 <span style="color:var(--ink3);font-weight:400">6분</span></div><div class="s">일기장 · 처방서 · 문자. “…네”는 <strong>3회까지만</strong></div></div></div>
+  <div class="step"><div class="n">2</div><div class="c"><div class="t">윤수 증인 신문 <span style="color:var(--ink3);font-weight:400">4분</span> <span class="chip c-boost">신규</span></div><div class="s">주치의로서 태연하게 증언한다. 관객은 이 사람을 조사 파트에서 이미 봤다. <strong>나중에 진범으로 밝혀지면 이 4분이 통째로 회수된다</strong></div></div></div>
+  <div class="step"><div class="n">3</div><div class="c"><div class="t">인혜 재심문 <span style="color:var(--ink3);font-weight:400">4분</span></div><div class="s">이제 인혜는 순응하지 않는다. 대본의 “그만!!!”이 여기서 터진다</div></div></div>
+  </div>
+  <p><span class="tag t-p">제안</span> <strong>인혜의 응답 곡선을 3단으로 설계하십시오</strong> — 순응(“…네”) → 저항(“그게 아니에요”) → 폭발(“그만!!!”). 대본에 이미 세 단계가 다 있습니다. <em class="hl">“…네”를 3회로 제한하면, 그 3회가 오히려 무겁게 들립니다.</em></p>
+
+  <h3>해결 C — 침묵을 연출로 쓴다 <span class="chip c-boost">강화</span></h3>
+  <div class="call warm"><p><span class="tag t-a">분석</span> 제목이 &lt;침묵의 증거&gt;인데 <strong>대본에서 침묵이 연출 장치로 쓰이지 않습니다.</strong> 인혜는 계속 대답하고, 정적은 지문 한 줄(“잠시 정적”)로만 등장합니다.</p>
+  <p style="margin-top:10px"><span class="tag t-p">제안</span> 인혜가 <strong>대답하지 않는 구간</strong>을 만드십시오. 판사가 “피고인, 대답하십시오”라고 해도 침묵합니다. 그 침묵을 검사는 유죄의 증거로, 변호인은 다른 것으로 읽습니다. <strong>제목과 연출이 연결되고, 심사평의 “진지한 극으로 몰입”과도 정확히 맞습니다.</strong> 그리고 반복되는 대사 리듬을 끊는 가장 값싼 방법이기도 합니다.</p></div>
+
+  <h3>해결 D — 이의 제기는 첫 마디를 바꾼다 <span class="chip c-keep">간단</span></h3>
+  <p><span class="tag t-f">사실</span> 5회 모두 사유가 다릅니다 — 추론의 사실화 / 복수 대상 오인 / 사전 통보 없는 증거 / 심증 해석 / 기소 없는 용의자 지명. <strong>문제는 사유가 아니라 첫 마디입니다.</strong></p>
+  <p><span class="tag t-p">제안</span> 5회 → 3회로 줄이고 진입을 다르게 — <strong>“이의 있습니다.”</strong>(정공법) / <strong>“재판장님.”</strong>(조용히 끼어들기) / <strong>“…잠깐만요.”</strong>(놀라서). 대사 한 줄씩만 고치면 됩니다.</p>
+
+  <h3>해결 E — 분기를 진짜로 만든다 <span class="chip c-drop">최우선</span></h3>
+  <p><span class="tag t-p">제안</span> 평결에 따라 <strong>관객이 마지막에 보는 것</strong>이 달라져야 합니다. 인혜의 대사만으로는 부족합니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:16%"></th><th style="width:42%">유죄 평결</th><th>무죄 평결</th></tr></thead>
+    <tbody>
+      <tr><td><strong>인혜</strong></td><td>격정 진술 후 끌려나간다</td><td>항의 후 빠른 걸음으로 나간다</td></tr>
+      <tr class="hi"><td><strong>윤수</strong></td><td><strong>조용히 일어나 나간다. 아무도 그를 보지 않는다</strong></td><td><strong>일어나려다 굳는다. 조명이 그에게 남는다</strong></td></tr>
+      <tr class="hi"><td><strong>마지막 이미지</strong></td><td>빈 피고인석 · 꺅 소리 · 암전</td><td><strong>윤수의 얼굴</strong> · 정적 · 암전</td></tr>
+      <tr><td><strong>관객이 아는 것</strong></td><td>진범을 놓쳤다는 것을 <strong>모른 채</strong> 끝난다</td><td>진범을 <strong>본 채</strong> 끝난다</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call hot"><p class="k">이 설계가 만드는 것</p>
+  <p class="big">“당신들의 평결이 진범을 놓쳤는가, 잡았는가.”</p>
+  <p>관객과의 대화에서 <strong>“다른 회차는 이렇게 끝났습니다”가 진짜 다른 이야기</strong>가 됩니다. 반복 관람 근거가 말이 아니라 무대 위 사실로 증명되고, 시장성 30점의 “같은 사람이 두 번 오나”에 실물로 답합니다.</p>
+  <p style="margin-top:10px"><span class="tag t-p">제안</span> “꺅 소리”는 <strong>유죄 엔딩에만</strong> 남기십시오. 무죄 엔딩의 마지막 소리는 정적이어야 대비가 섭니다.</p></div>
+
+  <h3>해결 F — 두 팀의 이동 순서를 뒤집는다 <span class="chip c-keep">저비용</span></h3>
+  <p><span class="tag t-p">제안</span> 검사팀이 <strong>브리핑 → 조사</strong> 순서라면, 변호팀은 <strong>조사 → 브리핑</strong> 순서로 하십시오. 관객은 먼저 현장을 본 뒤 설명을 듣습니다. <span class="tag t-a">분석</span> 같은 재료로 다른 경험이 만들어지고, 배우의 대기 동선도 겹치지 않습니다. 이건 아래 &lt;Information for Foreigners&gt;에서 검증된 고전적 해법입니다.</p>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">레퍼런스</span><h2>참고할 외국 작품</h2>
+  <p class="sub">우리 구조와 실제로 같은 문제를 푼 작품들입니다. 우선순위 순서입니다.</p></div>
+
+  <div class="call warm"><p class="k">먼저 밝힙니다</p>
+  <p><strong>아래 영상 중 제가 직접 본 것은 하나도 없습니다.</strong> 이 작업 환경에서 YouTube을 포함한 영상 사이트가 차단되어 있습니다. 검색으로 찾은 자료와 문서화된 공연 설명에 근거한 추천이며, <strong>내용 검증은 대표님이 직접 보시고 해주셔야 합니다.</strong></p></div>
+
+  <div class="ref">
+    <div class="rh"><span class="rank">1</span><b>Terror — Ihr Urteil</b><span class="yr">Ferdinand von Schirach · 2015~ · 독일</span></div>
+    <div class="rb">
+      <p><strong>우리와 구조가 거의 같습니다.</strong> 법정극, 최후변론 직후 관객이 배심원으로 유무죄 투표, 집계 결과에 따라 <strong>두 개의 결말 중 하나를 배우가 상연</strong>합니다. 2015년 베를린 초연 후 전 세계에서 공연되었습니다.</p>
+      <p>주목할 것은 <strong>국가별 투표 성향이 공개 데이터로 축적되어 있다는 점</strong>입니다 — 독일은 약 60%가 무죄, 일본은 매회 유죄, 미국은 매회 무죄. 이 데이터 자체가 작품의 자산이 되었습니다.</p>
+      <div class="learn"><div class="k">우리가 배울 것</div>
+      <p>① <strong>투표 위치</strong> — 최후변론 직후, 휴식 직전. 우리 설계와 동일합니다 ② <strong>결말 차이를 만드는 법</strong> — 우리 해결 E의 검증된 선례 ③ <strong>회차별 투표 결과를 기록·공개하는 것이 시장성 자산이 된다</strong>는 실증. 11/20 평결을 반드시 기록하십시오</p></div>
+      <div class="learn"><div class="k">볼 수 있는 것</div>
+      <p>TV 영화 <strong>「Terror – Ihr Urteil」(2016)</strong>, 영어명 <strong>The Verdict</strong>. 극장 개봉 후 ARD 방영 시 <strong>시청자가 전화·온라인으로 투표해 결말을 결정</strong>했습니다. Amazon Prime · Apple TV · Rakuten 등에서 시청 가능(지역별 상이).</p>
+      <p class="lk">트레일러(자막): youtube.com/watch?v=QycF7dQcvUM<br>공식 투표 집계: terror.theater</p></div>
+      <div class="learn"><div class="k">한국어 자료 — 영상보다 이쪽이 더 유용할 수 있습니다</div>
+      <p>「페르디난트 폰 시라흐의 법정 드라마 『테러』 — 서사, 구조, 소통방식에 주목하여」 (KCI 등재 논문). <strong>구조와 소통방식을 한국어로 분석한 논문</strong>이라, 9/11 계획서에 인용 가능한 근거가 됩니다.</p></div>
+    </div>
+  </div>
+
+  <div class="ref">
+    <div class="rh"><span class="rank">2</span><b>Witness for the Prosecution</b><span class="yr">Agatha Christie · London County Hall · 2017~</span></div>
+    <div class="rb">
+      <p>런던 카운티홀 <strong>실제 의사당 건물</strong>에서 상연하는 법정극입니다. 공간 자체가 법정이라 세트를 짓지 않습니다. 배우들이 객석 통로를 오가며 실제 재판의 공기를 만듭니다.</p>
+      <p><strong>관객 12명이 배심원석에 앉습니다.</strong> 이 좌석은 프리미엄으로 판매되며, 배심원석 관객은 피고의 운명을 결정하는 과정에 참여합니다.</p>
+      <div class="learn"><div class="k">우리가 배울 것</div>
+      <p>① <strong>배심원석을 프리미엄 좌석으로 파는 가격 전략</strong> — 우리 손익분기 문제의 직접적 해법이 될 수 있습니다. 일반석 3.5만 / 배심원석 5만 ② <strong>공간이 곧 세트</strong> — 우리 5단계(어느 공간에서도 적용 가능한 법정 연극)의 완성형 ③ 전원이 아니라 <strong>일부만 배심원으로 특정</strong>하는 방식</p></div>
+    </div>
+  </div>
+
+  <div class="ref">
+    <div class="rh"><span class="rank">3</span><b>The Justice Syndicate</b><span class="yr">Fast Familiar · 영국 · 2018~</span></div>
+    <div class="rb">
+      <p>관객 <strong>12명 전원이 배심원</strong>이 되어 90분간 아이패드로 증거를 열람하고 토론한 뒤 평결합니다. <strong>배우가 없고</strong>, 운영자 1명이 구석에서 랩톱으로 진행만 합니다.</p>
+      <p>결정적인 것 — <strong>각 배심원에게 미세하게 다른 정보를 줘서 의견 대립을 인위적으로 설계</strong>합니다. 대표님이 구상하셨던 “제한된 것만 보게 해서 팀이 이기고 싶게”의 검증된 구현입니다.</p>
+      <div class="learn"><div class="k">참고하되 따라하지 마십시오</div>
+      <p>이 작품은 <strong>배우가 없는 것이 전제</strong>입니다. 우리는 정반대로 <strong>배우의 연극적 표현이 강점이라 뽑혔습니다.</strong> 비대칭 정보 설계를 이 정도로 밀면 배우가 설 자리가 사라집니다 — 이번 심사평이 경고한 바로 그 방향입니다. <strong>“이렇게까지 가면 우리 강점을 잃는다”는 경계선으로 보십시오.</strong></p></div>
+      <div class="learn"><div class="k">자료</div>
+      <p class="lk">fastfamiliar.com/artwork/the-justice-syndicate/<br>논문: Law and Humanities 14(2), 2020 — 배심원 의사결정 연구로 정리됨</p></div>
+    </div>
+  </div>
+
+  <div class="ref">
+    <div class="rh"><span class="rank">4</span><b>Information for Foreigners</b><span class="yr">Griselda Gambaro · 아르헨티나 · 1973</span></div>
+    <div class="rb">
+      <p>관객을 여러 그룹으로 나누고 <strong>각 그룹이 서로 다른 순서로</strong> 20개 장면을 돕니다. 그룹마다 인솔자가 있고, <strong>마지막 장면에서만 전원이 합류</strong>합니다.</p>
+      <div class="learn"><div class="k">우리가 배울 것</div>
+      <p><strong>반복 문제의 고전적 해법이 “순서를 다르게 하는 것”</strong>이라는 점. 우리는 2팀뿐이라 훨씬 간단합니다 — 해결 F(검사팀 브리핑→조사 / 변호팀 조사→브리핑)가 이 원리입니다. 그리고 <strong>마지막에 전원 합류</strong>는 우리 법정 장면과 정확히 같은 구조입니다.</p></div>
+    </div>
+  </div>
+
+  <div class="ref">
+    <div class="rh"><span class="rank">5</span><b>Shear Madness</b><span class="yr">1980~ · 미국 최장기 공연</span></div>
+    <div class="rb">
+      <p>관객이 목격자이자 배심원이 되어 용의자에게 직접 질문하고, <strong>매회 결말이 달라집니다.</strong> 1980년 초연 이후 미국 최장기 공연 기록을 보유하고 다국가 라이선스로 유통됩니다.</p>
+      <div class="learn"><div class="k">우리가 배울 것</div>
+      <p><strong>반복 관람을 어떻게 상품화하는가.</strong> 40년 넘게 팔린 이유는 대본이 뛰어나서가 아니라 <strong>포맷이기 때문</strong>입니다 — 심사위원 5명 중 4명이 바이어인 이번 심사에서 가장 강력한 논거입니다.</p></div>
+    </div>
+  </div>
+
+  <div class="call"><p class="k">우선순위</p>
+  <p><strong>시간이 없다면 1번만 보십시오.</strong> Terror는 우리와 구조가 거의 같고, TV 영화판이 실제로 시청 가능하며, 한국어 논문까지 있습니다. 특히 <strong>“두 결말의 차이를 어떻게 만들었는가”</strong>를 보시면 해결 E를 설계하는 데 직접 쓰입니다.</p>
+  <p style="margin-top:10px">2번(Witness for the Prosecution)은 <strong>배심원석 프리미엄 좌석</strong> 아이디어 하나만으로도 손익분기 계산이 달라질 수 있습니다.</p></div>
+</section>
+
+<section>
+  <div class="sh"><span class="sn">확인 필요</span><h2>제가 할 수 없었던 것과, 대표님이 정하셔야 할 것</h2></div>
+
+  <h3>공연 영상을 보지 못했습니다 <span class="tag t-u">불가</span></h3>
+  <p>보내주신 <span class="mono" style="font-family:var(--mono);font-size:13px">youtu.be/98_qqBTUSz4</span> 는 이 작업 환경의 네트워크 정책에서 차단되어 있습니다(<span class="mono" style="font-family:var(--mono);font-size:13px">403 CONNECT</span>). <strong>영상 내용은 전혀 확인하지 못했으므로, 이 문서의 어떤 분석도 그 영상에 근거하지 않습니다.</strong> 다음 중 하나를 주시면 분석하겠습니다 — 영상 파일 업로드 / 자막·대본 텍스트 / 주요 장면 캡처.</p>
+
+  <h3>여전히 미확인인 것</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:34%">항목</th><th>왜 필요한가</th></tr></thead>
+    <tbody>
+      <tr><td><strong>관객·전문가 평가표 실물</strong></td><td>관객이 45점을 쥐고 있습니다. 문항을 모르면 그 문항에 답하는 공연을 만들 수 없습니다. <strong>아직 요청 안 하신 것으로 압니다</strong></td></tr>
+      <tr><td>합센터 공연장 규모 · 조사 공간 2개 확보 가능 여부</td><td><strong>팀당 25명 = 총 50석</strong>이 손익의 하한선입니다. 공간이 안 나오면 경제 모델 전체가 바뀝니다</td></tr>
+      <tr><td>공연 시각 · 러닝타임 제한</td><td>75분 설계의 전제</td></tr>
+      <tr><td>실제 인건비·대관료 단가</td><td>손익분기 계산의 전제. 운영 콘솔 계산기에 넣으시면 바로 나옵니다</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>대표님이 정하셔야 할 것</h3>
+  <div class="step"><div class="n">1</div><div class="c"><div class="t">분산 조사 설계를 접는 것에 동의하십니까</div><div class="s">지난주 세운 6스테이션·4팀 구조를 접고 쇼케이스의 2팀 구조로 돌아가는 것이 이 문서의 전제입니다. 동의하지 않으시면 나머지가 전부 바뀝니다</div></div></div>
+  <div class="step"><div class="n">2</div><div class="c"><div class="t">배우 6명 겸역안을 받아들일 수 있습니까</div><div class="s">경제성의 핵심입니다. 단원 구성상 불가능하다면 티켓가나 회전수로 메워야 하는데, 여유가 크지 않습니다</div></div></div>
+  <div class="step"><div class="n">3</div><div class="c"><div class="t">윤수를 조사 파트에 세우는 것</div><div class="s">페어플레이·인건비·재관람 근거를 한 번에 해결하지만, 진범을 미리 노출하는 것이라 연출 판단이 필요합니다</div></div></div>
+  <div class="step"><div class="n">4</div><div class="c"><div class="t">초연 평결을 1회로 줄이는 것</div><div class="s">1심·2심·최종 3회 투표는 2단계로 미루자는 제안입니다. 통제 부담과 러닝타임 때문입니다</div></div></div>
+</section>
+
+<footer>
+  <p><strong>근거 자료</strong> — 「법정 추리극 침묵의 증거」 쇼케이스 대본(2026.7.8, 작 헬텀) · 「침묵의 증거 흐름 정리」 풀버전 스토리 · 1차 심사 구두 심사평(대표 전달) · &lt;합스테이지&gt; 공식 서류 2건</p>
+  <p style="margin-top:12px">【사실】은 위 문서에 문자 그대로 있는 내용, 【분석】과 【제안】은 그로부터의 해석이며 사실이 아닙니다. 【미확인】은 확인되지 않은 항목입니다. 공연 영상은 확인하지 못했습니다. 사규 1항에 따라 메일 발송·SNS 게시·결제는 수행하지 않았습니다.</p>
+</footer>
+</div>
